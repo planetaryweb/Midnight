@@ -9,6 +9,17 @@
   {{ end }}
 {{- end -}}
 
+{{- /* Include any code from sidebar widgets */ -}}
+{{- partial "sidebar/widget_list.html" . -}}
+{{- range $name := $.Scratch.Get "widget_list" -}}
+    {{- $.Scratch.Set "widget_name" $name -}}
+    {{- partial "sidebar/widget_definition.html" $ -}}
+    {{- $widget := $.Scratch.Get "widget" -}}
+    {{ with $widget.js }}
+        {{- partial . $ -}}
+    {{- end -}}
+{{- end -}}
+
 {{- /* Include any code from shortcodes */ -}}
 {{- partial "shortcodes/get_list.html" $ -}}
 {{- range $name := ($.Scratch.Get "shortcodes") -}}

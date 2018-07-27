@@ -1,0 +1,32 @@
+{{- $server := default (default "" $.Site.Params.forms.server) (.Get "server") -}}
+{{- if not $server -}}
+    {{- errorf "A server for the form in %s must be defined" $.File.Path -}}
+{{- end -}}
+
+{{- $path := .Get "path" -}}
+{{- $multipart := gt (len (findRE "<input .*type=\"file\"" .Inner)) 0 -}}
+<form method="POST" class="form-container" name="{{ .Get "name" }}" id="{{ .Get "id" }}" action="{{ printf "%s%s" $server $path }}"{{ if $multipart }}enctype="multipart/form-data"{{ end }}>
+    {{ .Inner }}
+    {{ with (.Get "honeypot") }}
+    <div class="row hide">
+        <div class="row-item small-full small-text-center medium-third medium-text-right">
+            <label for="{{ . }}">Leave empty:</label>
+        </div>
+        <div class="row-item small-full small-text-center medium-two-thirds medium-text-left">
+            <input type="text" id="{{ . }}" name="{{ . }}" />
+        </div>
+    </div>
+    {{ end }}
+    <div class="row">
+        <button class="row-item small-full medium-third large-quarter left button" type="reset">
+            Reset
+        </button>
+        <button class="row-item small-full medium-third large-quarter right button" id="{{ .Get "id" }}-submit" type="submit">
+            Submit
+        </button>
+    </div>
+    <div class="row">
+        <div class="row-item small-full alert hide" id="{{ .Get "id" }}-status">
+        </div>
+    </div>
+</form>

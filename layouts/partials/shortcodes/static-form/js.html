@@ -1,0 +1,5 @@
+{{- if $.Site.IsServer -}}
+    <script type="text/javascript" src="{{ partial "utility/make_link.html" "/js/static-form.js" }}" async defer></script>
+{{- else -}}
+    <script type="text/javascript" src="{{ partial "utility/make_link.html" "/js/static-form.min.js" }}" async defer></script>
+{{- end -}}

@@ -16,11 +16,15 @@
         {{- $.Scratch.Set "widget_name" $name -}}
         {{- partial "sidebar/widget_definition.html" $ -}}
         {{- $widget := $.Scratch.Get "widget" -}}
-        {{ with (index $widget "css_inline") }}
-            {{- if $.Site.Params.no_minimize -}}
-                {{- partial . $ | safeCSS -}}
-            {{- else -}}
-                {{- partial "css/minify.css" (partial . $) | safeCSS -}}
+        {{- if eq nil $widget -}}
+            {{- errorf "No reference found to sidebar widget: %s" $name -}}
+        {{- else -}}
+            {{ with (index $widget "css_inline") }}
+                {{- if $.Site.Params.no_minimize -}}
+                    {{- partial . $ | safeCSS -}}
+                {{- else -}}
+                    {{- partial "css/minify.css" (partial . $) | safeCSS -}}
+                {{- end -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}

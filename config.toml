@@ -21,6 +21,8 @@
         js  = "shortcodes/katex/foot.html"
     [params.BluestNight.shortcodes.tabgroup]
         js  = "shortcodes/tabgroup/js.html"
+    [params.BluestNight.shortcodes."static-form"]
+        js  = "shortcodes/static-form/js.html"
 
 [params.BluestNight.sidebar]
     [params.BluestNight.sidebar.categories]
