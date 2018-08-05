@@ -21,15 +21,6 @@
 {{- else -}}
   {{- .Scratch.Set "background_tile" "no-repeat" -}}
 {{- end -}}
-{{- if ($.Site.Params.background.fit_width) -}}
-  {{- .Scratch.Set "background_fit" "contain" -}}
-{{- else -}}
-  {{- if $.Site.Params.background.tile -}}
-    {{- .Scratch.Set "background_fit" "auto" -}}
-  {{- else -}}
-    {{- .Scratch.Set "background_fit" "cover" -}}
-  {{- end -}}
-{{- end -}}
 {{- if ($.Site.Params.background.fit) -}}
   {{- if eq $.Site.Params.background.fit "cover" -}}
     {{- .Scratch.Set "background_fit" "cover" -}}
