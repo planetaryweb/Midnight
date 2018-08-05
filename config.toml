@@ -16,8 +16,8 @@
     print_body_style = "serif"
 
 [params.BluestNight.shortcodes]
-    [params.BluestNight.shortcodes.katex]
-        css = "shortcodes/katex/head.html"
+    [params.BluestNight.shortcodes.math]
+        css_extern = "shortcodes/katex/head.html"
         js  = "shortcodes/katex/foot.html"
     [params.BluestNight.shortcodes.tabgroup]
         js  = "shortcodes/tabgroup/js.html"
