@@ -1,0 +1,1 @@
+{{ partial "async/css.html" (dict "URL" (printf "css/handwriting%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}

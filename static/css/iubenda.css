@@ -1,5 +1,3 @@
-{{- if (.Get "sitevar").Params.iubenda.id -}}
-{{ partial "iubenda/color.html" . }}
 .iubenda-compat {
   display: flex;
   align-items: flex-start;
@@ -10,17 +8,9 @@
   align-items: center;
   border-radius: 3px;
   /* Below colors copied straight from the Iubenda CSS */
-  {{ if eq (.Get "iub_color") "black" }}
-  background-color: rgb(56, 56, 56);
-  color: #fff;
-  {{ else }}
-  background-color: rgb(255, 255, 255);
-  color: rgb(89, 99, 109);
-  border-top-color: #d0d0d0;
-  border-left-color: #c3c3c3;
-  border-right-color: #c3c3c3;
-  border-bottom-color: #b8b9ba;
-  {{ end }}
+  background-color: var(--color-iubenda-bg-link);
+  color: var(--color-iubenda-fg-link);
+  border-color: var(--color-iubenda-border);
   padding: 0 8px;
   font-size: 11px;
   font-weight: 700;
@@ -30,14 +20,9 @@
 .iubenda-compat > a:hover, .iubenda-compat > a:active, .iubenda-compat > a:focus {
   text-decoration: none !important;
   /* Below colors copied straight from the Iubenda CSS */
-  {{ if eq (.Get "iub_color") "black" }}
-  color: #eee;
-  {{ else }}
-  color: rgb(51, 51, 51);
-  {{ end }}
+  color: var(--color-iubenda-fg-link-focus);
 }
 
-{{- if (.Get "sitevar").Params.iubenda.pro.enable_cookie_policy -}}
 /* cookie banner related styles below */
 
 /***************************************************************************
@@ -67,8 +52,7 @@
     position: fixed !important;
     width: 100% !important;
     z-index: 99999998 !important;
-    {{ .Set "label" "alt_bg" -}}
-    background: {{ partial "css/color/semi_transparent.css" . }};
+    background: var(--color-bg-alt-transparent);
     /* ----------------- */
 }
 
@@ -80,10 +64,8 @@
     width:auto;
     /*font-family: Helvetica,Arial,FreeSans,sans-serif;*/
     font-size: 1rem;
-    {{ .Set "label" "alt_bg" -}}
-    {{- partial "css/color/get_rgb_numbers.css" . -}}
-    background: rgba({{.Get "red"}}, {{.Get "green"}}, {{.Get "blue"}}, {{mul (.Get "alpha") 0.9}});
-    color: {{ .Get "alt_body_text" }};
+    background: var(--color-iubenda-bg-container);
+    color: var(--color-fg-alt);
 }
 /*.iubenda-banner-content{
 
@@ -105,7 +87,7 @@
 /*  CLOSE BUTTON. NOTICE: IMAGE FOR BUTTON NOT IMPLEMENTED YET */
 .iubenda-cs-close-btn{
     margin:0;
-    color: {{ .Get "alt_body_text" }};
+    color: var(--color-fg-alt);
     text-decoration:none;
     font-size: 1rem;
     position: absolute;
@@ -117,9 +99,7 @@
 /*  STYLE FOR TEXT LINK TO PRIVACY POLICY */
 .iubenda-cs-cookie-policy-lnk{
     text-decoration: underline;
-    color: {{ .Get "accent" }};
+    color: var(--color-bg-accent);
     font-size: 1rem;
     font-weight: bold;
 }
-{{- end -}}
-{{- end -}}

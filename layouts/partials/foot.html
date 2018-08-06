@@ -3,9 +3,9 @@
 
 {{ if $.Site.Params.thumbnail -}}
   {{- if $.Site.Params.no_minimize -}}
-  <script type="text/javascript" src="{{ "js/thumbnail.js" | absLangURL | safeHTMLAttr }}"></script>
+  <script type="text/javascript" src="{{ "js/thumbnail.js" | absLangURL | safeHTMLAttr }}" defer></script>
   {{ else }}
-  <script type="text/javascript" src="{{ "js/thumbnail.min.js" | absLangURL | safeHTMLAttr }}"></script>
+  <script type="text/javascript" src="{{ "js/thumbnail.min.js" | absLangURL | safeHTMLAttr }}" defer></script>
   {{ end }}
 {{- end -}}
 

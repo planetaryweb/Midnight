@@ -1,7 +1,7 @@
 /* Site main - single */
 
 #post-metadata a {
-  color: {{ .Get "body_text" }};
+  color: var(--color-fg-main);
 }
 
 #post-tags {
@@ -25,9 +25,9 @@ main img {
 
 #TableOfContents {
   display: inline-block;
-  background-color: {{ .Get "alt_bg" }};
-  color: {{ .Get "alt_body_text" }};
-  border: 1px solid {{ .Get "accent" }};
+  background-color: var(--color-bg-alt);
+  color: var(--color-fg-alt);
+  border: 1px solid var(--color-bg-accent);
   padding: 5px;
   margin-bottom: 25px;
 }
@@ -40,5 +40,5 @@ main img {
 
 #TableOfContents a {
   font-weight: normal;
-  color: {{ .Get "alt_body_text" }};
+  color: var(--color-fg-alt);
 }

@@ -34,7 +34,6 @@ h5 { font-size: 0.894rem; }
 h6 { font-size: 0.816rem; }
 h1,h2,h3,h4,h5,h6 {
   margin: 1rem 0;
-  border-bottom: 2px solid var(--color-fg-main);
 }
 
 /* Fix <li><p> having extra newline */
@@ -62,7 +61,7 @@ blockquote {
   padding-top: 0.5rem;
   padding-left: 1rem;
   border-left: 2px solid var(--color-fg-main);
-  color: var(--color-fg-main);
+  color: var(--color-fg-main-faded);
 }
 
 blockquote > p:first-child::before {

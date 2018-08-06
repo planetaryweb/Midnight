@@ -8,14 +8,14 @@ input:not([type="radio"]):not([type="checkbox"]), textarea, select {
   width: 100%;
   min-width: 100%;
   max-width: 100%;
-  background-color: {{ .Get "alt_bg" }};
-  color: {{ .Get "alt_body_text" }};
+  background-color: var(--color-bg-alt);
+  color: var(--color-fg-alt);
   border: none;
   padding: 0.5rem;
 }
 
 input:focus, textarea:focus, select:focus {
-  outline-color: {{ .Get "accent" }};
+  outline-color: var(--color-bg-accent);
 }
 
 .form-container label {

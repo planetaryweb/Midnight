@@ -68,7 +68,7 @@ header a:link, header a:visited, #site-header header a:hover, #site-header heade
 }
 
 #site-header header div {
-  padding: var(--site-header-padding);
+  padding-left: var(--site-header-padding);
 }
 
 #site-title, #site-tagline {
@@ -149,7 +149,7 @@ main header a:hover, main header a:active, main header a:focus {
 
 .alert {
   border: 1px solid var(--color-bg-accent);
-  background-color: var(--color-bg-accent-transparent);
+  background-color: var(--color-bg-alert);
   padding: 1rem;
   margin-bottom: 0.5rem;
   max-width: 100%;

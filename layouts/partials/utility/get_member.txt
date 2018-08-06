@@ -1,5 +1,5 @@
 {{- range $.Members -}}
-  {{- if eq .Name ($.Scratch.Get "name") -}}
+  {{- if eq .Name ($.Name) -}}
   {{- $.Scratch.Set "found" true -}}
   {{- $.Scratch.Set "member" . -}}
   {{- end -}}

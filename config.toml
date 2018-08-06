@@ -16,6 +16,8 @@
     print_body_style = "serif"
 
 [params.BluestNight.shortcodes]
+    [params.BluestNight.shortcodes.handwriting]
+        head = "shortcodes/handwriting/head.html"
     [params.BluestNight.shortcodes.math]
         head = "shortcodes/katex/head.html"
         foot = "shortcodes/katex/foot.html"

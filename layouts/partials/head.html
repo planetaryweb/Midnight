@@ -1,8 +1,6 @@
 <!-- Prematurely connect to the servers to save some milliseconds -->
 <!-- <link rel="preload"> is only in recent browser versions, so we keep "dns-prefetch" and "preconnect" -->
 <!-- <link rel="prefetch" is loads content the user may request *after* the page loads -->
-<link rel="preload" href="https://unpkg.com/normalize.css@8.0.0/normalize.css" as="style">
-<link rel="preload" href="{{ "styles.css" | absLangURL }}" as="style" />
 
 {{ partial "fontawesome/head.html" . }}
 
@@ -29,6 +27,42 @@
 
 {{ partial "async/css.html" (dict "URL" "styles.css") }}
 
+{{ $files := slice "fonts" "reset" "classes" "screen-size" "navigation" "page" "widgets" }}
+{{ range $f := $files }}
+    {{ $file := printf "css/%s%s.css" $f (cond ($.Site.Params.no_minimize | default false) "" ".min") }}
+    <link rel="stylesheet" type="text/css" href="{{ absLangURL $file }}">
+{{ end }}
+
+{{ if eq .Kind "page" }}
+{{ partial "async/css.html" (dict "URL" (printf "css/single%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+{{ else }}
+{{ partial "async/css.html" (dict "URL" (printf "css/list%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+{{ end }}
+
+{{ if .Content -}}
+    {{ $figures := findRE "<figure" .Content -}}
+    {{ $forms := findRE "<form" .Content -}}
+    {{ $tables := findRE "<table" .Content -}}
+    
+    {{ if gt (len $figures) 0 }}
+    {{ partial "async/css.html" (dict "URL" (printf "css/figure%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+    {{ end }}
+    
+    {{ if gt (len $forms) 0 }}
+    {{ partial "async/css.html" (dict "URL" (printf "css/forms%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+    {{ end }}
+    
+    {{ if gt (len $tables) 0 }}
+    {{ partial "async/css.html" (dict "URL" (printf "css/table%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+    {{ end }}
+{{ end -}}
+
+{{ if $.Site.Params.iubenda.id }}
+{{ partial "async/css.html" (dict "URL" (printf "css/iubenda%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+{{ end }}
+
+<link rel="preload" media="print" type="text/css" href="{{ absLangURL (printf "css/print%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min")) }}" as="style">
+
 {{ partial "async/cssrelpreload.js.html" }}
 
 {{- /* Include any code from sidebar widgets */ -}}
@@ -54,8 +88,6 @@
         {{- end -}}
     {{- end -}}
 {{- end -}}
-
-{{ partial "inline_css.html" . }}
 
 {{ if .Content -}}
     {{ $urls := findRE "<img src=\"[^\"|\\\"]*\"" .Content -}}
