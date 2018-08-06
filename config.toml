@@ -17,12 +17,12 @@
 
 [params.BluestNight.shortcodes]
     [params.BluestNight.shortcodes.math]
-        css_extern = "shortcodes/katex/head.html"
-        js  = "shortcodes/katex/foot.html"
+        head = "shortcodes/katex/head.html"
+        foot = "shortcodes/katex/foot.html"
     [params.BluestNight.shortcodes.tabgroup]
-        js  = "shortcodes/tabgroup/js.html"
+        foot = "shortcodes/tabgroup/js.html"
     [params.BluestNight.shortcodes."static-form"]
-        js  = "shortcodes/static-form/js.html"
+        foot = "shortcodes/static-form/js.html"
 
 [params.BluestNight.sidebar]
     [params.BluestNight.sidebar.categories]
@@ -38,13 +38,13 @@
         path = "sidebar/widgets/recent/widget.html"
     [params.BluestNight.sidebar.search]
         path = "sidebar/widgets/search/widget.html"
-        js = "sidebar/widgets/search/js.html"
-        css = "sidebar/widgets/search/css.html"
+        foot = "sidebar/widgets/search/js.html"
+        head = "sidebar/widgets/search/css.html"
         cache = true
     [params.BluestNight.sidebar.support]
         path = "sidebar/widgets/support/widget.html"
-        js = "sidebar/widgets/support/js.html"
-        css = "sidebar/widgets/support/head.html"
+        foot = "sidebar/widgets/support/js.html"
+        head = "sidebar/widgets/support/head.html"
         cache = true
     [params.BluestNight.sidebar.taglist]
         path = "sidebar/widgets/taglist/widget.html"

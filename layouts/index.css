@@ -47,6 +47,17 @@
 {{- .Scratch.Add "css" (partial "css/figure.css" .Scratch) -}}
 {{- .Scratch.Add "css" (partial "css/iubenda.css" .Scratch) -}}
 
+{{- /* Include any CSS from sidebar widgets */ -}}
+{{- partial "sidebar/widget_list.html" . -}}
+{{- range $name := $.Scratch.Get "widget_list" -}}
+    {{- $.Scratch.Set "widget_name" $name -}}
+    {{- partial "sidebar/widget_definition.html" $ -}}
+    {{- $widget := $.Scratch.Get "widget" -}}
+    {{ with $widget.css }}
+        {{- partial . $ -}}
+    {{- end -}}
+{{- end -}}
+
 {{- /* Add any CSS from shortcodes */ -}}
 {{- partial "shortcodes/get_list.html" $ -}}
 {{- range $name := ($.Scratch.Get "shortcodes") -}}

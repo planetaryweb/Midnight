@@ -15,7 +15,7 @@
     {{- $.Scratch.Set "widget_name" $name -}}
     {{- partial "sidebar/widget_definition.html" $ -}}
     {{- $widget := $.Scratch.Get "widget" -}}
-    {{ with $widget.js }}
+    {{ with $widget.foot }}
         {{- partial . $ -}}
     {{- end -}}
 {{- end -}}
@@ -27,7 +27,7 @@
         {{- $.Scratch.Set "shortcode_name" $name -}}
         {{- partial "shortcodes/definition.html" $ -}}
         {{- $shortcode := $.Scratch.Get "shortcode" -}}
-        {{- with $shortcode.js -}}
+        {{- with $shortcode.foot -}}
             {{- partial . $ -}}
         {{- end -}}
     {{- end -}}

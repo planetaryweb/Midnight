@@ -22,7 +22,7 @@
     {{- end -}}
 
     <link rel="canonical" href="{{ .URL | absURL }}">
-    {{ partial "css_head.html" . }}
+    {{ partial "head.html" . }}
   </head>
   <body itemscope itemtype="http://schema.org/WebPage">
     <div id="site-container">
@@ -126,6 +126,6 @@
         </div>
       </footer>
     </div>
-    {{ partial "javascript_foot.html" . }}
+    {{ partial "foot.html" . }}
   </body>
 </html>
