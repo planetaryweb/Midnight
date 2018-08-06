@@ -44,6 +44,7 @@
     [params.BluestNight.sidebar.support]
         path = "sidebar/widgets/support/widget.html"
         js = "sidebar/widgets/support/js.html"
+        css = "sidebar/widgets/support/head.html"
         cache = true
     [params.BluestNight.sidebar.taglist]
         path = "sidebar/widgets/taglist/widget.html"
