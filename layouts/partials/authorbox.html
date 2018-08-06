@@ -5,6 +5,6 @@
   {{- if ne $author "" -}}
     {{- .Scratch.Set "itemprop" "author" -}}
     {{- if eq .Section "events" -}}{{- .Scratch.Set "itemprop" "organizer" -}}{{- end -}}
-    {{- partial "memberbox.html" (dict "Scratch" .Scratch "Members" $.Site.Data.members "Member" $author "IsAuthor" true "ItemProp" (.Scratch.Get "itemprop")) -}}
+    {{- partial "memberbox.html" (dict "Scratch" .Scratch "Members" $.Site.Data.members "Name" $author "IsAuthor" true "ItemProp" (.Scratch.Get "itemprop")) -}}
   {{- end -}}
 {{- end -}}
