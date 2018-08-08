@@ -71,6 +71,8 @@
 
 {{- partial "comments/partial.html" (dict "Prop" "head" "Root" $) -}}
 
+{{- partial "plugins/partial.html" (dict "Prop" "head" "Root" $) -}}
+
 {{ if .Content -}}
     {{ $urls := findRE "<img src=\"[^\"|\\\"]*\"" .Content -}}
     {{ range $url := $urls -}}

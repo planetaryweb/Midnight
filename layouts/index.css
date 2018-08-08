@@ -7,7 +7,7 @@
     {{- partial "sidebar/widget_definition.html" $ -}}
     {{- $widget := $.Scratch.Get "widget" -}}
     {{ with $widget.css }}
-        {{- $.Scratch.Add "css" (partial . $.Scratch) -}}
+        {{- $.Scratch.Add "css" (partial .path $.Scratch) -}}
     {{- end -}}
 {{- end -}}
 
@@ -22,14 +22,38 @@
             {{- partial "shortcodes/definition.html" $ -}}
             {{- $shortcode := $.Scratch.Get "shortcode" -}}
             {{- with (index $shortcode "css") -}}
-                {{- $.Scratch.Add "css" (partial . $.Scratch) -}}
+                {{- $.Scratch.Add "css" (partial .path $.Scratch) -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
 
+{{- /* Add any CSS from comment providers */ -}}
+{{- if and ($.Site.Params.comments.provider) (not $.Params.disable_comments) -}}
+    {{- $.Scratch.Set "comments_name" $.Site.Params.comments.provider -}}
+    {{- partial "comments/definition.html" $ -}}
+    {{- $c := $.Scratch.Get "comments" -}}
+    {{- with $c.css -}}
+        {{- with .path -}}
+            {{- partial .path $.Scratch -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- /* Add any CSS from other plugins */ -}}
+{{- range $.Site.Params.plugins.enabled -}}
+    {{- $.Scratch.Set "plugin_name" . -}}
+    {{- partial "plugins/definition.html" $ -}}
+    {{- $p := $.Scratch.Get "plugin" -}}
+    {{- with $p.css -}}
+        {{- with .path -}}
+            {{- partial .path $.Scratch -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
 {{- if $.Site.Params.no_minimize -}}
-{{- .Scratch.Get "css" -}}
+    {{- .Scratch.Get "css" -}}
 {{- else -}}
-{{- .Scratch.Get "css" | replaceRE "(?m)(;\\s+)" ";" | replaceRE "(?m)(\\s*{\\s*)" "{" | replaceRE "(?m)(\\s*}\\s*)" "}" | replaceRE "(?m)(\\s*:\\s*)" ":" | replaceRE "(?m)(\\s*,\\s*)" "," | replaceRE "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/" "" | replaceRE "(?m)(\\s+)" " " -}}
+    {{- .Scratch.Get "css" | replaceRE "(?m)(;\\s+)" ";" | replaceRE "(?m)(\\s*{\\s*)" "{" | replaceRE "(?m)(\\s*}\\s*)" "}" | replaceRE "(?m)(\\s*:\\s*)" ":" | replaceRE "(?m)(\\s*,\\s*)" "," | replaceRE "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/" "" | replaceRE "(?m)(\\s+)" " " -}}
 {{- end -}}

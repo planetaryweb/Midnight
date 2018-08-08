@@ -1,0 +1,15 @@
+{{- /* Add partial from other plugins */ -}}
+{{- range $.Root.Site.Params.plugins.enabled -}}
+    {{- $.Root.Scratch.Set "plugin_name" . -}}
+    {{- partial "plugins/definition.html" $.Root -}}
+    {{- $p := $.Root.Scratch.Get "plugin" -}}
+    {{- with (index $p $.Prop) -}}
+        {{- with .path -}}
+            {{- if .cache -}}
+                {{- partial .path $.Root -}}
+            {{- else -}}
+                {{- partial .path $.Root -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

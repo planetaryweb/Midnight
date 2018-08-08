@@ -15,4 +15,6 @@
 
 {{- partial "comments/partial.html" (dict "Prop" "foot" "Root" $) -}}
 
+{{- partial "plugins/partial.html" (dict "Prop" "foot" "Root" $) -}}
+
 <script type="text/javascript" src="{{ partial "get_min_url" (dict "URL" "/js/index%s.js" "Site" $.Site) }}" defer></script>
