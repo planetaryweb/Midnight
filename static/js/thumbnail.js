@@ -1,5 +1,5 @@
 var header = document.getElementById("site-header").getElementsByTagName("header")[0];
-var title = header.getElementsByTagName("div")[0];
+var title = document.getElementById("site-title-container");
 var thumbnail = document.getElementById("site-thumbnail");
 // Make constant because it is 0 when hidden
 const THUMB_WIDTH = thumbnail.scrollWidth + parseInt(window.getComputedStyle(thumbnail).getPropertyValue("padding-left"), 10) + parseInt(window.getComputedStyle(thumbnail).getPropertyValue("padding-right"), 10) + +  parseInt(window.getComputedStyle(thumbnail).getPropertyValue("margin-left"), 10) + parseInt(window.getComputedStyle(thumbnail).getPropertyValue("margin-right"), 10);
@@ -14,13 +14,13 @@ function showHideThumbnail() {
       if (contentWidth > header.scrollWidth) {
         if (!thumbnail.classList.contains("hide")) {
           thumbnail.classList.add("hide");
-          header.classList.add("small-text-center")
-          header.classList.remove("small-text-left")
+          header.classList.add("small-text-center");
+          header.classList.remove("small-text-left");
         }
       } else {
         if (thumbnail.classList.contains("hide")) {
-          header.classList.add("small-text-left")
-          header.classList.remove("small-text-center")
+          header.classList.add("small-text-left");
+          header.classList.remove("small-text-center");
           thumbnail.classList.remove("hide");
         }
       }

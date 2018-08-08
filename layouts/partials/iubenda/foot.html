@@ -1,7 +1,7 @@
 {{- if and (not $.Site.IsServer) (and $.Site.Params.iubenda.pro.enable_cookie_policy (and $.Site.Params.iubenda.id $.Site.Params.iubenda.pro.site_id)) -}}
 <script type="text/javascript">
-  var _iub = _iub || [];
-  _iub.csConfiguration = {
+var _iub = _iub || [];
+_iub.csConfiguration = {
     cookiePolicyId: {{ $.Site.Params.iubenda.id }},
     siteId: {{ $.Site.Params.iubenda.pro.site_id }},
     lang: "en",
@@ -10,11 +10,11 @@
     priorConsent: false
     {{- end }},
     banner: {
-      slideDown: false,
-      applyStyles: false,
-      content: "<p>{{ i18n "cookie_banner" }}</p>"
+        slideDown: false,
+        applyStyles: false,
+        content: "<p>{{ i18n "cookie_banner" }}</p>"
     }
-  };
+};
 </script>
 <script type="text/javascript" src="https://cdn.iubenda.com/cookie_solution/iubenda_cs/core-6f17ecca6b9b620e0bbb837c5c1409ab.js" charset="UTF-8" async></script>
 {{- end }}

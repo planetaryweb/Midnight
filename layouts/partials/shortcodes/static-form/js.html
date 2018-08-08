@@ -1,5 +1,2 @@
-{{- if $.Site.IsServer -}}
-    <script type="text/javascript" src="{{ partial "utility/make_link.html" "/js/static-form.js" }}" async defer></script>
-{{- else -}}
-    <script type="text/javascript" src="{{ partial "utility/make_link.html" "/js/static-form.min.js" }}" async defer></script>
-{{- end -}}
+{{- $url := partial "get_min_url" (dict "URL" "/js/shortcodes/static-form%s.js" "Site" $.Site) -}}
+<script type="text/javascript" src="{{ $url }}" defer async></script>

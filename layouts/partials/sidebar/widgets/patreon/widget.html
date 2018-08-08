@@ -27,7 +27,7 @@
 			{{- end -}}
 			{{- $scr.Set "patreon_banner_url" . -}}
 		{{- end -}}
-    <img id="patreon-banner" src="{{ $scr.Get "patreon_banner_url" | absURL }}" alt="Patreon Banner" title="Support me on Patreon!" />
+    <img id="patreon-banner" src="{{ $scr.Get "patreon_banner_url" | partial "make_link" }}" alt="Patreon Banner" title="Support me on Patreon!" />
   </a>
 </div>
 {{- end -}}

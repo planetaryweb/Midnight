@@ -1,6 +1,10 @@
 <!-- Prematurely connect to the servers to save some milliseconds -->
 <!-- <link rel="preload"> is only in recent browser versions, so we keep "dns-prefetch" and "preconnect" -->
-<!-- <link rel="prefetch" is loads content the user may request *after* the page loads -->
+<!-- <link rel="prefetch" loads content the user may request *after* the page loads -->
+
+{{- with $.Site.Params.thumbnail -}}
+<meta name="thumbnail" content="{{ partial "make_link" . }}" />
+{{- end -}}
 
 {{ partial "fontawesome/head.html" . }}
 
@@ -8,86 +12,64 @@
 
 {{ partial "iubenda/head.html" . }}
 
-{{ if $.Site.Params.hashover }}
-    {{ partial "async/css.html" (dict "URL" "hashover/comments.css" "Integrity" "sha384-Ef/dA/KgOCpRpXdcwlTPVy3C83rE6PlHVZqLyDYDPnegQm7qtWkEG5aTRGGaizd6") }}
-{{ end }}
-
 {{- .Scratch.Set "sitevar" $.Site -}}
 {{- partial "css/color/parse_color.css" .Scratch -}}
 {{- .Scratch.Set "label" "alt_bg" -}}
 {{- partial "css/color/detect_light_or_dark.css" .Scratch -}}
 
 {{- if ($.Scratch.Get "alt_bg_is_dark") -}}
-    {{- .Scratch.Set "code_css" (add (add "css/dark" (cond ($.Site.Params.no_minimize | default false) "" ".min")) ".css") }}
+    {{- .Scratch.Set "code_css" (partial "get_min_url" (dict "URL" "/css/dark%s.css" "Site" $.Site)) }}
 {{- else -}}
-    {{- .Scratch.Set "code_css" (add (add "css/light" (cond ($.Site.Params.no_minimize | default false) "" ".min")) ".css") }}
+    {{- .Scratch.Set "code_css" (partial "get_min_url" (dict "URL" "/css/light%s.css" "Site" $.Site)) }}
 {{- end -}}
 
 {{ partial "async/css.html" (dict "URL" (.Scratch.Get "code_css")) }}
 
-{{ partial "async/css.html" (dict "URL" "styles.css") }}
+{{ partial "async/css.html" (dict "URL" (partial "make_link" "styles.css")) }}
 
-{{ $files := slice "fonts" "reset" "classes" "screen-size" "navigation" "page" "widgets" }}
+{{ $files := slice "foundation" "reset" "fonts" "classes" "page" "widgets" }}
 {{ range $f := $files }}
-    {{ $file := printf "css/%s%s.css" $f (cond ($.Site.Params.no_minimize | default false) "" ".min") }}
-    <link rel="stylesheet" type="text/css" href="{{ absLangURL $file }}">
+    {{ $file := partial "get_min_url" (dict "URL" (printf "css/%s%%s.css" $f) "Site" $.Site) }}
+    {{ partial "async/css.html" (dict "URL" $file) }}
 {{ end }}
 
 {{ if eq .Kind "page" }}
-{{ partial "async/css.html" (dict "URL" (printf "css/single%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+{{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/single%s.css" "Site" $.Site))) }}
 {{ else }}
 {{ partial "async/css.html" (dict "URL" (printf "css/list%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
 {{ end }}
 
 {{ if .Content -}}
     {{ $figures := findRE "<figure" .Content -}}
-    {{ $forms := findRE "<form" .Content -}}
+    {{ $forms := findRE "<input" .Content -}}
     {{ $tables := findRE "<table" .Content -}}
     
     {{ if gt (len $figures) 0 }}
-    {{ partial "async/css.html" (dict "URL" (printf "css/figure%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+    {{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/figure%s.css" "Site" $.Site))) }}
     {{ end }}
     
-    {{ if gt (len $forms) 0 }}
-    {{ partial "async/css.html" (dict "URL" (printf "css/forms%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+    {{ if or (gt (len $forms) 0) $.Site.Params.comments.provider }}
+    {{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/forms%s.css" "Site" $.Site))) }}
     {{ end }}
     
     {{ if gt (len $tables) 0 }}
-    {{ partial "async/css.html" (dict "URL" (printf "css/table%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+    {{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/table%s.css" "Site" $.Site))) }}
     {{ end }}
 {{ end -}}
 
 {{ if $.Site.Params.iubenda.id }}
-{{ partial "async/css.html" (dict "URL" (printf "css/iubenda%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+{{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/iubenda%s.css" "Site" $.Site))) }}
 {{ end }}
 
-<link rel="preload" media="print" type="text/css" href="{{ absLangURL (printf "css/print%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min")) }}" as="style">
+<link rel="preload" media="print" type="text/css" href="{{ partial "get_min_url" (dict "URL" "css/print%s.css" "Site" $.Site) }}" as="style">
 
 {{ partial "async/cssrelpreload.js.html" }}
 
-{{- /* Include any code from sidebar widgets */ -}}
-{{- partial "sidebar/widget_list.html" . -}}
-{{- range $name := $.Scratch.Get "widget_list" -}}
-    {{- $.Scratch.Set "widget_name" $name -}}
-    {{- partial "sidebar/widget_definition.html" $ -}}
-    {{- $widget := $.Scratch.Get "widget" -}}
-    {{ with $widget.head }}
-        {{- partial . $ -}}
-    {{- end -}}
-{{- end -}}
+{{- partial "shortcodes/partial.html" (dict "Prop" "head" "Root" $) -}}
 
-{{- /* Include any code from shortcodes */ -}}
-{{- partial "shortcodes/get_list.html" $ -}}
-{{- range $name := ($.Scratch.Get "shortcodes") -}}
-    {{- if $.Page.HasShortcode $name -}}
-        {{- $.Scratch.Set "shortcode_name" $name -}}
-        {{- partial "shortcodes/definition.html" $ -}}
-        {{- $shortcode := $.Scratch.Get "shortcode" -}}
-        {{- with $shortcode.head -}}
-            {{- partial . $ -}}
-        {{- end -}}
-    {{- end -}}
-{{- end -}}
+{{- partial "sidebar/partial.html" (dict "Prop" "head" "Root" $) -}}
+
+{{- partial "comments/partial.html" (dict "Prop" "head" "Root" $) -}}
 
 {{ if .Content -}}
     {{ $urls := findRE "<img src=\"[^\"|\\\"]*\"" .Content -}}

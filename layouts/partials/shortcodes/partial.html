@@ -1,0 +1,16 @@
+{{- /* Include any code from shortcodes */ -}}
+{{- partial "shortcodes/get_list.html" $.Root -}}
+{{- range $name := ($.Root.Scratch.Get "shortcodes") -}}
+    {{- if $.Root.Page.HasShortcode $name -}}
+        {{- $.Root.Scratch.Set "shortcode_name" $name -}}
+        {{- partial "shortcodes/definition.html" $.Root -}}
+        {{- $shortcode := $.Root.Scratch.Get "shortcode" -}}
+        {{- with (index $shortcode $.Prop) -}}
+            {{- if .cache -}}
+                {{- partialCached .path $.Root -}}
+            {{- else -}}
+                {{- partial .path $.Root -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

@@ -10,7 +10,7 @@
             {{- if $.Site.Params.sidebar.support.support_page }}</a>{{ end }}
         </span>
     </header>
-    <div class="social row small-text-center medium-text-left">
+    <div class="social grid-x small-text-center medium-text-left">
         {{ $params := $.Site.Params.sidebar.support -}}
         {{ with $params.patreon -}}
             {{ partial "social-icon.html" (dict "URL" "https://patreon.com/%USER%" "User" . "Title" "Patreon" "Style" $style "Icon" "fab fa-patreon") }}
@@ -26,9 +26,13 @@
         {{- end }}
     </div>
     {{ with $params.monero -}}
-    <div id="monero-sidebar-box" class="row hide">
-        <input type="text" id="monero-wallet-address" value="{{ . }}" class="row-item small-three-quarters" readonly/>
-        <button id="copy-monero-wallet" class="row-item small-quarter button fas fa-copy" data-clipboard-target="#monero-wallet-address"></button>
+    <div id="monero-sidebar-box" class="grid-x hide">
+        <input type="text" id="monero-wallet-address" value="{{ . }}" class="cell auto input-group-field" readonly/>
+        <div class="cell shrink input-group-button">
+        <button id="copy-monero-wallet" class="button" data-clipboard-target="#monero-wallet-address">
+            <span class="fas fa-copy"></span>
+        </button>
+        </div>
     </div>
     {{- end }}
 </div>

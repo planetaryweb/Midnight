@@ -9,6 +9,15 @@
     accent = "#2c8cef"
     accent_text = "#e2e2e2"
 
+[params.BluestNight.comments]
+    [params.BluestNight.comments.commento]
+    [params.BluestNight.comments.commento.partial]
+            path = "comments/commento/widget.html"
+            cache = true
+    [params.BluestNight.comments.commento.foot]
+            path = "comments/commento/foot.html"
+            cache = true
+
 [params.BluestNight.fonts]
     header_style = "sans-serif"
     body_style = "sans-serif"
@@ -17,40 +26,74 @@
 
 [params.BluestNight.shortcodes]
     [params.BluestNight.shortcodes.handwriting]
-        head = "shortcodes/handwriting/head.html"
+        [params.BluestNight.shortcodes.handwriting.head]
+            path = "shortcodes/handwriting/head.html"
+            cache = true
     [params.BluestNight.shortcodes.math]
-        head = "shortcodes/katex/head.html"
-        foot = "shortcodes/katex/foot.html"
+        [params.BluestNight.shortcodes.math.head]
+            path = "shortcodes/katex/head.html"
+            cache = true
+        [params.BluestNight.shortcodes.math.foot]
+            path = "shortcodes/katex/foot.html"
+            cache = true
     [params.BluestNight.shortcodes.tabgroup]
-        foot = "shortcodes/tabgroup/js.html"
+        [params.BluestNight.shortcodes.tabgroup.head]
+            path = "shortcodes/tabgroup/head.html"
+            cache = true
+        [params.BluestNight.shortcodes.tabgroup.foot]
+            path = "shortcodes/tabgroup/js.html"
+            cache = true
+    [params.BluestNight.shortcodes.table]
+        [params.BluestNight.shortcodes.table.head]
+            path = "shortcodes/table/head.html"
+            cache = true
     [params.BluestNight.shortcodes."static-form"]
-        foot = "shortcodes/static-form/js.html"
+        [params.BluestNight.shortcodes."static-form".foot]
+            path = "shortcodes/static-form/js.html"
+            cache = true
 
 [params.BluestNight.sidebar]
     [params.BluestNight.sidebar.categories]
-        path = "sidebar/widgets/categories/widget.html"
-        cache = true
-    [params.BluestNight.sidebar.events]
-        path = "sidebar/widgets/events/widget.html"
-        cache = true
+        [params.BluestNight.sidebar.categories.partial]
+            path = "sidebar/widgets/categories/widget.html"
+            cache = true
     [params.BluestNight.sidebar.patreon]
-        path = "sidebar/widgets/patreon/widget.html"
-        cache = true
+        [params.BluestNight.sidebar.patreon.head]
+            path = "sidebar/widgets/patreon/head.html"
+            cache = true
+        [params.BluestNight.sidebar.patreon.partial]
+            path = "sidebar/widgets/patreon/widget.html"
+            cache = true
     [params.BluestNight.sidebar.recent]
-        path = "sidebar/widgets/recent/widget.html"
+        [params.BluestNight.sidebar.recent.partial]
+            path = "sidebar/widgets/recent/widget.html"
     [params.BluestNight.sidebar.search]
-        path = "sidebar/widgets/search/widget.html"
-        foot = "sidebar/widgets/search/js.html"
-        head = "sidebar/widgets/search/css.html"
-        cache = true
+        [params.BluestNight.sidebar.search.partial]
+            path = "sidebar/widgets/search/widget.html"
+            cache = true
+        [params.BluestNight.sidebar.search.foot]
+            path = "sidebar/widgets/search/foot.html"
+            cache = true
+        [params.BluestNight.sidebar.search.head]
+            path = "sidebar/widgets/search/head.html"
+            cache = true
     [params.BluestNight.sidebar.support]
-        path = "sidebar/widgets/support/widget.html"
-        foot = "sidebar/widgets/support/js.html"
-        head = "sidebar/widgets/support/head.html"
-        cache = true
+        [params.BluestNight.sidebar.support.partial]
+            path = "sidebar/widgets/support/widget.html"
+            cache = true
+        [params.BluestNight.sidebar.support.foot]
+            path = "sidebar/widgets/support/js.html"
+            cache = true
+        [params.BluestNight.sidebar.support.head]
+            path = "sidebar/widgets/support/head.html"
+            cache = true
     [params.BluestNight.sidebar.taglist]
-        path = "sidebar/widgets/taglist/widget.html"
-        cache = true
+        [params.BluestNight.sidebar.taglist.head]
+            path = "sidebar/widgets/taglist/head.html"
+            cache = true
+        [params.BluestNight.sidebar.taglist.partial]
+            path = "sidebar/widgets/taglist/widget.html"
+            cache = true
 
 [mediaTypes]
     [mediaTypes."netlify/headers"]

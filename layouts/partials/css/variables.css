@@ -60,13 +60,13 @@
     {{- end -}}
     
     {{- with ($.Scratch.Get "background_src") -}}
-    --image-bg-lg: url("{{ . | relURL }}");
+    --image-bg-lg: url("{{ partial "make_link" . }}");
     {{- end -}}
     {{- with ($.Scratch.Get "background_src_medium") -}}
-    --image-bg-md: url("{{ . | relURL }}");
+    --image-bg-md: url("{{ partial "make_link" . }}");
     {{- end -}}
     {{- with ($.Scratch.Get "background_src_small") -}}
-    --image-bg-sm: url("{{ . | relURL }}");
+    --image-bg-sm: url("{{ partial "make_link" . }}");
     {{- end -}}
     
     --font-sans: "Clear Sans", sans-serif;

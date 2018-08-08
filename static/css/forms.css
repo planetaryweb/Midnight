@@ -4,7 +4,8 @@
   max-width: 100%;
 }
 
-input:not([type="radio"]):not([type="checkbox"]), textarea, select {
+input:not([type="radio"]):not([type="checkbox"]), textarea,
+input[readonly]:not([type="radio"]):not([type="checkbox"]), select {
   width: 100%;
   min-width: 100%;
   max-width: 100%;
@@ -40,4 +41,16 @@ input:focus, textarea:focus, select:focus {
 input[type="checkbox"][value="other"]:checked ~ input.hide,
 input[type="radio"][value="other"]:checked ~ input.hide {
   display: inline;
+}
+
+label {
+  color: var(--color-fg-main);
+}
+
+[type="text"], [type="password"], [type="date"], [type="datetime"], [type="datetime-local"],
+[type="month"], [type="week"], [type="email"], [type="number"], [type="search"], [type="tel"],
+[type="time"], [type="url"], [type="color"], textarea {
+    outline-style:none;
+    box-shadow:none;
+    border-color:transparent;
 }

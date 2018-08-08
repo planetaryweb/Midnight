@@ -1,0 +1,2 @@
+{{ $file := printf "/css/widgets/taglist%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min") }}
+{{ partial "async/css.html" (dict "URL" $file) }}

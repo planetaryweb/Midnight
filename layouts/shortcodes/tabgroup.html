@@ -2,13 +2,13 @@
     {{- errorf "Tabbed box must have a unique title" -}}
 {{- end -}}
 {{- $regexp := "<li class=\"tab.*?>(.|\n)*?</li>" -}}
-<div class="tabs">
-    <ul class="menu">
+<div class="tabgroup">
+    <ul class="tabs" data-tabs id="{{ .Get "id" }}">
         {{- range $elem := findRE $regexp .Inner -}}
             {{- $elem | safeHTML }}
         {{- end -}}
     </ul>
-    <div class="content">
+    <div class="tabs-content" data-tabs-content="{{ .Get "id" }}">
     {{ replaceRE $regexp "" .Inner | safeHTML }}
     </div>
 </div>

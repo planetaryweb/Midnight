@@ -3,13 +3,11 @@
 {{- end -}}
 <div class="widget">
 	<header>
-		<span class="widget-header"><span class="fas fa-tags fa-xs" aria-hidden></span> <a href="{{ "tags/" | absLangURL }}">{{ i18n "tagLabel" (len .Site.Taxonomies.tags) | title }}</a></span>
+		<span class="widget-header"><span class="fas fa-tags fa-xs" aria-hidden></span> <a href="{{ partial "make_link" "/tags/" }}">{{ i18n "tagLabel" (len .Site.Taxonomies.tags) | title }}</a></span>
 	</header>
-	<div class="row" id="sidebar-tags">
+	<div class="grid-x grid-padding-x" id="sidebar-tags">
 		{{- range $key, $val := .Site.Taxonomies.tags.ByCount -}}
-		  {{- $.Scratch.Set "link" "tags/" -}}
-			{{- $.Scratch.Add "link" $val.Name -}}
-			<a class="button row-item" href="{{ $.Scratch.Get "link" | lower | urlize | absLangURL }}" title="{{ $val.Name | humanize | lower }}">
+			<a class="cell shrink" href="{{ lower $val.Name | urlize | printf "/tags/%s/" | partial "make_link" }}" title="{{ $val.Name | humanize | lower }}">
 				{{ $val.Name | humanize | lower }}{{ if $.Site.Params.sidebar.taglist.count }} ({{ $val.Count }}){{ end }}
 			</a>
 		{{- end -}}

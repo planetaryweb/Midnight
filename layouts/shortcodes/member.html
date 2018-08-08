@@ -6,4 +6,4 @@
 	{{ $.Scratch.Set "noborder" false }}
 {{ end }}
 
-{{- partial "memberbox.html" (dict "Scratch" .Scratch "Members" $.Site.Data.members "Member" ($.Scratch.Get "name") "NoBorder" ($.Scratch.Get "noborder")) -}}
+{{- partial "memberbox.html" (dict "Scratch" .Scratch "Members" $.Site.Data.members "Name" ($.Scratch.Get "name") "NoBorder" ($.Scratch.Get "noborder")) -}}

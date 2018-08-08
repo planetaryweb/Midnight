@@ -1,105 +1,53 @@
-/* Fix some of the resets */
-* {
-  box-sizing: border-box;
-  font-size-adjust: 0.5;
-}
 html {
-  font-size: 16px;
+    font-size: 16px;
 }
-hr { width: 25%; margin: auto; }
-p { margin-bottom: 1rem; }
-p, li, pre { line-height: 1.5; }
-ul, ol {
-  list-style: none;
-  margin-bottom: 1rem;
-  padding-left: 0;
-}
-ul > li > ul, ol > li > ol { margin-bottom: 0; }
-main ul { list-style: disc inside; }
-main ol { list-style: decimal inside; }
-
-li > ul, li > ol {
-  margin-left: 2rem;
-}
-
-div, article {
-  margin: 0.2rem 0;
-}
-
-h1 { font-size: 2rem; }
-h2 { font-size: 1.414rem; }
-h3 { font-size: 1.115rem; }
-h4 { font-size: 1rem; }
-h5 { font-size: 0.894rem; }
-h6 { font-size: 0.816rem; }
-h1,h2,h3,h4,h5,h6 {
-  margin: 1rem 0;
-}
-
-/* Fix <li><p> having extra newline */
-li > p { display: inline; }
-
-table {
-  margin-bottom: 1rem;
-}
-
-code {
-  padding: 0 0.1rem;
-  margin: 0.1rem 0;
-  display: inline-block;
-}
-code, pre {
-  max-width: 100%;
-  font-family: "Source Code Pro", monospace;
-}
-th, td {
-  padding: 0.6rem;
-  vertical-align: middle;
+hr {
+    width: 25%;
+    margin: auto;
 }
 
 blockquote {
-  padding-top: 0.5rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--color-fg-main);
-  color: var(--color-fg-main-faded);
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-fg-main);
+    color: var(--color-fg-main-faded);
 }
 
 blockquote > p:first-child::before {
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  padding-right: 0.5rem;
-  content: "\f10d";
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    padding-right: 0.5rem;
+    content: "\f10d";
 }
 
 blockquote > p:last-child::after {
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  padding-left: 0.5rem;
-  content: "\f10e";
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    padding-left: 0.5rem;
+    content: "\f10e";
 }
 
 a { text-decoration: none; }
 
 a:hover {
-  text-decoration: underline;
-  cursor: pointer;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 input[type=search] {
-  padding: 0.5rem;
+    padding: 0.5rem;
 }
 
-small { font-size: 0.8em;}
-
-sup { position: relative; top: -0.5em; font-size: 80%; }
-sub { font-size: 80%; }
+[type="search"] {
+    margin-bottom: 0;
+}

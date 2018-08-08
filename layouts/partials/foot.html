@@ -1,34 +1,18 @@
 {{ partial "matomo/foot.html" . }}
 {{ partial "iubenda/foot.html" . }}
 
+<script type="text/javascript" src="{{ partial "get_min_url" (dict "URL" "/js/jquery.slim%s.js" "Site" $.Site) }}" defer></script>
+<script type="text/javascript" src="{{ partial "get_min_url" (dict "URL" "/js/foundation%s.js" "Site" $.Site) }}" defer></script>
+
 {{ if $.Site.Params.thumbnail -}}
-  {{- if $.Site.Params.no_minimize -}}
-  <script type="text/javascript" src="{{ "js/thumbnail.js" | absLangURL | safeHTMLAttr }}" defer></script>
-  {{ else }}
-  <script type="text/javascript" src="{{ "js/thumbnail.min.js" | absLangURL | safeHTMLAttr }}" defer></script>
-  {{ end }}
+    {{ $url := partial "get_min_url" (dict "URL" "/js/thumbnail%s.js" "Site" $.Site) }}
+    <script type="text/javascript" src="{{ $url }}" defer></script>
 {{- end -}}
 
-{{- /* Include any code from sidebar widgets */ -}}
-{{- partial "sidebar/widget_list.html" . -}}
-{{- range $name := $.Scratch.Get "widget_list" -}}
-    {{- $.Scratch.Set "widget_name" $name -}}
-    {{- partial "sidebar/widget_definition.html" $ -}}
-    {{- $widget := $.Scratch.Get "widget" -}}
-    {{ with $widget.foot }}
-        {{- partial . $ -}}
-    {{- end -}}
-{{- end -}}
+{{- partial "shortcodes/partial.html" (dict "Prop" "foot" "Root" $) -}}
 
-{{- /* Include any code from shortcodes */ -}}
-{{- partial "shortcodes/get_list.html" $ -}}
-{{- range $name := ($.Scratch.Get "shortcodes") -}}
-    {{- if $.Page.HasShortcode $name -}}
-        {{- $.Scratch.Set "shortcode_name" $name -}}
-        {{- partial "shortcodes/definition.html" $ -}}
-        {{- $shortcode := $.Scratch.Get "shortcode" -}}
-        {{- with $shortcode.foot -}}
-            {{- partial . $ -}}
-        {{- end -}}
-    {{- end -}}
-{{- end -}}
+{{- partial "sidebar/partial.html" (dict "Prop" "foot" "Root" $) -}}
+
+{{- partial "comments/partial.html" (dict "Prop" "foot" "Root" $) -}}
+
+<script type="text/javascript" src="{{ partial "get_min_url" (dict "URL" "/js/index%s.js" "Site" $.Site) }}" defer></script>

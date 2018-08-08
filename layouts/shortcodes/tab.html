@@ -11,9 +11,9 @@
     {{- errorf "Tabbed section must have a unique id within the tabgroup" -}}
 {{- end -}}
 {{ $anchor := printf "tab-%s-%s" (anchorize $parentId) (anchorize $id) }}
-<li class="tab button {{ if eq .Ordinal 0 }} active{{ end }}" data-tab-id="{{ $anchor }}">
-    {{ $title }}
+<li class="tabs-title{{ if eq .Ordinal 0 }} is-active{{ end }}">
+    <a href="#{{ $anchor }}"{{ if eq .Ordinal 0 }} aria-selected="true"{{ end }}>{{ $title }}</a>
 </li>
-<section id="{{ $anchor }}" class="tab-content{{ if ne .Ordinal 0 }} hide{{ end }}">
+<section id="{{ $anchor }}" class="tabs-panel{{ if eq .Ordinal 0 }} is-active{{ end }}">
     {{ .Inner | safeHTML }}
 </section>

@@ -1,1 +1,2 @@
-<script src="{{ printf "/js/tabgroup%s.js" (cond (eq $.Site.Params.no_minimize true) "" ".min") | absLangURL }}"></script>
+{{ $file := partial "get_min_url" (dict "URL" "/js/tabgroup%s.js" "Site" $.Site) -}}
+<script src="{{ $file }}" defer></script>

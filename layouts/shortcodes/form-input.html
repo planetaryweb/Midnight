@@ -1,8 +1,8 @@
-<div class="row">
-  <div class="row-item small-full small-text-center medium-third medium-text-right">
+<div class="grid-x grid-padding-x">
+  <div class="cell small-text-center medium-4 medium-text-right">
     <label for="{{- .Get "id" -}}">{{- .Get "label" -}}</label>
   </div>
-  <div class="row-item small-full small-text-center medium-two-thirds medium-text-left">
+  <div class="cell small-text-center medium-8 medium-text-left">
     {{- $types := slice "color" "date" "datetime-local" "email" "file" "hidden" "month" "number" "password" "range" "tel" "text" "time" "url" "week" "textarea" -}}
     {{- $type := .Get "type" -}}
     {{- $id := .Get "id" -}}

@@ -10,30 +10,23 @@
   font-weight: bold;
 }
 
+#post-list article h2 {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
 /* Site main - pagination */
-
-.paginate {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.paginate .button {
-  width: 100%;
-  max-width: 100%;
-}
-
-.paginate .pagination-previous {
-  align-self: flex-start;
+.pagination a.button {
+  color: var(--color-fg-alt)
   white-space: nowrap;
 }
 
-.paginate .pagination-next {
+.pagination .pagination-next {
   align-self: flex-end;
   white-space: nowrap;
 }
 
-.paginate .pagination-page-number {
+.pagination .pagination-page-number {
   align-self: center;
   text-align: center;
   flex-shrink: 2;

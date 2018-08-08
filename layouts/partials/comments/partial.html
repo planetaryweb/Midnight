@@ -1,0 +1,13 @@
+{{- /* Include any code from comments provider */ -}}
+{{- if and ($.Root.Site.Params.comments.provider) (not $.Root.Params.disable_comments) -}}
+    {{- $.Root.Scratch.Set "comments_name" $.Root.Site.Params.comments.provider -}}
+    {{- partial "comments/definition.html" $.Root -}}
+    {{- $c := $.Root.Scratch.Get "comments" -}}
+    {{- with (index $c $.Prop) -}}
+        {{- if .cache -}}
+            {{- partialCached .path $.Root -}}
+        {{- else -}}
+            {{- partial .path $.Root -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

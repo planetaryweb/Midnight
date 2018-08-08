@@ -18,6 +18,10 @@ main img {
   list-style-type: none;
 }
 
+.post-comments {
+  padding-top: 1rem;
+}
+
 /* Table of Contents */
 #TableOfContents::before {
   content: "Table of Contents";

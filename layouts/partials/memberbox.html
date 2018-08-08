@@ -1,17 +1,17 @@
-{{- partial "utility/get_member.txt" . -}}
+{{- partial "get_member" . -}}
 {{- with ($.Scratch.Get "member") -}}
-<div {{ if $.IsAuthor }}id="authorbox" {{ end }}class="row vcenter memberbox{{ if $.NoBorder }} no-border{{ end }}" {{ with $.ItemProp }}itemprop="{{ . }}" itemscope {{ end }}itemtype="http://schema.org/Person">
-    <div class="row-item member-avatar" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-        <img alt="{{ .Name }} avatar" src="{{ with .Img }}{{ . | absURL }}{{ else }}{{ "images/profile.jpg" | absURL }}{{ end }}" itemprop="contentUrl" />
+<div {{ if $.IsAuthor }}id="authorbox" {{ end }}class="grid-x grid-padding-x vcenter memberbox{{ if $.NoBorder }} no-border{{ end }}" {{ with $.ItemProp }}itemprop="{{ . }}" itemscope {{ end }}itemtype="http://schema.org/Person">
+    <div class="cell shrink member-avatar" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+        <img alt="{{ .Name }} avatar" src="{{ with .Img }}{{ partial "make_link" . }}{{ else }}{{ partial "make_link" "images/profile.jpg" }}{{ end }}" itemprop="contentUrl" />
     </div>
-    <div class="row-item member-bio">
+    <div class="cell auto member-bio">
       <div>
-        <span class="widget-title">{{ i18n "aboutLabel" | title }} {{ with .URL }}<a href="{{ . | absLangURL }}" {{ if $.IsAuthor }}rel="author"{{ end }}>{{ end }}<span itemprop="name">{{ .Name }}</span>{{ if .URL }}</a>{{ end }}</span>
+        <span class="widget-title">{{ i18n "aboutLabel" | title }} {{ with .URL }}<a href="{{ partial "make_link" . }}" {{ if $.IsAuthor }}rel="author"{{ end }}>{{ end }}<span itemprop="name">{{ .Name }}</span>{{ if .URL }}</a>{{ end }}</span>
       </div>
       <p itemprop="description">
         {{- .Bio | markdownify -}}
       </p>
-      <div class="social row">
+      <div class="social grid-x">
         {{ partialCached "social-icons.html" (dict "Scratch" $.Scratch "Social" .social "IsMember" true "Name" .Name) .Name }}
       </div>
     </div>
