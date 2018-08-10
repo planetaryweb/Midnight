@@ -1,2 +1,4 @@
+{{- $url := printf "%s/js/commento.js" $.Site.Params.comments.commento.base_url -}}
 {{- $css := partial "get_min_url" (dict "URL" "/css/comments/commento%s.css" "Site" $.Site) -}}
-<script src="{{ printf "%s/js/commento.js" $.Site.Params.comments.commento.base_url }}" data-css-override="{{ $css }}" defer async></script>
+{{- $attrs := printf "data-css-override=\"%s\"" $css -}}
+{{- partial "script" (dict "Src" $url "Tracks" true "Attrs" $attrs "Defer" true "Async" true) -}}

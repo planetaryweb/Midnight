@@ -1,0 +1,11 @@
+{{- $url := partial "make_link" .Src -}}
+{{- $tracks := and $.Site.Params.iubenda.id (.Tracks | default false) -}}
+{{- $integrity := .Integrity | default "" -}}
+{{- $defer := .Defer | default true -}}
+{{- $async := .Async | default false -}}
+{{- $attrs := .Attrs | default "" -}}
+{{- if $tracks -}}
+    <script type="text/plain" suppressedsrc="{{ $url }}" class="_iub_cs_activate"{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}{{ with $integrity }} integrity="{{ . }}"{{ end }}{{ if $defer }} defer{{ end }}{{ if $async }} async{{ end }}></script>
+{{- else -}}
+    <script type="text/javascript" src="{{ $url }}"{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}{{ with $integrity }} integrity="{{ . }}"{{ end }}{{ if $defer }} defer{{ end }}{{ if $async }} async{{ end }}></script>
+{{- end -}}

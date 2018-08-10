@@ -1,5 +1,5 @@
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js" defer></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/contrib/auto-render.min.js" defer></script>
+{{ partial "script" (dict "Src" "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js" "Defer" true) }}
+{{ partial "script" (dict "Src" "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/contrib/auto-render.min.js" "Defer" true) }}
 {{ $url := partial "get_min_url" (dict "URL" "/js/shortcodes/katex%s.js" "Site" $.Site) -}}
-<script type="text/javascript" src="{{ $url }}" defer></script>
+{{ partial "script" (dict "Src" $url "Defer" true) }}
 
