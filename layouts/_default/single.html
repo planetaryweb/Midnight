@@ -57,8 +57,8 @@
                     <img src="{{ partial "make_link" .Params.thumbnail }}" alt="{{ .Title }}">
                 </figure>
             {{- end -}}
-            {{ if and .Params.enable_toc (eq .Params.enable_toc true) }}{{ .TableOfContents }}{{ end }}
-            <span itemprop="articleBody">{{ .Content }}</span>
+            {{- partial "toc.html" $ -}}
+            <span itemprop="articleBody">{{ partial "content.html" $ }}</span>
         </div>
         {{- partial "pages/authorbox.html" . -}}
     </article>

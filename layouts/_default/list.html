@@ -10,7 +10,7 @@
             {{ . | markdownify }}
         </div>
     {{ end }}
-    {{ .Content }}
+    {{ partial "content.html" $ }}
     {{ if and (not .Params.hide_list) (gt .WordCount 0) }}
         <hr/>
     {{ end }}
