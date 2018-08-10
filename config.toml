@@ -97,7 +97,7 @@
 
 [mediaTypes]
     [mediaTypes."netlify/headers"]
-        suffix = ""
+        suffixes = []
 
 [outputFormats]
     [outputFormats.NetlifyHeaders]
