@@ -69,7 +69,7 @@ header a:hover, header a:active, header a:focus {
     color: var(--color-fg-main);
 }
 
-header a:link, header a:visited,  {
+header a, header a:link, header a:visited,  {
     color: var(--color-fg-main);
     text-decoration: none;
 }
@@ -188,7 +188,7 @@ main a, .callout a {
     font-weight: bold;
 }
 
-main header a:hover, main header a:active, main header a:focus {
+main header a, main header a:link, main header a:visited, main header a:hover, main header a:active, main header a:focus {
     color: var(--color-fg-main);
 }
 
@@ -300,7 +300,15 @@ footer .row { align-items: center; }
     text-align: left;
 }
 
+.is-dropdown-submenu {
+    border-color: var(--color-fg-alt);
+}
+
 /* Foundation is this specific, so I need to be too */
+
+.drilldown .is-drilldown-submenu {
+    background-color: var(--color-bg-alt);
+}
 
 .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
     border-top-color: var(--color-fg-alt);
@@ -341,24 +349,24 @@ footer .row { align-items: center; }
     margin-right: 1rem;
 }
 
-.is-drilldown-submenu-parent a::after {
+.drilldown .is-drilldown-submenu-parent a::after {
     border-left-color: var(--color-fg-alt);
 }
 
-.is-drilldown-submenu-parent a:hover::after,
-.is-drilldown-submenu-parent a:active::after,
-.is-drilldown-submenu-parent a:focus::after,
-.is-drilldown-submenu-parent a.active::after {
+.drilldown .is-drilldown-submenu-parent a:hover::after,
+.drilldown .is-drilldown-submenu-parent a:active::after,
+.drilldown .is-drilldown-submenu-parent a:focus::after,
+.drilldown .is-drilldown-submenu-parent a.active::after {
     border-left-color: var(--color-fg-accent);
 }
 
-.is-drilldown-submenu-parent a::before {
+.drilldown .is-drilldown-submenu-parent a::before {
     border-right-color: var(--color-fg-alt);
 }
 
-.is-drilldown-submenu-parent a:hover::before,
-.is-drilldown-submenu-parent a:active::before,
-.is-drilldown-submenu-parent a:focus::before,
-.is-drilldown-submenu-parent a.active::before {
+.drilldown .is-drilldown-submenu-parent a:hover::before,
+.drilldown .is-drilldown-submenu-parent a:active::before,
+.drilldown .is-drilldown-submenu-parent a:focus::before,
+.drilldown .is-drilldown-submenu-parent a.active::before {
     border-right-color: var(--color-fg-accent);
 }

@@ -1,11 +1,12 @@
 /* Base classes */
-.button, .drilldown a, .pagination .button, .dropdown.menu .is-active > a {
+.button, .drilldown a, .pagination .button, .dropdown.menu .is-active > a, .dropdown.menu a {
     background-color: var(--color-bg-alt);
     color: var(--color-fg-alt);
     font-weight: bold;
     text-transform: uppercase;
-    padding: 1rem 0.5rem;
+    padding: 0.7rem 0.5rem;
     font-size: 1rem;
+    transition: unset;
 }
 
 .button.disabled, .button:disabled {
