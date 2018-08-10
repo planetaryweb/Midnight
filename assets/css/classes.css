@@ -1,5 +1,5 @@
 /* Base classes */
-.button, .drilldown a, .pagination .button {
+.button, .drilldown a, .pagination .button, .dropdown.menu .is-active > a {
     background-color: var(--color-bg-alt);
     color: var(--color-fg-alt);
     font-weight: bold;
@@ -81,4 +81,22 @@
     word-wrap: normal !important;
     /* Not (currently) supported by browsers */
     speak: none;
+}
+
+@media only screen and (max-width: 639px) {
+    .small-text-right { text-align: right; }
+    .small-text-center { text-align: center; }
+    .small-text-left { text-align: left; }
+}
+
+@media only screen and (min-width: 640px) {
+    .medium-text-right { text-align: right; }
+    .medium-text-center { text-align: center; }
+    .medium-text-left { text-align: left; }
+}
+
+@media only screen and (min-width: 1024px) {
+    .large-text-right { text-align: right; }
+    .large-text-center { text-align: center; }
+    .large-text-left { text-align: left; }
 }

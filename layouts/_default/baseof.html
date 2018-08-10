@@ -41,7 +41,17 @@
                     <a href="{{ .Site.BaseURL }}">
                         <header class="small-text-{{ if $.Site.Params.thumbnail }}left{{ else }}center{{ end }} medium-text-left grid-x">
                             {{ with $.Site.Params.thumbnail -}}
-                                <img id="site-thumbnail" class="cell shrink" src="{{ partial "make_link" . }}">
+                                {{- $thmb := resources.Get . -}}
+                                {{- if ne $thmb.ResourceType "image" -}}
+                                    {{- errorf "Resource %s is not an image" . -}}
+                                {{- end -}}
+                                {{- if or (or (strings.HasSuffix . "jpg") (strings.HasPrefix . "jpeg")) (strings.HasSuffix . "png") -}}
+                                    {{- $.Scratch.Set "width" (cond (gt 93 $thmb.Width) 93 $thmb.Width) -}}
+                                {{- else -}}
+                                    {{- /* 93px is the max-width/height of the thumbnail in rems times 1rem */ -}}
+                                    {{- $.Scratch.Set "width" 93 -}}
+                                {{- end -}}
+                                <img id="site-thumbnail" class="cell shrink" src="{{ partial "make_link" $thmb.RelPermalink }}" data-width="{{ $.Scratch.Get "width" }}">
                             {{ end -}}
                             <div id="site-title-container" class="cell shrink grid-y">
                                 <div id="site-title" class="cell shrink" itemprop="name">{{ .Site.Title }}</div>
@@ -50,8 +60,8 @@
                         </header>
                     </a>
                     {{ if (.Site.Menus.main) -}}
-                    <nav id="main-nav">
-                      <ul class="dropdown menu small-hide" data-dropdown-menu>
+                    <nav id="main-nav" class="small-hide">
+                      <ul class="dropdown menu" data-dropdown-menu>
                       {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "site" .Site) . -}}
                       </ul>
                     </nav>
