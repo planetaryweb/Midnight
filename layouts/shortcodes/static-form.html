@@ -1,6 +1,6 @@
 {{- $server := default (default "" $.Site.Params.forms.server) (.Get "server") -}}
 {{- if not $server -}}
-    {{- errorf "A server for the form in %s must be defined" $.File.Path -}}
+    {{- errorf "(%s) A server must be defined for the form" $.File.Path -}}
 {{- end -}}
 
 {{- $path := .Get "path" -}}

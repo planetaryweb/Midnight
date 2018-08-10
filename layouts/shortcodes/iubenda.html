@@ -11,8 +11,8 @@
             {{- end -}}
         {{- end -}}
     {{- else -}}
-        {{- errorf "Iubenda id is necessary to use Iubenda features." -}}
+        {{- errorf "(%s) Iubenda id is necessary to use Iubenda features." .Page.File.Path -}}
     {{- end -}}
 {{- else -}}
-    {{- errorf "Iubenda pro features are not enabled. Pro features must be enabled to use the iubenda shortcode." -}}
+    {{- errorf "(%s) Iubenda pro features are not enabled. Pro features must be enabled to use the iubenda shortcode." .Page.File.Path -}}
 {{- end -}}

@@ -14,17 +14,17 @@
     {{- $value := (.Get "value" | default "") -}}
 
     {{- if gt (len (findRE "([^a-zA-Z0-9_\\-\\.])+" $id 1)) 0 -}}
-      {{- errorf "ID \"%s\" should not contains characters other than ASCII letters, digits, '_', '-', and '.'" $id -}}
+      {{- errorf "(%s) ID \"%s\" should not contains characters other than ASCII letters, digits, '_', '-', and '.'" .Page.File.Path $id -}}
     {{- else if not (in $types $type) -}}
       {{- if or (eq $type "checkbox") (eq $type "radio") -}}
-        {{- errorf "To use input type \"%s\", use the mult-input shortcode instead." $type -}}
+        {{- errorf "(%s) To use input type \"%s\", use the mult-input shortcode instead." .Page.File.Path $type -}}
       {{- else -}}
-        {{- errorf "Input type \"%s\" for ID \"%s\" is invalid/not allowed.\nValid values are: " $type $id (delimit $types ", ") -}}
+        {{- errorf "(%s) Input type \"%s\" for ID \"%s\" is invalid/not allowed.\nValid values are: " .Page.File.Path $type $id (delimit $types ", ") -}}
       {{- end -}}
     {{- else if ne (len (findRE "^(\\d)*$" $minlen)) 1 -}}
-      {{- errorf "Minimum length \"%s\" must be a whole number!" $minlen -}}
+      {{- errorf "(%s) Minimum length \"%s\" must be a whole number!" .Page.File.Path $minlen -}}
     {{- else if ne (len (findRE "^(\\d)*$" $maxlen)) 1 -}}
-      {{- errorf "Maximum length \"%s\" must be a whole number!" $maxlen -}}
+      {{- errorf "(%s) Maximum length \"%s\" must be a whole number!" .Page.File.Path $maxlen -}}
     {{- end -}}
 
     {{- $.Scratch.Set "optional-tags" "" -}}
@@ -59,7 +59,7 @@
     {{- else if (in $types $type) -}}
       <input type="{{ $type }}" id="{{ $id }}" name="{{ $id }}"{{ ($.Scratch.Get "optional-tags" | safeHTMLAttr) }} />
     {{- else -}}
-      {{ errorf "If you are seeing this, please let the developer know at https://dev.shadow53.com/maniphest/\nInvalid input type \"%s\"" $type }}
+      {{ errorf "(%s) If you are seeing this, please let the developer know at https://dev.shadow53.com/maniphest/\nInvalid input type \"%s\"" .Page.File.Path $type }}
     {{- end -}}
   </div>
 </div>
