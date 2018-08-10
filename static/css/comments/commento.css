@@ -18,6 +18,7 @@
 
 .commento-root .commento-submit-button,
 .commento-root .commento-create-button,
+.commento-root .commento-login-button,
 .commento-root .commento-login-box-container .commento-login-box .commento-email-container .commento-email .commento-email-button,
 .commento-root .commento-login-box-container .commento-login-box .commento-email-container .commento-email .commento-email-button:hover {
     background-color: var(--color-bg-accent);
@@ -26,7 +27,8 @@
     border: none;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6, p,
+.commento-root .commento-account-buttons-question{
     color: var(--color-fg-main);
 }
 
@@ -58,7 +60,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .commento-root .commento-login-box-container .commento-login-box .commento-login-box-header {
-    color: var(--color-bg-accent);
+    color: var(--color-fg-main);
 }
 
 .commento-root .commento-login-box-container .commento-login-box .commento-email-container .commento-email .commento-input {
@@ -69,4 +71,24 @@ h1, h2, h3, h4, h5, h6, p {
 .commento-root .commento-login-box-container .commento-login-box .commento-login-box-close::before,
 .commento-root .commento-login-box-container .commento-login-box .commento-login-box-close::after {
     background-color: var(--color-fg-alt);
+}
+
+#commento-textarea-container-root {
+    position: relative;
+}
+
+.commento-root .commento-account-buttons-question {
+    top: 0.5rem;
+}
+
+.commento-account-buttons-container {
+    top: 3rem;
+}
+
+.commento-account-buttons-container .commento-account-buttons {
+    position: static;
+}
+
+.commento-root .commento-logged-container .commento-logout:hover {
+    text-decoration: underline;
 }
