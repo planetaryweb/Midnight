@@ -24,19 +24,19 @@
         <link rel="canonical" href="{{ partial "make_link" .URL }}">
         {{ partial "head.html" . }}
     </head>
-    <body itemscope itemtype="http://schema.org/WebPage">
+    <body itemscope itemtype="http://schema.org/WebPage" class="off-canvas-wrapper">
         <button id="off-canvas-toggle" type="button" class="button hide-for-medium" aria-label="Open Menu" data-toggle="main-nav-off-canvas">
             <span class="fas fa-bars"></span>
         </button>
-        <div id="site-container" class="grid-container full off-canvas-wrapper">
-            <div class="off-canvas position-left" id="main-nav-off-canvas" data-off-canvas>
-                <nav>
-                    <ul class="vertical menu drilldown" data-drilldown>
-                        {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "site" .Site) . -}}
-                    </ul>
-                </nav>
-            </div>
-            <div class="grid-x full grid-container off-canvas-content" data-off-canvas-content>
+        <div class="off-canvas position-left" id="main-nav-off-canvas" data-off-canvas>
+            <nav>
+                <ul class="vertical menu drilldown" data-drilldown>
+                    {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "site" .Site) . -}}
+                </ul>
+            </nav>
+        </div>
+        <div id="site-container" class="grid-container full off-canvas-content">
+            <div class="grid-x full grid-container data-off-canvas-content">
                 <div id="site-header" class="cell">
                     <a href="{{ .Site.BaseURL }}">
                         <header class="small-text-{{ if $.Site.Params.thumbnail }}left{{ else }}center{{ end }} medium-text-left grid-x">
