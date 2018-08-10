@@ -40,16 +40,13 @@
         [params.BluestNight.shortcodes.tabgroup.head]
             path = "shortcodes/tabgroup/head.html"
             cache = true
-        [params.BluestNight.shortcodes.tabgroup.foot]
-            path = "shortcodes/tabgroup/js.html"
-            cache = true
     [params.BluestNight.shortcodes.table]
         [params.BluestNight.shortcodes.table.head]
             path = "shortcodes/table/head.html"
             cache = true
     [params.BluestNight.shortcodes."static-form"]
         [params.BluestNight.shortcodes."static-form".foot]
-            path = "shortcodes/static-form/js.html"
+            path = "shortcodes/static-form/foot.html"
             cache = true
 
 [params.BluestNight.sidebar]
@@ -82,7 +79,7 @@
             path = "sidebar/widgets/support/widget.html"
             cache = true
         [params.BluestNight.sidebar.support.foot]
-            path = "sidebar/widgets/support/js.html"
+            path = "sidebar/widgets/support/foot.html"
             cache = true
         [params.BluestNight.sidebar.support.head]
             path = "sidebar/widgets/support/head.html"

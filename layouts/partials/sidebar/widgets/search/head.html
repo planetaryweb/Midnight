@@ -3,5 +3,4 @@
 <!-- Cache the scripts and JSON index -->
 <link rel="preload" href="{{ partial "make_link" "/index.json" }}" as="fetch" />
 
-{{ $file := partial "get_min_url" (dict "URL" "/css/widgets/search%s.css" "Site" $.Site) }}
-{{ partial "async/css.html" (dict "URL" $file) }}
+{{ partial "styles" (dict "Asset" "css/widgets/search.css" "Root" $) }}

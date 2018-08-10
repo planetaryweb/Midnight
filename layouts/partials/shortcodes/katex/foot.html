@@ -1,5 +1,4 @@
-{{ partial "script" (dict "Src" "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js" "Defer" true) }}
-{{ partial "script" (dict "Src" "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/contrib/auto-render.min.js" "Defer" true) }}
-{{ $url := partial "get_min_url" (dict "URL" "/js/shortcodes/katex%s.js" "Site" $.Site) -}}
-{{ partial "script" (dict "Src" $url "Defer" true) }}
+{{ partial "script" (dict "Src" "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js" "Defer" true "Root" $) }}
+{{ partial "script" (dict "Src" "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/contrib/auto-render.min.js" "Defer" true "Root" $) }}
+{{ partial "script" (dict "Asset" "js/shortcodes/katex.js" "Defer" true "Root" $) }}
 

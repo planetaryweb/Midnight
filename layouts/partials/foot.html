@@ -1,12 +1,11 @@
 {{ partial "matomo/foot.html" . }}
 {{ partial "iubenda/foot.html" . }}
 
-<script type="text/javascript" src="{{ partial "get_min_url" (dict "URL" "/js/jquery.slim%s.js" "Site" $.Site) }}" defer></script>
-<script type="text/javascript" src="{{ partial "get_min_url" (dict "URL" "/js/foundation%s.js" "Site" $.Site) }}" defer></script>
+{{- partial "script" (dict "Asset" "js/jquery.slim.js" "Defer" true "Root" $) -}}
+{{- partial "script" (dict "Asset" "js/foundation.js" "Defer" true "Root" $) -}}
 
 {{ if $.Site.Params.thumbnail -}}
-    {{ $url := partial "get_min_url" (dict "URL" "/js/thumbnail%s.js" "Site" $.Site) }}
-    <script type="text/javascript" src="{{ $url }}" defer></script>
+    {{- partial "script" (dict "Asset" "js/thumbnail.js" "Defer" true "Root" $) -}}
 {{- end -}}
 
 {{- partial "shortcodes/partial.html" (dict "Prop" "foot" "Root" $) -}}
@@ -17,4 +16,4 @@
 
 {{- partial "plugins/partial.html" (dict "Prop" "foot" "Root" $) -}}
 
-<script type="text/javascript" src="{{ partial "get_min_url" (dict "URL" "/js/index%s.js" "Site" $.Site) }}" defer></script>
+{{- partial "script" (dict "Asset" "js/index.js" "Defer" true "Root" $) -}}

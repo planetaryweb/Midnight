@@ -1,2 +1,1 @@
-{{ $file := printf "/css/widgets/patreon%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min") }}
-{{ partial "async/css.html" (dict "URL" $file) }}
+{{ partial "style" (dict "Asset" "css/widgets/patreon.css" "Root" $) }}

@@ -16,6 +16,6 @@ _iub.csConfiguration = {
     }
 };
 </script>
-<script type="text/javascript" src="https://cdn.iubenda.com/cookie_solution/safemode/iubenda_cs.js" charset="UTF-8" async></script>
+{{- partial "script" (dict "Src" "https://cdn.iubenda.com/cookie_solution/safemode/iubenda_cs.js" "Attrs" "charset=\"UTF-8\"" "Async" true "Root" $) -}}
 {{- end }}
 

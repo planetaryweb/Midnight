@@ -1,7 +1,6 @@
-{{- $tracks := and $.Root.Site.Params.iubenda.id (.Tracks | default false) -}}
-{{- $defer := .Defer | default true -}}
-{{- $async := .Async | default false -}}
 {{- $attrs := .Attrs | default "" -}}
+{{- $preload := .Preload | default true -}}
+{{- $crossorigin := .CrossOrigin | default "" -}}
 
 {{- with (index . "Src") -}}
     {{- $.Root.Scratch.Set "url" (partial "make_link" .) -}}
@@ -19,15 +18,18 @@
             {{- $.Root.Scratch.Set "integrity" $res.Data.Integrity -}}
         {{- end -}}
     {{- else -}}
-        {{- errorf "script partial requires either Src or Asset to be set. Params: %#v" . -}}
+        {{- errorf "style partial requires either Src or Asset to be set Params: %#v" . -}}
     {{- end -}}
 {{- end -}}
 
 {{- $url := $.Root.Scratch.Get "url" -}}
 {{- $integrity := $.Root.Scratch.Get "integrity" -}}
 
-{{- if $tracks -}}
-    <script type="text/plain" suppressedsrc="{{ $url }}" class="_iub_cs_activate"{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}{{ with $integrity }} integrity="{{ . }}"{{ end }}{{ if $defer }} defer{{ end }}{{ if $async }} async{{ end }}></script>
-{{- else -}}
-    <script type="text/javascript" src="{{ $url }}"{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}{{ with $integrity }} integrity="{{ . }}"{{ end }}{{ if $defer }} defer{{ end }}{{ if $async }} async{{ end }}></script>
+{{- if $preload -}}
+<link rel="preload" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} as="style"{{ with $integrity }}{{ printf " integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }} onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+{{- end -}}
+<link rel="stylesheet" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} {{ with $integrity }}{{ printf "integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}></noscript>
+{{- if $preload -}}
+</noscript>
 {{- end -}}

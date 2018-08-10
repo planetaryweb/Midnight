@@ -1,2 +1,1 @@
-{{- $url := partial "get_min_url" (dict "URL" "css/shortcodes/handwriting%s.css" "Site" $.Site) -}}
-{{ partial "async/css.html" (dict "URL" $url) }}
+{{ partial "styles" (dict "Asset" "css/shortcodes/handwriting.css" "Root" $) }}

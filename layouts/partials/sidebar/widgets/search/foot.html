@@ -1,7 +1,6 @@
 <script type="text/javascript">
     var lunrJSON = "{{ partial "make_link" "/index.json" }}";
 </script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.3/lunr.min.js" defer></script>
-{{- $url := partial "get_min_url" (dict "URL" "/js/widgets/search%s.js" "Site" $.Site) -}}
-<script type="text/javascript" src="{{ $url }}" defer></script>
+{{- partial "script" (dict "Src" "https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.1.3/lunr.min.js" "Defer" true "Root" $) -}}
+{{- partial "script" (dict "Asset" "js/widgets/search.js" "Defer" true "Root" $) -}}
 

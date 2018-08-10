@@ -10,7 +10,9 @@
 
 {{ partial "matomo/head.html" . }}
 
-{{ partial "iubenda/head.html" . }}
+{{ partial "styles" (dict "Asset" "css/foundation.css" "Root" $) }}
+
+{{- $.Scratch.Set "assets" slice -}}
 
 {{- .Scratch.Set "sitevar" $.Site -}}
 {{- partial "css/color/parse_color.css" .Scratch -}}
@@ -18,25 +20,43 @@
 {{- partial "css/color/detect_light_or_dark.css" .Scratch -}}
 
 {{- if ($.Scratch.Get "alt_bg_is_dark") -}}
-    {{- .Scratch.Set "code_css" (partial "get_min_url" (dict "URL" "/css/dark%s.css" "Site" $.Site)) }}
+    {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
+        {{- partial "styles" (dict "Asset" "css/dark.css" "Root" $) -}}
+    {{- else -}}
+        {{- .Scratch.Set "code_css" "css/dark.css" -}}
+    {{- end -}}
 {{- else -}}
-    {{- .Scratch.Set "code_css" (partial "get_min_url" (dict "URL" "/css/light%s.css" "Site" $.Site)) }}
+    {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
+        {{- partial "styles" (dict "Asset" "css/light.css" "Root" $) -}}
+    {{- else -}}
+        {{- .Scratch.Add "code_css" "css/light.css" -}}
+    {{- end -}}
 {{- end -}}
 
-{{ partial "async/css.html" (dict "URL" (.Scratch.Get "code_css")) }}
+{{ partial "styles" (dict "Src" (partial "make_link" "styles.css") "Root" $) }}
 
-{{ partial "async/css.html" (dict "URL" (partial "make_link" "styles.css")) }}
-
-{{ $files := slice "foundation" "reset" "fonts" "classes" "page" "widgets" }}
-{{ range $f := $files }}
-    {{ $file := partial "get_min_url" (dict "URL" (printf "css/%s%%s.css" $f) "Site" $.Site) }}
-    {{ partial "async/css.html" (dict "URL" $file) }}
+{{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
+    {{ $files := slice "reset" "fonts" "classes" "page" "widgets" }}
+    {{ range $f := $files }}
+        {{- partial "styles" (dict "Asset" $f "Root" $) -}}
+    {{- end -}}
 {{ end }}
 
+{{- if not (or $.Site.Params.http2 (getenv "HUGO_HTTP2")) -}}
+    {{- $reset := resources.Get "css/reset.css" -}}
+    {{- $codecss := .Scratch.Get "code_css" -}}
+    {{- $fonts := resources.Get "css/fonts.css" -}}
+    {{- $classes := resources.Get "css/classes.css" -}}
+    {{- $page := resources.Get "css/page.css" -}}
+    {{- $widgets := resources.Get "css/widgets.css" -}}
+    {{- $css := slice $reset $codecss $fonts $classes $page $widgets | resources.Concat "css/bundle.css" | fingerprint -}}
+    {{- partial "styles" (dict "Src" $css.RelPermalink "Integrity" $css.Data.Integrity "Root" $) -}}
+{{- end -}}
+
 {{ if eq .Kind "page" }}
-{{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/single%s.css" "Site" $.Site))) }}
+    {{ partial "styles" (dict "Asset" "css/single.css" "Root" $) }}
 {{ else }}
-{{ partial "async/css.html" (dict "URL" (printf "css/list%s.css" (cond ($.Site.Params.no_minimize | default false) "" ".min"))) }}
+    {{ partial "styles" (dict "Asset" "css/list.css" "Root" $) }}
 {{ end }}
 
 {{ if .Content -}}
@@ -45,20 +65,20 @@
     {{ $tables := findRE "<table" .Content -}}
     
     {{ if gt (len $figures) 0 }}
-    {{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/figure%s.css" "Site" $.Site))) }}
+        {{ partial "styles" (dict "Asset" "css/figure.css" "Root" $) }}
     {{ end }}
     
     {{ if or (gt (len $forms) 0) $.Site.Params.comments.provider }}
-    {{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/forms%s.css" "Site" $.Site))) }}
+        {{ partial "styles" (dict "Asset" "css/forms.css" "Root" $) }}
     {{ end }}
     
     {{ if gt (len $tables) 0 }}
-    {{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/table%s.css" "Site" $.Site))) }}
+        {{ partial "styles" (dict "Asset" "css/table.css" "Root" $) }}
     {{ end }}
 {{ end -}}
 
 {{ if $.Site.Params.iubenda.id }}
-{{ partial "async/css.html" (dict "URL" (partial "get_min_url" (dict "URL" "css/iubenda%s.css" "Site" $.Site))) }}
+    {{ partial "styles" (dict "Asset" "css/iubenda.css" "Root" $) }}
 {{ end }}
 
 <link rel="preload" media="print" type="text/css" href="{{ partial "get_min_url" (dict "URL" "css/print%s.css" "Site" $.Site) }}" as="style">
