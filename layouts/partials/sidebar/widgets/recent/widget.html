@@ -1,5 +1,15 @@
 <div class="widget">
-	{{ if ($.Site.GetPage "/posts") }}
+    {{ if $.Site.Params.sidebar.recent.section }}
+        {{ with $.Site.Params.sidebar.recent.section }}
+            {{ if ($.Site.GetPage .) }}
+                {{ $.Scratch.Set "posts_name" . }}
+            {{ else }}
+                {{ errorf "Could not find section %s" . }}
+            {{ end }}
+        {{ end }}
+    {{ else if ($.Site.GetPage "/news") }}
+        {{ $.Scratch.Set "posts_name" "news" }}
+    {{ else if ($.Site.GetPage "/posts") }}
 		{{ $.Scratch.Set "posts_name" "posts" }}
 	{{ else if ($.Site.GetPage "/post") }}
 		{{ $.Scratch.Set "posts_name" "post" }}
