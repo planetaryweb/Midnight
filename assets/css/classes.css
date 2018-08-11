@@ -67,6 +67,16 @@
     cursor: pointer;
 }
 
+.badge {
+    background-color: var(--color-bg-alt);
+    color: var(--color-fg-alt);
+}
+
+a:hover .badge, .badge:hover {
+    background-color: var(--color-bg-accent);
+    color: var(--color-fg-accent);
+}
+
 /* Hide text meant for screen readers */
 /* Copied from https://rianrietveld.com/2015/04/04/the-screen-reader-text-class-why-and-how/ */
 .sr-text {
@@ -84,19 +94,19 @@
     speak: none;
 }
 
-@media only screen and (max-width: 639px) {
+@media screen and (max-width: 39.9375em) {
     .small-text-right { text-align: right; }
     .small-text-center { text-align: center; }
     .small-text-left { text-align: left; }
 }
 
-@media only screen and (min-width: 640px) {
+@media screen and (min-width: 40em) {
     .medium-text-right { text-align: right; }
     .medium-text-center { text-align: center; }
     .medium-text-left { text-align: left; }
 }
 
-@media only screen and (min-width: 1024px) {
+@media screen and (min-width: 64em) {
     .large-text-right { text-align: right; }
     .large-text-center { text-align: center; }
     .large-text-left { text-align: left; }

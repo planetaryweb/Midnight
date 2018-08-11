@@ -8,7 +8,7 @@
 	<div class="grid-x grid-padding-x" id="sidebar-tags">
 		{{- range $key, $val := .Site.Taxonomies.tags.ByCount -}}
 			<a class="cell shrink" href="{{ lower $val.Name | urlize | printf "/tags/%s/" | partial "make_link" }}" title="{{ $val.Name | humanize | lower }}">
-				{{ $val.Name | humanize | lower }}{{ if $.Site.Params.sidebar.taglist.count }} ({{ $val.Count }}){{ end }}
+                {{ $val.Name | humanize | lower }}{{ if $.Site.Params.sidebar.taglist.count }} <span class="badge">{{ $val.Count }}</span>{{ end }}
 			</a>
 		{{- end -}}
 	</div>

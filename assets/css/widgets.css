@@ -94,8 +94,4 @@
     #social-icons {
         justify-content: flex-end !important;
     }
-
-    #sidebar-tags {
-        justify-content: flex-start !important;
-    }
 }
