@@ -33,7 +33,14 @@
         {{ end }}
 
         {{ if .IsHome }}
-            {{ if ($.Site.GetPage "/posts") }}
+            {{ if $.Site.Params.home_section }}    
+                {{ strings.TrimPrefix "/" $.Site.Params.home_section | where $.Pages "Section" | $.Scratch.Set "pages" }}
+                {{ if eq (len ($.Scratch.Get "pages")) 0 }}
+                    {{ errorf "Section \"%s\" is empty or does not exist" .Site.Params.home_section }}
+                {{ end }}
+            {{ else if ($.Site.GetPage "/news") }}
+                {{ $.Scratch.Set "pages" (where .Pages "Section" "news") }}
+            {{ else if ($.Site.GetPage "/posts") }}
                 {{ $.Scratch.Set "pages" (where .Pages "Section" "posts") }}
             {{ else if ($.Site.GetPage "/post") }}
                 {{ $.Scratch.Set "pages" (where .Pages "Section" "post") }}
