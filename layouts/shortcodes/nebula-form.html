@@ -5,7 +5,7 @@
 
 {{- $path := .Get "path" -}}
 {{- $multipart := gt (len (findRE "<input .*type=\"file\"" .Inner)) 0 -}}
-<form method="POST" class="form-container" name="{{ .Get "name" }}" id="{{ .Get "id" }}" action="{{ printf "%s%s" $server $path }}"{{ if $multipart }}enctype="multipart/form-data"{{ end }}>
+<form method="POST" class="form-container" name="{{ .Get "name" }}" action="{{ printf "%s%s" $server $path }}"{{ if $multipart }}enctype="multipart/form-data"{{ end }}>
     {{ .Inner }}
     {{ with (.Get "honeypot") }}
     <div class="grid-x grid-padding-x hide">
