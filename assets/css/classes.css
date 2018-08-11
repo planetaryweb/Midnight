@@ -18,7 +18,7 @@
 .button:active:not(.disabled):not(disabled), .button.active,
 .drilldown a:hover:not(.disabled):not(disabled), .drilldown a:focus:not(.disabled):not(disabled),
 .drilldown a:active:not(.disabled):not(disabled), .drilldown a.active,
-.is-dropdown-submenu-parent.is-active > .button {
+.is-dropdown-submenu-parent.is-active > .button, .dropdown.menu a.button.active {
     background-color: var(--color-bg-accent);
     color: var(--color-fg-accent) !important;
     cursor: pointer;
