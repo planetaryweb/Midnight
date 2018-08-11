@@ -36,7 +36,7 @@
 {{ partial "styles" (dict "Src" (partial "make_link" "styles.css") "Root" $) }}
 
 {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
-    {{ $files := slice "reset" "fonts" "classes" "page" "widgets" }}
+    {{ $files := slice "reset" "fonts" "classes" "pagination" "page" "widgets" }}
     {{ range $f := $files }}
         {{- partial "styles" (dict "Asset" (printf "css/%s.css" $f) "Root" $) -}}
     {{- end -}}
@@ -47,9 +47,10 @@
     {{- $codecss := resources.Get (.Scratch.Get "code_css") -}}
     {{- $fonts := resources.Get "css/fonts.css" -}}
     {{- $classes := resources.Get "css/classes.css" -}}
+    {{- $pagination := resources.Get "css/pagination.css" -}}
     {{- $page := resources.Get "css/page.css" -}}
     {{- $widgets := resources.Get "css/widgets.css" -}}
-    {{- $css := slice $reset $codecss $fonts $classes $page $widgets | resources.Concat "css/bundle.css" | fingerprint -}}
+    {{- $css := slice $reset $codecss $fonts $classes $pagination $page $widgets | resources.Concat "css/bundle.css" | fingerprint -}}
     {{- partial "styles" (dict "Src" $css.RelPermalink "Integrity" $css.Data.Integrity "Root" $) -}}
 {{- end -}}
 

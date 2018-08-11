@@ -1,0 +1,22 @@
+/* Site main - pagination */
+.pagination a.button {
+  color: var(--color-fg-alt)
+  white-space: nowrap;
+}
+
+.pagination .pagination-next {
+  align-self: flex-end;
+  white-space: nowrap;
+}
+
+.pagination .pagination-page-number {
+  align-self: center;
+  text-align: center;
+  flex-shrink: 2;
+  font-weight: bold;
+}
+
+.pagination li {
+    margin-right: 0;
+}
+
