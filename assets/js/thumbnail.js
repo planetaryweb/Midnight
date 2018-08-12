@@ -14,10 +14,12 @@ function showHideThumbnail() {
             if (contentWidth > header.scrollWidth) {
                 thumbnail.classList.add("hide");
                 header.classList.add("small-text-center");
+                header.classList.add("align-center")
                 header.classList.remove("small-text-left");
             } else {
                 header.classList.add("small-text-left");
                 header.classList.remove("small-text-center");
+                header.classList.remove("align-center");
                 thumbnail.classList.remove("hide");
             }
         }, 70);
