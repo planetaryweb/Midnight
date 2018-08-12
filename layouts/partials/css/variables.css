@@ -25,7 +25,34 @@
     --color-bg-alert: {{ trim (partial "css/color/semi_transparent.css" .Scratch) " \n" }};
     {{ .Scratch.Set "transparent_alpha" 0.2 -}}
     --color-bg-code: {{ trim (partial "css/color/semi_transparent.css" .Scratch) " \n" }};
-    
+
+    {{ .Scratch.Set "label" "main_bg" }}
+    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/rgb_to_hsl.css" .Scratch }}
+    {{ $main := dict "H" ($.Scratch.Get "hue") "S" ($.Scratch.Get "saturation") "L" ($.Scratch.Get "lightness") }}
+    {{ .Scratch.Set "label" "accent" }}
+    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/rgb_to_hsl.css" .Scratch }}
+    {{ $accent := dict "H" ($.Scratch.Get "hue") "S" ($.Scratch.Get "saturation") "L" ($.Scratch.Get "lightness") }}
+    {{ .Scratch.Set "label" "alt_bg" }}
+    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/rgb_to_hsl.css" .Scratch }}
+    {{ $alt := dict "H" ($.Scratch.Get "hue") "S" ($.Scratch.Get "saturation") "L" ($.Scratch.Get "lightness") }}
+    {{ $.Scratch.Set "lightness" (div (add $alt.L $main.L) 2.0) }}
+    {{ partial "css/color/hsl_to_rgb.css" .Scratch }}
+    {{ $border := dict "R" ($.Scratch.Get "red") "G" ($.Scratch.Get "green") "B" ($.Scratch.Get "blue") }}
+    --color-border-main: rgb({{ $border.R }}, {{ $border.G }}, {{ $border.B }});
+    {{ $.Scratch.Set "lightness" (div (add $alt.L $accent.L) 2.0) }}
+    {{ $border := dict "R" ($.Scratch.Get "red") "G" ($.Scratch.Get "green") "B" ($.Scratch.Get "blue") }}
+    --color-border-nav: rgb({{ $border.R }}, {{ $border.G }}, {{ $border.B }});
+    {{ .Scratch.Set "label" "main_bg" }}
+    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/rgb_to_hsl.css" .Scratch }}
+    {{ $.Scratch.Set "lightness" (div (add $accent.L $main.L) 2.0) }}
+    {{ partial "css/color/hsl_to_rgb.css" .Scratch }}
+    {{ $border := dict "R" ($.Scratch.Get "red") "G" ($.Scratch.Get "green") "B" ($.Scratch.Get "blue") }}
+    --color-border-header: rgb({{ $border.R }}, {{ $border.G }}, {{ $border.B }});
+
     {{- .Scratch.Set "label" "accent" }}
     {{- partial "css/color/get_rgb_numbers.css" .Scratch }}
     {{- partial "css/color/rgb_to_hsl.css" .Scratch }}
@@ -60,13 +87,16 @@
     {{- end -}}
     
     {{- with ($.Scratch.Get "background_src") -}}
-    --image-bg-lg: url("{{ partial "make_link" . }}");
+        {{- $res := resources.Get . -}}
+        --image-bg-lg: url("{{ partial "make_link" $res.RelPermalink }}");
     {{- end -}}
     {{- with ($.Scratch.Get "background_src_medium") -}}
-    --image-bg-md: url("{{ partial "make_link" . }}");
+        {{- $res := resources.Get . -}}
+        --image-bg-md: url("{{ partial "make_link" $res.RelPermalink }}");
     {{- end -}}
     {{- with ($.Scratch.Get "background_src_small") -}}
-    --image-bg-sm: url("{{ partial "make_link" . }}");
+        {{- $res := resources.Get . -}}
+        --image-bg-sm: url("{{ partial "make_link" $res.RelPermalink }}");
     {{- end -}}
     
     --font-sans: "Clear Sans", sans-serif;

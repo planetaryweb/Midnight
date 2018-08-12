@@ -8,6 +8,10 @@
     #main-nav {
         display: none;
     }
+
+    #main-container {
+        border-top: 3px solid var(--color-border-header);
+    }
 }
 
 @media screen and (min-width: 40em) {
@@ -232,7 +236,7 @@ footer {
     padding: 0.5rem 1rem;
     background-color: var(--color-bg-alt);
     color: var(--color-fg-alt);
-    border-top: 3px solid #999999;
+    border-top: 3px solid var(--color-border-main);
 }
 
 footer p {
@@ -275,6 +279,12 @@ footer .row { align-items: center; }
 
 #main-nav {
     background-color: var(--color-bg-alt);
+    border-top: 2px solid var(--color-border-nav);
+    border-bottom: 2px solid var(--color-border-main);
+}
+
+.dropdown.menu > li {
+    margin-right: 0.5rem;
 }
 
 #off-canvas-toggle {
