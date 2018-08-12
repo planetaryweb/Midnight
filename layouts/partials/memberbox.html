@@ -2,7 +2,11 @@
 {{- with ($.Scratch.Get "member") -}}
 <div {{ if $.IsAuthor }}id="authorbox" {{ end }}class="grid-x grid-padding-x vcenter memberbox{{ if $.NoBorder }} no-border{{ end }}" {{ with $.ItemProp }}itemprop="{{ . }}" itemscope {{ end }}itemtype="http://schema.org/Person">
     <div class="cell shrink member-avatar" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-        <img alt="{{ .Name }} avatar" src="{{ with .Img }}{{ partial "make_link" . }}{{ else }}{{ partial "make_link" "images/profile.jpg" }}{{ end }}" itemprop="contentUrl" />
+        {{ $.Scratch.Set "profile" "images/profile.jpg" }}
+        {{ with .Img }}{{ $.Scratch.Set "profile" . }}{{ end }}
+        {{ $img := resources.Get ($.Scratch.Get "profile") }}
+        {{ $img := $img.Fill "90x90 Lanczos" }}
+        <img alt="{{ .Name }} avatar" src="{{ $img.RelPermalink }}" itemprop="contentUrl" />
     </div>
     <div class="cell auto member-bio">
       <div>
