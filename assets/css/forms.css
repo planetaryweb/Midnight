@@ -51,5 +51,19 @@ label {
 [type="time"], [type="url"], [type="color"], textarea {
     outline-style:none;
     box-shadow:none;
-    border-color:transparent;
+    border-color:none;
+    background-color: var(--color-bg-alt);
+    color: var(--color-fg-alt);
+    transition: unset;
+}
+
+[type="text"]:focus, [type="password"]:focus, [type="date"]:focus, [type="datetime"]:focus, [type="datetime-local"]:focus,
+[type="month"]:focus, [type="week"]:focus, [type="email"]:focus, [type="number"]:focus, [type="search"]:focus, [type="tel"]:focus,
+[type="time"]:focus, [type="url"]:focus, [type="color"]:focus, textarea:focus {
+    outline-style:none;
+    box-shadow:none;
+    border: none;
+    background-color: var(--color-bg-alt);
+    color: var(--color-fg-alt);
+    transition: unset;
 }
