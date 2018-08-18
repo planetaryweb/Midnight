@@ -8,7 +8,7 @@
 {{- else -}}
     {{- with (index . "Asset") -}}
         {{- /* Can't seem to store asset resources in Scratch, so avoid that here */ -}}
-        {{- if $.Root.Site.Params.no_minimize -}}
+        {{- if $.Root.Site.Params.no_minify -}}
             {{- $res := resources.Get . | fingerprint -}}
             {{- $.Root.Scratch.Set "url" $res.RelPermalink -}}
             {{- $.Root.Scratch.Set "integrity" $res.Data.Integrity -}}

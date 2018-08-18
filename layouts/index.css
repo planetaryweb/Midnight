@@ -52,7 +52,7 @@
     {{- end -}}
 {{- end -}}
 
-{{- if $.Site.Params.no_minimize -}}
+{{- if $.Site.Params.no_minify -}}
     {{- .Scratch.Get "css" -}}
 {{- else -}}
     {{- .Scratch.Get "css" | replaceRE "(?m)(;\\s+)" ";" | replaceRE "(?m)(\\s*{\\s*)" "{" | replaceRE "(?m)(\\s*}\\s*)" "}" | replaceRE "(?m)(\\s*:\\s*)" ":" | replaceRE "(?m)(\\s*,\\s*)" "," | replaceRE "\\/\\*[^*]*\\*+([^/*][^*]*\\*+)*\\/" "" | replaceRE "(?m)(\\s+)" " " -}}

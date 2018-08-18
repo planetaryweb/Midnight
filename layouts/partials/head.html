@@ -82,7 +82,7 @@
     {{ partial "styles" (dict "Asset" "css/iubenda.css" "Root" $) }}
 {{ end }}
 
-{{- if $.Site.Params.no_minimize -}}
+{{- if $.Site.Params.no_minify -}}
     {{- $res := resources.Get "css/print.css" | fingerprint -}}
     {{- $.Scratch.Set "url" $res.RelPermalink -}}
     {{- $.Scratch.Set "integrity" $res.Data.Integrity -}}

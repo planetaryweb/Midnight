@@ -1,6 +1,6 @@
 {{- $url := printf "%s/js/commento.js" $.Site.Params.comments.commento.base_url -}}
 {{- $.Scratch.Set "res" (resources.Get "css/comments/commento.css") -}}
-{{- if $.Site.Params.no_minimize -}}
+{{- if $.Site.Params.no_minify -}}
     {{- $.Scratch.Set "res" ($.Scratch.Get "res" | minify) -}}
 {{- end -}}
 {{- $res := $.Scratch.Get "res" -}}
