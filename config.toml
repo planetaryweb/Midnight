@@ -44,9 +44,9 @@
         [params.BluestNight.shortcodes.table.head]
             path = "shortcodes/table/head.html"
             cache = true
-    [params.BluestNight.shortcodes."static-form"]
-        [params.BluestNight.shortcodes."static-form".foot]
-            path = "shortcodes/static-form/foot.html"
+    [params.BluestNight.shortcodes.nebula-form]
+        [params.BluestNight.shortcodes.nebula-form.foot]
+            path = "shortcodes/nebula-form/foot.html"
             cache = true
 
 [params.BluestNight.sidebar]

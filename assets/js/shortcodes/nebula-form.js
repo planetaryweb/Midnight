@@ -6,7 +6,7 @@ function formSubmitFunc(form) {
         
         var xhr = new XMLHttpRequest();
         
-        var stat = document.getElementById(form.getAttribute("id") + "-status");
+        var stat = document.getElementById(form.getAttribute("name") + "-status");
         stat.classList.add("hide");
 
         xhr.addEventListener("load", function(e){
@@ -37,6 +37,6 @@ function formSubmitFunc(form) {
 var forms = document.getElementsByTagName("form");
 for (var i = 0; i < forms.length; i++) {
     var form = forms[i];
-    var submit = document.getElementById(form.getAttribute("id") + "-submit");
+    var submit = document.getElementById(form.getAttribute("name") + "-submit");
     submit.addEventListener("click", formSubmitFunc(form));
 }
