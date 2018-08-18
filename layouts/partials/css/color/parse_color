@@ -2,8 +2,8 @@
 {{- $site := $scr.Get "sitevar" -}}
 
 {{- $scr.Set "page_bg" "#000000" -}}{{- $scr.Set "main_bg" "#050505" -}}{{- $scr.Set "alt_bg" "#252525" -}}
-{{- $scr.Set "body_text" "#e2e2e2" -}}{{- $scr.Set "alt_body_text" "#ffffff" -}}
-{{- $scr.Set "accent" "#2073c9" -}}{{- $scr.Set "header_text" "#e2e2e2" -}}
+{{- $scr.Set "main_text" "#e2e2e2" -}}{{- $scr.Set "alt_text" "#ffffff" -}}
+{{- $scr.Set "accent" "#2073c9" -}}{{- $scr.Set "accent_text" "#e2e2e2" -}}
 
 {{- with $site.Params.color.page_background -}}
   {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
@@ -19,11 +19,11 @@
 {{- end -}}
 {{- with $site.Params.color.main_text -}}
   {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "body_text" . -}}
+  {{- $scr.Set "main_text" . -}}
 {{- end -}}
 {{- with $site.Params.color.alt_text -}}
   {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "alt_body_text" . -}}
+  {{- $scr.Set "alt_text" . -}}
 {{- end -}}
 {{- with $site.Params.color.accent -}}
   {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
@@ -31,5 +31,5 @@
 {{- end -}}
 {{- with $site.Params.color.accent_text -}}
   {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "header_text" . -}}
+  {{- $scr.Set "accent_text" . -}}
 {{- end -}}

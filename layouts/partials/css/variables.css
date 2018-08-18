@@ -11,13 +11,13 @@
     --color-bg-alt: {{ .Scratch.Get "alt_bg" }};
     --color-bg-accent: {{ .Scratch.Get "accent" }};
     
-    --color-fg-main: {{ .Scratch.Get "body_text" }};
-    --color-fg-alt: {{ .Scratch.Get "alt_body_text" }};
-    --color-fg-accent: {{ .Scratch.Get "header_text" }};
+    --color-fg-main: {{ .Scratch.Get "main_text" }};
+    --color-fg-alt: {{ .Scratch.Get "alt_text" }};
+    --color-fg-accent: {{ .Scratch.Get "accent_text" }};
     
     {{ .Scratch.Set "label" "alt_bg" }}
     --color-bg-alt-transparent: {{ trim (partial "css/color/semi_transparent" .Scratch) " \n" }};
-    {{ .Scratch.Set "label" "alt_body_text" }}
+    {{ .Scratch.Set "label" "alt_text" }}
     --color-fg-alt-transparent: {{ trim (partial "css/color/semi_transparent" .Scratch) " \n" }};
     {{ .Scratch.Set "label" "accent" }}
     --color-bg-accent-transparent: {{ trim (partial "css/color/semi_transparent" .Scratch) " \n" }};
@@ -88,15 +88,15 @@
     
     {{- with ($.Scratch.Get "background_src") -}}
         {{- $res := resources.Get . -}}
-        --image-bg-lg: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Root" $) }}");
+        --image-bg-lg: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
     {{- with ($.Scratch.Get "background_src_medium") -}}
         {{- $res := resources.Get . -}}
-        --image-bg-md: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Root" $) }}");
+        --image-bg-md: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
     {{- with ($.Scratch.Get "background_src_small") -}}
         {{- $res := resources.Get . -}}
-        --image-bg-sm: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Root" $) }}");
+        --image-bg-sm: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
     
     --font-sans: "Clear Sans", sans-serif;
@@ -194,7 +194,7 @@
 
 blockquote {
     /* blockquote uses a "faded" version of the main body font color */
-    {{ .Scratch.Set "label" "body_text" }}
+    {{ .Scratch.Set "label" "main_text" }}
     {{- partial "css/color/get_rgb_numbers.css" .Scratch }}
     {{- partial "css/color/rgb_to_hsl" .Scratch }}
 

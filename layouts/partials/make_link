@@ -4,7 +4,7 @@
 {{- if eq $type "root-relative" -}}
     {{- relLangURL $path -}}
 {{- else if eq $type "relative" -}}
-    {{- $thisPage := $.Root.RelPermalink -}}
+    {{- $thisPage := $.Start | default $.Root.RelPermalink -}}
     {{- $thatPage := relLangURL $path -}}
     {{- if hasPrefix $thatPage "/" -}}
         {{- $this := split (strings.TrimPrefix "/" $thisPage) "/" -}}
