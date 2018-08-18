@@ -211,7 +211,7 @@ main header a, main header a:link, main header a:visited, main header a:hover, m
     color: var(--color-fg-alert-link);
 }
 
-.callout p { margin-bottom: 0; }
+.callout p:last-child { margin-bottom: 0; }
 
 .callout p:first-child { margin-top: 0; }
 
