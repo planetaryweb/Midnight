@@ -1,2 +1,0 @@
-{{- $url := printf .URL (cond ($.Site.Params.no_minimize | default false) "" ".min") -}}
-{{- partial "make_link" (dict "URL" $url "Root" $) -}}
