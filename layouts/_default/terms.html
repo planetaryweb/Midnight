@@ -11,7 +11,7 @@
         {{ range $key, $val := .Data.Terms.Alphabetical }}
             <div class="cell small-full medium-6 large-4">
                 <li class="taxonomy-item">
-                    {{- $link := printf "%s/%s" $data.Plural $val.Name -}}
+                    {{- $link := printf "/%s/%s" $data.Plural $val.Name -}}
                     <a href="{{ partial "make_link" (dict "URL" ($link | urlize) "Root" $) }}">{{ $val.Name }}</a> ({{ $val.Count }})
                 </li>
             </div>

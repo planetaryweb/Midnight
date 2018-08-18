@@ -1,39 +1,38 @@
 <article itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
-    {{- if .Params.thumbnail -}}
+    {{- if .Page.Params.thumbnail -}}
     <div>
         <figure>
             <a href="{{ .Permalink }}">
-                <img src="{{ partial "make_link" (dict "URL" .Params.thumbnail "Root" $) }}" alt="{{ .Title }}" />
+                <img src="{{ partial "make_link" (dict "URL" .Page.Params.thumbnail "Root" $.Root) }}" alt="{{ .Title }}" />
             </a>
         </figure>
     </div>
     {{- end -}}
     <div>
         <header class="post-list-title">
-            <a href="{{ .Permalink }}">
-                <h2 itemprop="headline">{{ .Title }}</h2>
+            <a href="{{ partial "make_link" (dict "URL" .Page.RelPermalink "Root" $.Root) }}">
+                <h2 itemprop="headline">{{ .Page.Title }}</h2>
             </a>
-            {{- if not .Date.IsZero -}}
+            {{- if not .Page.Date.IsZero -}}
                 <div class="metadata">
                     <span class="far fa-clock" aria-hidden></span>
                     <span class="sr-text">{{ i18n "publishedLabel" | title }}: </span>
-                    <time datetime="{{ .Date.Format "2006-01-02" }}" itemprop="datePublished">{{ .Date.Format "January 02, 2006" }}</time>
+                    <time datetime="{{ .Date.Format "2006-01-02" }}" itemprop="datePublished">{{ .Page.Date.Format "January 02, 2006" }}</time>
                 </div>
             {{- end -}}
         </header>
         <div class="post-list-summary" itemprop="description">
             <p>
-                {{- $page := . -}}
-                {{- with .Description -}}
+                {{- with .Page.Description -}}
                     {{ . | plainify | htmlUnescape | replaceRE "(?m)(\\s+)" " " }}
-                    <a href="{{ $page.Permalink }}">
-                        [{{ i18n "readMore" ($page.Title | title) | safeHTML }}...]
+                    <a href="{{ partial "make_link" (dict "URL" $.Page.RelPermalink "Root" $.Root) }}">
+                        [{{ i18n "readMore" ($.Page.Title | title) | safeHTML }}...]
                     </a>
                 {{- else -}}
-                    {{ .Summary | plainify | htmlUnescape | replaceRE "(?m)(\\s+)" " " }}
-                    {{ if .Truncated }}
-                        <a href="{{ $page.Permalink }}">
-                            [{{ i18n "readMore" ($page.Title | title) | safeHTML }}...]
+                    {{ .Page.Summary | plainify | htmlUnescape | replaceRE "(?m)(\\s+)" " " }}
+                    {{ if .Page.Truncated }}
+                        <a href="{{ partial "make_link" (dict "URL" $.Page.RelPermalink "Root" $.Root) }}">
+                            [{{ i18n "readMore" ($.Page.Title | title) | safeHTML }}...]
                         </a>
                     {{ end }}
                 {{- end -}}

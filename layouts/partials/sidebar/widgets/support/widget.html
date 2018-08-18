@@ -4,7 +4,10 @@
         <span class="widget-header">
             <span class="fas fa-credit-card fa-xs" aria-hidden></span>
             {{ with $.Site.Params.sidebar.support.support_page -}}
-            <a href="{{ ref $ . }}">
+            {{- if not (hasPrefix . "/") -}}
+                {{- errorf "Sidebar support widget's \"support_page\" must be set to a root-relative path (i.e. start with a \"/\")" -}}
+            {{- end -}}
+            <a href="{{ partial "make_link" (dict "URL" (relref $ .) "Root" $) }}">
             {{- end -}}
             Support {{ i18n "ownerPronoun" (len $.Site.Data.members) | title }} On
             {{- if $.Site.Params.sidebar.support.support_page }}</a>{{ end }}

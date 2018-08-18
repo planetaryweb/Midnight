@@ -8,7 +8,7 @@
 	{{ partial "content.html" $ }}
     {{- if (or (not (isset .Params "hide_list")) (not .Params.hide_list)) -}}
   		{{- range .Paginator.Pages -}}
-  		  {{ partial "list_item.html" . }}
+  		  {{ partial "list_item.html" (dict "Page" . "Root" $) }}
   		{{- end -}}
       {{ partial "pagination.html" (dict "Paginator" .Paginator "Root" $) }}
     {{- end -}}

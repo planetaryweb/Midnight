@@ -42,26 +42,26 @@
         {{- end }}
         <div class="cell small-full small-text-center grid-x">
             {{ $iubenda := and $.Site.Params.iubenda.id (or (not $.Site.Params.iubenda.pro.enable_pro) (not $.Site.Params.iubenda.pro.disable_footer_link)) }}
-            {{ if or ($.Site.GetPage "page" "privacy-policy.md") $iubenda }}
+            {{ if or ($.Site.GetPage "page" "/privacy-policy.md") $iubenda }}
             <div class="cell medium-auto">
                 {{ if $iubenda }}
                 {{ partial "iubenda/button.html" . }}
                 {{ else }}
-                {{ with $.Site.GetPage "page" "privacy-policy.md" }}
+                {{ with $.Site.GetPage "page" "/privacy-policy.md" }}
                 <small>
-                    <a href="{{- ref . "privacy-policy.md" -}}">{{ i18n "privacyPolicyLabel" | title }}</a>
+                    <a href="{{- partial "make_link" (dict "URL" (relref $ "/privacy-policy.md") "Root" $) -}}">{{ i18n "privacyPolicyLabel" | title }}</a>
                 </small>
                 {{ end }}
                 {{ end }}
             </div>
             {{ end }}
-            {{ if ($.Site.GetPage "page" "terms-of-use.md") }}
+            {{ if ($.Site.GetPage "page" "/terms-of-use.md") }}
             <div class="cell medium-auto{{ if $iubenda }} iubenda-compat{{ end }}">
-                {{ with $.Site.GetPage "page" "terms-of-use.md" -}}
+                {{ with $.Site.GetPage "page" "/terms-of-use.md" -}}
                 {{ if not $iubenda }}
                 <small>
                     {{ end }}
-                    <a href="{{- ref . "terms-of-use.md" -}}">{{ i18n "termsOfUseLabel" | title }}</a>
+                    <a href="{{- partial "make_link" (dict "URL" (relref . "/terms-of-use.md") "Root" $) -}}">{{ i18n "termsOfUseLabel" | title }}</a>
                     {{ if not $iubenda }}
                 </small>
                 {{ end }}
