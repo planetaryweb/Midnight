@@ -21,7 +21,7 @@
           <meta name="keywords" itemprop="keywords" content="{{ delimit .Params.tags "," }}" id="keywords">
         {{- end -}}
 
-        <link rel="canonical" href="{{ partial "make_link" .URL }}">
+        <link rel="canonical" href="{{ .Permalink }}">
         {{ partial "head.html" . }}
     </head>
     <body itemscope itemtype="http://schema.org/WebPage">
@@ -32,14 +32,14 @@
             <div class="off-canvas position-left" id="main-nav-off-canvas" data-off-canvas>
                 <nav>
                     <ul class="vertical menu drilldown" data-drilldown>
-                        {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "site" .Site) . -}}
+                        {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "root" $) . -}}
                     </ul>
                 </nav>
             </div>
             <div id="site-container" class="grid-container full off-canvas-content">
                 <div class="grid-x full grid-container data-off-canvas-content">
                     <div id="site-header" class="cell">
-                        <a href="{{ .Site.BaseURL }}">
+                        <a href="{{ partial "make_link" (dict "URL" "/" "Root" $) }}">
                             <header class="small-text-{{ if $.Site.Params.thumbnail }}left{{ else }}center{{ end }} medium-text-left grid-x">
                                 {{ with $.Site.Params.thumbnail -}}
                                     {{- $thmb := resources.Get . -}}
@@ -52,7 +52,7 @@
                                         {{- /* 93px is the max-width/height of the thumbnail in rems times 1rem */ -}}
                                         {{- $.Scratch.Set "width" 93 -}}
                                     {{- end -}}
-                                    <img id="site-thumbnail" class="cell shrink" src="{{ partial "make_link" $thmb.RelPermalink }}" data-width="{{ $.Scratch.Get "width" }}">
+                                    <img id="site-thumbnail" class="cell shrink" src="{{ partial "make_link" (dict "URL" $thmb.RelPermalink "Root" $) }}" data-width="{{ $.Scratch.Get "width" }}">
                                 {{ end -}}
                                 <div id="site-title-container" class="cell shrink grid-y">
                                     <div id="site-title" class="cell shrink" itemprop="name">{{ .Site.Title }}</div>
@@ -63,7 +63,7 @@
                         {{ if (.Site.Menus.main) -}}
                         <nav id="main-nav" class="small-hide">
                           <ul class="dropdown menu" data-dropdown-menu>
-                          {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "site" .Site) . -}}
+                          {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "root" $) . -}}
                           </ul>
                         </nav>
                         {{ end -}}

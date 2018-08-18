@@ -1,6 +1,6 @@
 {{ $action := .Get "action" | default "thank-you" -}}
 {{- $antispam := .Get "antispam" | default "recaptcha" -}}
-{{- if ne $action "thank-you" -}}{{- $action := partial "make_link" $action -}}{{- end -}}
+{{- if ne $action "thank-you" -}}{{- $action := partial "make_link" (dict "URL" $action "Root" $) -}}{{- end -}}
 <form class="form-container" {{ if eq $antispam "honeypot" }}netlify-honeypot="antispambot"{{ end }} name="{{ .Get "name" }}" action="{{ $action }}" netlify>
     {{ if eq $antispam "honeypot" }}<input type="text" name="antispambot" class="hide" />{{ end }}
     {{ .Inner }}

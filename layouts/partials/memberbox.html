@@ -10,7 +10,7 @@
     </div>
     <div class="cell auto member-bio">
       <div>
-        <span class="widget-title">{{ i18n "aboutLabel" | title }} {{ with .URL }}<a href="{{ partial "make_link" . }}" {{ if $.IsAuthor }}rel="author"{{ end }}>{{ end }}<span itemprop="name">{{ .Name }}</span>{{ if .URL }}</a>{{ end }}</span>
+        <span class="widget-title">{{ i18n "aboutLabel" | title }} {{ with .URL }}<a href="{{ partial "make_link" (dict "URL" . "Root" $) }}" {{ if $.IsAuthor }}rel="author"{{ end }}>{{ end }}<span itemprop="name">{{ .Name }}</span>{{ if .URL }}</a>{{ end }}</span>
       </div>
       <p itemprop="description">
         {{- .Bio | markdownify -}}

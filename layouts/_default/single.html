@@ -23,7 +23,9 @@
                     <span class="cell shrink">
                         <span class="fas fa-folder fa-sm fa-fw" aria-hidden></span>
                         <span class="sr-text">{{ i18n "categoryLabel" (len .Params.categories) | title }}: </span>
-                        {{ range $index, $category := .Params.categories }}{{ if gt $index 0 }}, {{ end }}<a href="{{ $category | urlize | lower | printf "categories/%s" | partial "make_link" }}" rel="category">{{ . | humanize | title }}</a>{{ end }}
+                        {{ range $index, $category := .Params.categories }}{{ if gt $index 0 }}, {{ end -}}
+                        {{ $url :=$category | urlize | lower | printf "categories/%s" }}
+                        <a href="{{ partial "make_link" (dict "URL" $url "Root" $) }}" rel="category">{{ . | humanize | title }}</a>{{ end }}
                     </span>
                 {{- end -}}
                 {{- if not .Params.hide_readingtime -}}
@@ -39,7 +41,7 @@
                         {{- range . }}
                             {{ $link := printf "/tags/%s" (urlize .) }}
                             {{ $link := lower $link  }}
-                            <a itemprop="relatedUrl" itemscope itemtype="http://schema.org/URL" href="{{ partial "make_link" $link }}" rel="tag" itemprop="url">{{ . | humanize | lower }}</a>
+                            <a itemprop="relatedUrl" itemscope itemtype="http://schema.org/URL" href="{{ partial "make_link" (dict "URL" $link "Root" $) }}" rel="tag" itemprop="url">{{ . | humanize | lower }}</a>
                         {{ end -}}
                     </span>
                 {{- end -}}
@@ -54,7 +56,7 @@
         <div id="post-content">
             {{- if .Params.thumbnail -}}
                 <figure class="thumbnail">
-                    <img src="{{ partial "make_link" .Params.thumbnail }}" alt="{{ .Title }}">
+                    <img src="{{ partial "make_link" (dict "URL" .Params.thumbnail "Root" $) }}" alt="{{ .Title }}">
                 </figure>
             {{- end -}}
             {{- partial "toc.html" $ -}}

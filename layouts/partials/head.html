@@ -3,7 +3,7 @@
 <!-- <link rel="prefetch" loads content the user may request *after* the page loads -->
 
 {{- with $.Site.Params.thumbnail -}}
-<meta name="thumbnail" content="{{ partial "make_link" . }}" />
+<meta name="thumbnail" content="{{ partial "make_link" (dict "URL" . "Root" $) }}" />
 {{- end -}}
 
 {{ partial "fontawesome/head.html" . }}
@@ -15,9 +15,9 @@
 {{- $.Scratch.Set "assets" slice -}}
 
 {{- .Scratch.Set "sitevar" $.Site -}}
-{{- partial "css/color/parse_color.css" .Scratch -}}
+{{- partial "css/color/parse_color" .Scratch -}}
 {{- .Scratch.Set "label" "alt_bg" -}}
-{{- partial "css/color/detect_light_or_dark.css" .Scratch -}}
+{{- partial "css/color/detect_light_or_dark" .Scratch -}}
 
 {{- if ($.Scratch.Get "alt_bg_is_dark") -}}
     {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
@@ -33,7 +33,7 @@
     {{- end -}}
 {{- end -}}
 
-{{ partial "styles" (dict "Src" (partial "make_link" "styles.css") "Root" $) }}
+{{ partial "styles" (dict "Src" "/styles.css" "Root" $) }}
 
 {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
     {{ $files := slice "reset" "fonts" "classes" "pagination" "page" "widgets" }}
@@ -91,7 +91,7 @@
     {{- $.Scratch.Set "url" $res.RelPermalink -}}
     {{- $.Scratch.Set "integrity" $res.Data.Integrity -}}
 {{- end -}}
-<link rel="preload" media="print" type="text/css" href="{{ $.Scratch.Get "url" }}" integrity="{{ $.Scratch.Get "integrity" }}" as="style">
+<link rel="preload" media="print" type="text/css" href="{{ partial "make_link" (dict "URL" ($.Scratch.Get "url") "Root" $) }}" integrity="{{ $.Scratch.Get "integrity" }}" as="style">
 
 {{ partial "async/cssrelpreload.js.html" }}
 

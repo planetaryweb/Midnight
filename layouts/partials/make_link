@@ -1,8 +1,46 @@
 {{- /* Do not modify links with leading "//" as those represent a URL with same protocol as this connection */ -}}
-{{- if and (gt (len .) 1) (and (hasPrefix . "/") (not (hasPrefix . "//"))) -}}
-  {{- (slicestr . 1) | relLangURL -}}
+{{- $path := strings.TrimPrefix $.Root.Site.BaseURL $.URL -}}
+{{- $type := $.Root.Site.Params.ref_type -}}
+{{- if eq $type "root-relative" -}}
+    {{- relLangURL $path -}}
+{{- else if eq $type "relative" -}}
+    {{- $thisPage := $.Root.RelPermalink -}}
+    {{- $thatPage := relLangURL $path -}}
+    {{- if hasPrefix $thatPage "/" -}}
+        {{- $this := split (strings.TrimPrefix "/" $thisPage) "/" -}}
+        {{- $scr := $.Root.Scratch -}}
+        {{- $scr.Set "this" $thisPage -}}
+        {{- $scr.Set "that" $thatPage -}}
+        {{- $scr.Set "keep going" true -}}
+        {{- range $this -}}
+            {{- if ($scr.Get "keep going") -}}
+                {{- $scr.Get "this" | strings.TrimPrefix "/" | $scr.Set "this" -}}
+                {{- $scr.Get "that" | strings.TrimPrefix "/" | $scr.Set "that" -}}
+                {{- if not (hasPrefix ($scr.Get "this") .) -}}
+                    {{- $scr.Set "keep going" false -}}
+                {{- else if not (hasPrefix ($scr.Get "that") .) -}}
+                    {{- $scr.Set "keep going" false -}}
+                {{- end -}}
+                {{- if ($scr.Get "keep going") -}}
+                    {{- $scr.Get "this" | strings.TrimPrefix . | $scr.Set "this" -}}
+                    {{- $scr.Get "that" | strings.TrimPrefix . | $scr.Set "that" -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- /*errorf "This: %s That: %s" ($scr.Get "this") ($scr.Get "that")*/ -}}
+        {{- $scr.Set "path" "" -}}
+        {{- range (split ($scr.Get "this") "/") -}}
+            {{- $scr.Add "path" "../" -}}
+        {{- end -}}
+        {{- $scr.Get "that" | $scr.Add "path" -}}
+        {{- $scr.Get "path" | strings.TrimPrefix "../" | $scr.Set "path" -}}
+        {{- /*errorf "Generated: %s" ($scr.Get "path")*/ -}}
+        {{- $scr.Get "path" -}}
+    {{- else -}}
+        {{- $thatPage -}}
+    {{- end -}}
 {{- else -}}
-  {{- . | relLangURL -}}
+    {{- absLangURL $path -}}
 {{- end -}}
 {{- /* Add # anchor back onto the URL */ -}}
-{{- index (findRE "\\#.*" . 1) 0 -}}
+{{- index (findRE "\\#.*" .URL 1) 0 -}}

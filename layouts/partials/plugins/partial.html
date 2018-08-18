@@ -5,7 +5,7 @@
     {{- $p := $.Root.Scratch.Get "plugin" -}}
     {{- with (index $p $.Prop) -}}
         {{- with .path -}}
-            {{- if .cache -}}
+            {{- if and .cache (ne $.Root.Site.Params.ref_type "relative") -}}
                 {{- partial .path $.Root -}}
             {{- else -}}
                 {{- partial .path $.Root -}}

@@ -3,7 +3,7 @@
     <div>
         <figure>
             <a href="{{ .Permalink }}">
-                <img src="{{ partial "make_link" .Params.thumbnail }}" alt="{{ .Title }}" />
+                <img src="{{ partial "make_link" (dict "URL" .Params.thumbnail "Root" $) }}" alt="{{ .Title }}" />
             </a>
         </figure>
     </div>

@@ -10,7 +10,7 @@
   		{{- range .Paginator.Pages -}}
   		  {{ partial "list_item.html" . }}
   		{{- end -}}
-      {{ partial "pagination.html" .Paginator }}
+      {{ partial "pagination.html" (dict "Paginator" .Paginator "Root" $) }}
     {{- end -}}
   </main>
 {{- end -}}

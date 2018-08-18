@@ -6,7 +6,7 @@
         {{- partial "shortcodes/definition.html" $.Root -}}
         {{- $shortcode := $.Root.Scratch.Get "shortcode" -}}
         {{- with (index $shortcode $.Prop) -}}
-            {{- if .cache -}}
+            {{- if and .cache (ne $.Root.Site.Params.ref_type "relative") -}}
                 {{- partialCached .path $.Root -}}
             {{- else -}}
                 {{- partial .path $.Root -}}

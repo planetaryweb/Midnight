@@ -16,12 +16,12 @@
 	{{ end }}
 	{{ $posts := string ($.Scratch.Get "posts_name") }}
 	<header>
-		<span class="widget-header"><span class="fas fa-pencil-alt fa-xs" aria-hidden></span> <a href="{{ printf "%s/" $posts | partial "make_link" }}">{{ i18n "recentPostsLabel" | title }}</a></span>
+		<span class="widget-header"><span class="fas fa-pencil-alt fa-xs" aria-hidden></span> <a href="{{ partial "make_link" (dict "URL" (printf "%s/" $posts) "Root" $) }}">{{ i18n "recentPostsLabel" | title }}</a></span>
 	</header>
 	{{ $url := .URL }}
 	{{- range $format := (.Site.GetPage "/").OutputFormats -}}
 		{{ if eq $format.Name "RSS" }}
-			<a class="widget-header-small button" href="{{ partial "make_link" "index.xml" }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSiteSubscribe" | title }}</a>
+			<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" "/index.xml" "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSiteSubscribe" | title }}</a>
 		{{ end }}
 	{{- end -}}
 
@@ -29,11 +29,11 @@
 		{{- $this := . -}}
 		{{- range $format := .OutputFormats -}}
 			{{- if eq $format.Name "RSS" -}}
-				<a class="widget-header-small button" href="{{ printf "%s/index.xml" $this.URL | partial "make_link" }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $this.LinkTitle | title }}</a>
+				<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" (printf "%s/index.xml" $this.URL) "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $this.LinkTitle | title }}</a>
 			{{- end -}}
 		{{- end -}}
 	{{- else if .IsPage -}}
-	{{- $sectionstr := trim (replaceRE "[^/]+$" "" (trim (replace (.URL | partial "make_link" ) .Site.BaseURL "") "/")) "/" -}}
+	{{- $sectionstr := trim (replaceRE "[^/]+$" "" (trim (replace (absLangURL .URL) .Site.BaseURL "") "/")) "/" -}}
 
 	{{- $.Scratch.Set "section" "" -}}
 	{{- $.Scratch.Set "sectionok" true -}}
@@ -55,14 +55,14 @@
 	{{- if ne (trim $section.URL "/") "" -}}
 		{{- range $format := $section.OutputFormats -}}
 			{{- if eq $format.Name "RSS" -}}
-			<a class="widget-header-small button" href="{{ printf "%s/index.xml" $section.URL | partial "make_link" }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $section.LinkTitle | title }}</a>
+			<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" (printf "%s/index.xml" $section.URL) "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $section.LinkTitle | title }}</a>
 			{{- end -}}
 		{{- end -}}
 	{{- end -}}
 	{{- end -}}
 	<ul>
 		{{- range first 10 (where .Site.Pages "Section" $posts) -}}
-		{{ if .IsPage }}<li><a href="{{ .Permalink }}">{{ .Title }}</a></li>{{ end }}
+		{{ if .IsPage }}<li><a href="{{ partial "make_link" (dict "URL" .RelPermalink "Root" $) }}">{{ .Title }}</a></li>{{ end }}
 		{{- end -}}
 	</ul>
 </div>

@@ -115,7 +115,7 @@
             {{ end }}
         {{ end }}
 
-        {{ partial "pagination.html" $paginator }}
+        {{ partial "pagination.html" (dict "Paginator" $paginator "Root" $) }}
     {{ end }}
 </main>
 {{ end }}

@@ -5,7 +5,7 @@
     {{- partial "sidebar/widget_definition.html" $.Root -}}
     {{- $widget := $.Root.Scratch.Get "widget" -}}
     {{ with (index $widget $.Prop) }}
-        {{- if .cache -}}
+        {{- if and .cache (ne $.Root.Site.Params.ref_type "relative") -}}
             {{- partialCached .path $.Root -}}
         {{- else -}}
             {{- partial .path $.Root -}}

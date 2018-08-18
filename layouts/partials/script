@@ -5,7 +5,7 @@
 {{- $attrs := .Attrs | default "" -}}
 
 {{- with (index . "Src") -}}
-    {{- $.Root.Scratch.Set "url" (partial "make_link" .) -}}
+    {{- $.Root.Scratch.Set "url" . -}}
     {{- $.Root.Scratch.Set "integrity" ($.Integrity | default "") -}}
 {{- else -}}
     {{- with (index . "Asset") -}}
@@ -24,7 +24,7 @@
     {{- end -}}
 {{- end -}}
 
-{{- $url := $.Root.Scratch.Get "url" -}}
+{{- $url := partial "make_link" (dict "URL" ($.Root.Scratch.Get "url") "Root" $.Root) -}}
 {{- $integrity := $.Root.Scratch.Get "integrity" -}}
 
 {{- if $tracks -}}
