@@ -1,0 +1,38 @@
+{{- if .IsNamedParams -}}
+    {{- .Scratch.Set "type" (.Get "type") -}}
+    {{- .Scratch.Set "path" (.Get "path") -}}
+{{- else -}}
+    {{- .Scratch.Set "path" (.Get 0) -}}
+    {{- .Scratch.Set "type" "content" -}}
+{{- end -}}
+
+{{- $type := .Scratch.Get "type" -}}
+{{- $path := .Scratch.Get "path" -}}
+
+{{- if not $path -}}
+{{- errorf "(%s) missing path parameter in link shortcode" $.Page.File.Path -}}
+{{- end -}}
+
+{{- .Scratch.Set "valid" true -}}
+{{- if eq $type "content" -}}
+    {{- relref $.Page $path | .Scratch.Set "url" -}}
+{{- else if eq $type "resource" -}}
+    {{- $res := .Page.GetMatch $path -}}
+    {{- .Scratch.Set "url" $res.RelPermalink -}} 
+{{- else if eq $type "asset" -}}
+    {{- $res := resources.Get $path -}}
+    {{- .Scratch.Set "url" $res.RelPermalink -}}
+{{- else if eq $type "static" -}}
+    {{- .Scratch.Set "url" $path -}}
+{{- else if not $type -}}
+    {{- errorf "(%s) missing type for link shortcode with path \"%s\"" $.Page.File.Path $path -}}
+{{- else -}}
+    {{- errorf "(%s) Invalid resource type \"%s\". Valid types are \"content\", \"resource\", \"asset\", and \"static\"" -}}
+    {{- .Scratch.Set "valid" false -}}
+{{- end -}}
+
+{{- $url := $.Scratch.Get "url" -}}
+
+{{- if $.Scratch.Get "valid" -}}
+{{- partial "make_link" (dict "URL" $url "Root" $.Page) -}}
+{{- end -}}
