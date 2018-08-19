@@ -41,6 +41,6 @@
     {{- end -}}
 {{- else -}}
     {{- absLangURL $path -}}
+    {{- /* Add #anchor back onto path */ -}}
+    {{- index (findRE "\\#.*" .URL 1) 0 -}}
 {{- end -}}
-{{- /* Add # anchor back onto the URL */ -}}
-{{- index (findRE "\\#.*" .URL 1) 0 -}}
