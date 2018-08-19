@@ -1,9 +1,9 @@
-name = "BluestNight"
+name = "Midnight"
 license = "MIT"
-licenselink = "https://dev.shadow53.com/source/BluestNight/browse/master/LICENSE.md"
-description = "A featureful, configurable, yet sleek dark theme for Hugo."
-homepage = "https://bluestnight.com/"
-min_version = 0.40.3
+licenselink = "https://git.shadow53.com/BluestNight/Midnight/src/branch/master/LICENSE.md"
+description = "A modern Hugo theme with lots of configuration options to make it truly yours. Supports custom plugins to integrate your own features into the theme."
+homepage = "https://bluestnight.com/products/midnight"
+min_version = 0.46
 tags = [
     "Blog",
     "Clean",
@@ -13,6 +13,7 @@ tags = [
     "Extensible",
     "Mobile Friendly",
     "Netlify",
+    "Plugins",
     "Widgets",
     "Writing"
 ]
@@ -20,8 +21,9 @@ features = [
     "Contact Form",
     "Error Validation",
     "Extensible",
-    "Flexbox",
     "Font Awesome",
+    "HTTP/2",
+    "Plugins",
     "Print CSS",
     "Responsive",
     "Search",
