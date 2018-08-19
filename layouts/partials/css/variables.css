@@ -27,15 +27,15 @@
     --color-bg-code: {{ trim (partial "css/color/semi_transparent" .Scratch) " \n" }};
 
     {{ .Scratch.Set "label" "main_bg" }}
-    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/get_rgb_numbers" .Scratch }}
     {{ partial "css/color/rgb_to_hsl" .Scratch }}
     {{ $main := dict "H" ($.Scratch.Get "hue") "S" ($.Scratch.Get "saturation") "L" ($.Scratch.Get "lightness") }}
     {{ .Scratch.Set "label" "accent" }}
-    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/get_rgb_numbers" .Scratch }}
     {{ partial "css/color/rgb_to_hsl" .Scratch }}
     {{ $accent := dict "H" ($.Scratch.Get "hue") "S" ($.Scratch.Get "saturation") "L" ($.Scratch.Get "lightness") }}
     {{ .Scratch.Set "label" "alt_bg" }}
-    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/get_rgb_numbers" .Scratch }}
     {{ partial "css/color/rgb_to_hsl" .Scratch }}
     {{ $alt := dict "H" ($.Scratch.Get "hue") "S" ($.Scratch.Get "saturation") "L" ($.Scratch.Get "lightness") }}
     {{ $.Scratch.Set "lightness" (div (add $alt.L $main.L) 2.0) }}
@@ -46,7 +46,7 @@
     {{ $border := dict "R" ($.Scratch.Get "red") "G" ($.Scratch.Get "green") "B" ($.Scratch.Get "blue") }}
     --color-border-nav: rgb({{ $border.R }}, {{ $border.G }}, {{ $border.B }});
     {{ .Scratch.Set "label" "main_bg" }}
-    {{ partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{ partial "css/color/get_rgb_numbers" .Scratch }}
     {{ partial "css/color/rgb_to_hsl" .Scratch }}
     {{ $.Scratch.Set "lightness" (div (add $accent.L $main.L) 2.0) }}
     {{ partial "css/color/hsl_to_rgb" .Scratch }}
@@ -54,7 +54,7 @@
     --color-border-header: rgb({{ $border.R }}, {{ $border.G }}, {{ $border.B }});
 
     {{- .Scratch.Set "label" "accent" }}
-    {{- partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{- partial "css/color/get_rgb_numbers" .Scratch }}
     {{- partial "css/color/rgb_to_hsl" .Scratch }}
     {{- if .Scratch.Get "main_bg_is_dark" }}
         {{- .Scratch.Set "lightness" (add (.Scratch.Get "lightness") 15.0) }}
@@ -195,7 +195,7 @@
 blockquote {
     /* blockquote uses a "faded" version of the main body font color */
     {{ .Scratch.Set "label" "main_text" }}
-    {{- partial "css/color/get_rgb_numbers.css" .Scratch }}
+    {{- partial "css/color/get_rgb_numbers" .Scratch }}
     {{- partial "css/color/rgb_to_hsl" .Scratch }}
 
     {{- if .Scratch.Get "main_bg_is_dark" }}
