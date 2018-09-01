@@ -196,6 +196,10 @@ main header a, main header a:link, main header a:visited, main header a:hover, m
     color: var(--color-fg-main);
 }
 
+article {
+    margin-bottom: 1rem;
+}
+
 .callout {
     border: 1px solid var(--color-bg-accent);
     display: block;
