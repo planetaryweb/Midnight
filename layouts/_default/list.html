@@ -26,11 +26,7 @@
 
         {{/* Show normal pages */}}
         {{ $index_only := default false .Params.index_only }}
-        {{ if eq .Type "events" }}
-            {{ $.Scratch.Set "pages" .Pages.ByDate.Reverse }}
-        {{ else }}
-            {{ $.Scratch.Set "pages" .Pages }}
-        {{ end }}
+        {{ $.Scratch.Set "pages" .Pages }}
 
         {{ if .IsHome }}
             {{ if $.Site.Params.home_section }}    
