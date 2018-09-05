@@ -1,57 +1,57 @@
 {{- if or (and (.Site.Params.post_navigation) (not (eq .Params.post_navigation false))) (.Params.post_navigation) -}}
-    {{- $.Scratch.Set "prev_link" "" -}}
-    {{- $.Scratch.Set "prev_title" "" -}}
-    {{- $.Scratch.Set "next_link" "" -}}
-    {{- $.Scratch.Set "next_title" "" -}}
+    {{- $prevlink := "" -}}
+    {{- $prevtitle := "" -}}
+    {{- $nextlink := "" -}}
+    {{- $nexttitle := "" -}}
 
     {{- with .Params.custom_prev -}}
         {{- if not (eq . "none") -}}
             {{- with ($.Site.GetPage .) -}}
-                {{- $.Scratch.Set "prev_link" .Permalink -}}
-                {{- $.Scratch.Set "prev_title" .LinkTitle -}}
+                {{- $prevlink = .Permalink -}}
+                {{- $prevtitle = .LinkTitle -}}
             {{- else -}}
                 {{- errorf "Could not find the file at \"%s\" linked from \"%s\"" . $.File.Path -}}
             {{- end -}}
         {{- end -}}
     {{- else -}}
         {{- with .PrevInSection -}}
-            {{- $.Scratch.Set "prev_link" .Permalink -}}
-            {{- $.Scratch.Set "prev_title" .Title -}}
+            {{- $prevlink = .Permalink -}}
+            {{- $prevtitle = .Title -}}
         {{- end -}}
     {{- end -}}
 
     {{- with .Params.custom_next -}}
         {{- if not (eq . "none") -}}
             {{- with ($.Site.GetPage .) -}}
-                {{- $.Scratch.Set "next_link" .Permalink -}}
-                {{- $.Scratch.Set "next_title" .LinkTitle -}}
+                {{- $nextlink = .Permalink -}}
+                {{- $nexttitle = .LinkTitle -}}
             {{- else -}}
                 {{- errorf "Could not find the file at \"%s\" linked from \"%s\"" . $.File.Path -}}
             {{- end -}}
         {{- end -}}
     {{- else -}}
         {{- with .NextInSection -}}
-            {{- $.Scratch.Set "next_link" .Permalink -}}
-            {{- $.Scratch.Set "next_title" .Title -}}
+            {{- $nextlink = .Permalink -}}
+            {{- $nexttitle = .Title -}}
         {{- end -}}
     {{- end -}}
 
-    {{- if or ($.Scratch.Get "next_link") ($.Scratch.Get "prev_link") -}}
+    {{- if or $nextlink $prevlink -}}
         <nav id="post-nav" aria-label="Pagination">
             <ul class="pagination grid-x grid-x-padding full">
-                {{ if ($.Scratch.Get "prev_link") }}
+                {{ if $prevlink }}
                 <li class="pagination-previous cell small-order-2 medium-5 medium-order-1">
-                    <a class="button" href="{{ $.Scratch.Get "prev_link" }}" rel="prev">
+                    <a class="button" href="{{ $prevlink }}" rel="prev">
                         <span class="sr-text">{{ i18n "previousPage" | title }}:</span>
-                        {{ $.Scratch.Get "prev_title" -}}
+                        {{ $prevtitle -}}
                     </a>
                 </li>
                 {{ end }}
-                {{ if ($.Scratch.Get "next_link") }}
-                <li class="pagination-next cell small-order-1 medium-5 medium-order-2 medium-offset-{{ if or ($.Scratch.Get "prev_link") .PrevInSection }}2{{ else }}7{{ end }}">
-                    <a class="button" href="{{ $.Scratch.Get "next_link" }}" rel="next">
+                {{ if $nextlink }}
+                <li class="pagination-next cell small-order-1 medium-5 medium-order-2 medium-offset-{{ if or $prevlink .PrevInSection }}2{{ else }}7{{ end }}">
+                    <a class="button" href="{{ $nextlink }}" rel="next">
                         <span class="sr-text">{{ i18n "nextPage" | title }}:</span>
-                        {{- $.Scratch.Get "next_title" }}
+                        {{- $nexttitle }}
                     </a>
                 </li>
                 {{ end }}

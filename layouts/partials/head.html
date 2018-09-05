@@ -12,7 +12,7 @@
 
 {{ partial "styles" (dict "Asset" "css/foundation.css" "Root" $) }}
 
-{{- $.Scratch.Set "assets" slice -}}
+{{- $assets := slice -}}
 
 {{- .Scratch.Set "sitevar" $.Site -}}
 {{- partial "css/color/parse_color" .Scratch -}}
@@ -29,7 +29,7 @@
     {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
         {{- partial "styles" (dict "Asset" "css/light.css" "Root" $) -}}
     {{- else -}}
-        {{- .Scratch.Add "code_css" "css/light.css" -}}
+        {{- .Scratch.Set "code_css" "css/light.css" -}}
     {{- end -}}
 {{- end -}}
 
@@ -82,16 +82,18 @@
     {{ partial "styles" (dict "Asset" "css/iubenda.css" "Root" $) }}
 {{ end }}
 
+{{- $url := "" -}}
+{{- $integrity := "" -}}
 {{- if $.Site.Params.no_minify -}}
     {{- $res := resources.Get "css/print.css" | fingerprint -}}
-    {{- $.Scratch.Set "url" $res.RelPermalink -}}
-    {{- $.Scratch.Set "integrity" $res.Data.Integrity -}}
+    {{- $url = $res.RelPermalink -}}
+    {{- $integrity = $res.Data.Integrity -}}
 {{- else -}}
     {{- $res := resources.Get "css/print.css" | minify | fingerprint -}}
-    {{- $.Scratch.Set "url" $res.RelPermalink -}}
-    {{- $.Scratch.Set "integrity" $res.Data.Integrity -}}
+    {{- $url = $res.RelPermalink -}}
+    {{- $integrity = $res.Data.Integrity -}}
 {{- end -}}
-<link rel="preload" media="print" type="text/css" href="{{ partial "make_link" (dict "URL" ($.Scratch.Get "url") "Root" $) }}" integrity="{{ $.Scratch.Get "integrity" }}" as="style">
+<link rel="preload" media="print" type="text/css" href="{{ partial "make_link" (dict "URL" $url "Root" $) }}" integrity="{{ $integrity }}" as="style">
 
 {{ partial "async/cssrelpreload.js.html" }}
 

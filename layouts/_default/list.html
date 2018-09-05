@@ -26,26 +26,26 @@
 
         {{/* Show normal pages */}}
         {{ $index_only := default false .Params.index_only }}
-        {{ $.Scratch.Set "pages" .Pages }}
+        {{ $pages := .Pages }}
 
         {{ if .IsHome }}
             {{ if $.Site.Params.home_section }}    
-                {{ strings.TrimPrefix "/" $.Site.Params.home_section | where $.Pages "Section" | $.Scratch.Set "pages" }}
-                {{ if eq (len ($.Scratch.Get "pages")) 0 }}
+                {{ $pages = strings.TrimPrefix "/" $.Site.Params.home_section | where $.Pages "Section" }}
+                {{ if eq (len $pages) 0 }}
                     {{ errorf "Section \"%s\" is empty or does not exist" .Site.Params.home_section }}
                 {{ end }}
             {{ else if ($.Site.GetPage "/news") }}
-                {{ $.Scratch.Set "pages" (where .Pages "Section" "news") }}
+                {{ $pages = where .Pages "Section" "news" }}
             {{ else if ($.Site.GetPage "/posts") }}
-                {{ $.Scratch.Set "pages" (where .Pages "Section" "posts") }}
+                {{ $pages = where .Pages "Section" "posts" }}
             {{ else if ($.Site.GetPage "/post") }}
-                {{ $.Scratch.Set "pages" (where .Pages "Section" "post") }}
+                {{ $pages = where .Pages "Section" "post" }}
             {{ end }}
         {{ end }}
 
         {{ if or .Params.sort_field .Params.sort_order }}
             {{ if in .Params.sort_field "Params." }}
-                {{ $.Scratch.Set "pages" (($.Scratch.Get "pages").ByParam (replace .Params.sort_field "Params." "")) }}
+                {{ $pages = $pages.ByParam (replace .Params.sort_field "Params." "") }}
             {{ else }}
                 {{/* This long if-chain is necessary because Paginate wants type Pages, not []*Page */}}
                 {{ $order := lower (default "" .Params.sort_order) }}
@@ -53,58 +53,58 @@
                 {{ if ne $field "" }}
                     {{ if eq $field "weight" }}
                         {{ if eq $order "desc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByWeight.Reverse }}
+                            {{ $pages = $pages.ByWeight.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByWeight }}
+                            {{ $pages = $pages.ByWeight }}
                         {{ end }}
                     {{ else if eq $field "date" }}
                         {{ if eq $order "asc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByDate.Reverse }}
+                            {{ $pages = $pages.ByDate.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByDate }}
+                            {{ $pages = $pages.ByDate }}
                         {{ end }}
                     {{ else if eq $field "publishdate" }}
                         {{ if eq $order "asc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByPublishDate.Reverse }}
+                            {{ $pages = $pages.ByPublishDate.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByPublishDate }}
+                            {{ $pages = $pages.ByPublishDate }}
                         {{ end }}
                     {{ else if eq $field "expirydate" }}
                         {{ if eq $order "asc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByExpiryDate.Reverse }}
+                            {{ $pages = $pages.ByExpiryDate.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByExpiryDate }}
+                            {{ $pages = $pages.ByExpiryDate }}
                         {{ end }}
                     {{ else if eq $field "lastmod" }}
                         {{ if eq $order "asc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByLastmod.Reverse }}
+                            {{ $pages = $pages.ByLastmod.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByLastmod }}
+                            {{ $pages = $pages.ByLastmod }}
                         {{ end }}
                     {{ else if eq $field "length" }}
                         {{ if eq $order "desc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByLength.Reverse }}
+                            {{ $pages = $pages.ByLength.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByLength }}
+                            {{ $pages = $pages.ByLength }}
                         {{ end }}
                     {{ else if eq $field "title" }}
                         {{ if eq $order "desc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByTitle.Reverse }}
+                            {{ $pages = $pages.ByTitle.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByTitle }}
+                            {{ $pages = $pages.ByTitle }}
                         {{ end }}
                     {{ else if eq $field "linktitle" }}
                         {{ if eq $order "desc" }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByLinkTitle.Reverse }}
+                            {{ $pages = $pages.ByLinkTitle.Reverse }}
                         {{ else }}
-                            {{ $.Scratch.Set "pages" ($.Scratch.Get "pages").ByLinkTitle }}
+                            {{ $pages = $pages.ByLinkTitle }}
                         {{ end }}
                     {{ end }}
                 {{ end }}
             {{ end }}
         {{ end }}
 
-        {{ $paginator := .Paginate ($.Scratch.Get "pages") }}
+        {{ $paginator := .Paginate $pages }}
         {{ range $paginator.Pages }}
             {{ if or (not $index_only) (in .File.Path "index.md") }}
                 {{ partial "list_item.html" (dict "Page" . "Root" $) }}

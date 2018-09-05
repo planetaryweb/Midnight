@@ -10,35 +10,32 @@
     {{- $thisPage := $.Start | default $.Root.RelPermalink -}}
     {{- $thatPage := relLangURL $path -}}
     {{- if hasPrefix $thatPage "/" -}}
-        {{- $this := split (strings.TrimPrefix "/" $thisPage) "/" -}}
+        {{- $thispath := split (strings.TrimPrefix "/" $thisPage) "/" -}}
         {{- $scr := $.Root.Scratch -}}
-        {{- $scr.Set "this" $thisPage -}}
-        {{- $scr.Set "that" $thatPage -}}
-        {{- $scr.Set "keep going" true -}}
-        {{- range $this -}}
-            {{- if ($scr.Get "keep going") -}}
-                {{- $scr.Get "this" | strings.TrimPrefix "/" | $scr.Set "this" -}}
-                {{- $scr.Get "that" | strings.TrimPrefix "/" | $scr.Set "that" -}}
-                {{- if not (hasPrefix ($scr.Get "this") .) -}}
-                    {{- $scr.Set "keep going" false -}}
-                {{- else if not (hasPrefix ($scr.Get "that") .) -}}
-                    {{- $scr.Set "keep going" false -}}
+        {{- $this := $thisPage -}}
+        {{- $that := $thatPage -}}
+        {{- $continue := true -}}
+        {{- range $thispath -}}
+            {{- if $continue -}}
+                {{- $this = strings.TrimPrefix "/" $this -}}
+                {{- $that = strings.TrimPrefix "/" $that -}}
+                {{- if not (hasPrefix $this .) -}}
+                    {{- $continue = false -}}
+                {{- else if not (hasPrefix $that .) -}}
+                    {{- $continue = false -}}
                 {{- end -}}
-                {{- if ($scr.Get "keep going") -}}
-                    {{- $scr.Get "this" | strings.TrimPrefix . | $scr.Set "this" -}}
-                    {{- $scr.Get "that" | strings.TrimPrefix . | $scr.Set "that" -}}
+                {{- if $continue -}}
+                    {{- $this = strings.TrimPrefix . $this -}}
+                    {{- $that = strings.TrimPrefix . $that -}}
                 {{- end -}}
             {{- end -}}
         {{- end -}}
-        {{- /*errorf "This: %s That: %s" ($scr.Get "this") ($scr.Get "that")*/ -}}
-        {{- $scr.Set "path" "" -}}
-        {{- range (split ($scr.Get "this") "/") -}}
-            {{- $scr.Add "path" "../" -}}
+        {{- $path := "" -}}
+        {{- range (split $this "/") -}}
+            {{- $path = add $path "../" -}}
         {{- end -}}
-        {{- $scr.Get "that" | $scr.Add "path" -}}
-        {{- $scr.Get "path" | strings.TrimPrefix "../" | $scr.Set "path" -}}
-        {{- /*errorf "Generated: %s" ($scr.Get "path")*/ -}}
-        {{- $scr.Get "path" -}}
+        {{- $path = add $path $that -}}
+        {{- strings.TrimPrefix "../" $path -}}
     {{- else -}}
         {{- $thatPage -}}
     {{- end -}}

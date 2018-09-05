@@ -1,26 +1,23 @@
 {{ if ne .Social nil }}
+{{- $attrs := "rel=\"me nofollow\"" -}}
 {{- if .IsMember -}}
-  {{- .Scratch.Set "attrs" "itemprop=\"sameAs\"" -}}
-{{- else -}}
-  {{- .Scratch.Set "attrs" "rel=\"me nofollow\"" -}}
+  {{- $attrs = "itemprop=\"sameAs\"" -}}
 {{- end -}}
-{{- $attrs := .Scratch.Get "attrs" -}}
 {{- $scr := .Scratch -}}
 
-{{- .Scratch.Set "style" "square" -}}
+{{- $style := "square" -}}
 {{- with (default "" .Social.icon_style) -}}
   {{- if (or (eq (lower .) "circle") (eq (lower .) "square")) -}}
-    {{- $scr.Set "style" (lower .) -}}
+    {{- $style = lower . -}}
   {{- end -}}
 {{- end -}}
-{{- $style := .Scratch.Get "style" -}}
 
+{{- $pronoun := "" -}}
 {{- if .IsMember -}}
-    {{- .Scratch.Set "pronoun" .Name -}}
+    {{- $pronoun = .Name -}}
 {{- else -}}
-    {{- .Scratch.Set "pronoun" (i18n "ownerPronoun" (len ($scr.Get "sitevar").Data.members)) -}}
+    {{- $pronoun = i18n "ownerPronoun" (len ($scr.Get "sitevar").Data.members) -}}
 {{- end -}}
-{{- $pronoun := .Scratch.Get "pronoun" -}}
 
 {{ with .Social.bitbucket -}}
   {{- partial "social-icon.html" (dict "Icon" "fab fa-bitbucket" "User" . "URL" "https://bitbucket.org/%USER%" "Attrs" $attrs "Style" $style "ReaderText" "Fork %PRONOUN% on %TITLE%!" "Pronoun" $pronoun "Title" "BitBucket") -}}

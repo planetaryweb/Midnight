@@ -1,36 +1,34 @@
-{{- .Scratch.Set "sitevar" $.Site -}}
-{{- partial "css/color/parse_color" .Scratch -}}
-{{- .Scratch.Set "label" "main_bg" -}}
-{{- partial "css/color/detect_light_or_dark" .Scratch -}}
-{{- $scr := .Scratch -}}
 {{- with $.Site.Params.sidebar.patreon.username -}}
-    {{ $scr.Set "patreon" . }}
-{{- else -}}
-    {{- errorf "Patreon username must be set in params.sidebar.patreon.username" -}}
-{{- end -}}
-{{- with ($scr.Get "patreon") -}}
 <div class="widget">
 	<header>
-		<span class="widget-header"><span class="fab fa-patreon fa-xs" aria-hidden></span> Support {{ i18n "ownerPronoun" (len ($scr.Get "sitevar").Data.members) | title }} On</span>
+		<span class="widget-header"><span class="fab fa-patreon fa-xs" aria-hidden></span> Support {{ i18n "ownerPronoun" (len $.Site.Data.members) | title }} On</span>
 	</header>
 	<a href="https://patreon.com/{{ . }}">
-        {{- $scr.Set "patreon_is_asset" true -}}
-		{{- if ($scr.Get "main_bg_is_dark") -}}
-			{{- $scr.Set "patreon_banner_url" "images/patreon/patreon_white.svg" -}}
-		{{- else -}}
-			{{- $scr.Set "patreon_banner_url" "images/patreon/patreon_black.svg" -}}
-		{{- end -}}
+        {{- $isasset := true -}}
+        {{- $banner := "" -}}
 		{{- with $.Site.Params.sidebar.patreon.banner -}}
             {{- if and (eq (len (findRE "^http(s?)://" .)) 1) -}}
-                {{- $scr.Set "patreon_is_asset" false -}}
+                {{- $isasset = false -}}
             {{- end -}}
-			{{- $scr.Set "patreon_banner_url" . -}}
+			{{- $banner = . -}}
+        {{- else -}}
+            {{- $.Scratch.Set "sitevar" $.Site -}}
+            {{- partial "css/color/parse_color" $.Scratch -}}
+            {{- $.Scratch.Set "label" "main_bg" -}}
+            {{- partial "css/color/detect_light_or_dark" $.Scratch -}}
+            {{- if ($.Scratch.Get "main_bg_is_dark") -}}
+                {{- $banner = "images/patreon/patreon_white.svg" -}}
+            {{- else -}}
+                {{- $banner = "images/patreon/patreon_black.svg" -}}
+            {{- end -}}
 		{{- end -}}
-        {{- if $scr.Get "patreon_is_asset" -}}
-            {{- $img := $scr.Get "patreon_banner_url" | resources.Get -}}
-            {{- $scr.Set "patreon_banner_url" $img.RelPermalink -}}
+        {{- if $isasset -}}
+            {{- $img := resources.Get $banner -}}
+            {{- $banner = $img.RelPermalink -}}
         {{- end -}}
-    <img id="patreon-banner" src="{{ partial "make_link" (dict "URL" ($scr.Get "patreon_banner_url") "Root" $) }}" alt="Patreon Banner" title="Support me on Patreon!" />
+    <img id="patreon-banner" src="{{ partial "make_link" (dict "URL" $banner "Root" $) }}" alt="Patreon Banner" title="Support me on Patreon!" />
   </a>
 </div>
+{{- else -}}
+    {{- errorf "Patreon username must be set in params.sidebar.patreon.username" -}}
 {{- end -}}

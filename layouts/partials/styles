@@ -1,29 +1,27 @@
 {{- $attrs := .Attrs | default "" -}}
 {{- $preload := .Preload | default true -}}
 {{- $crossorigin := .CrossOrigin | default "" -}}
-
+{{- $url := "" -}}
+{{- $integrity := "" -}}
 {{- with (index . "Src") -}}
-    {{- $.Root.Scratch.Set "url" . -}}
-    {{- $.Root.Scratch.Set "integrity" ($.Integrity | default "") -}}
+    {{- $url = . -}}
+    {{- $integrity = ($.Integrity | default "") -}}
 {{- else -}}
     {{- with (index . "Asset") -}}
         {{- /* Can't seem to store asset resources in Scratch, so avoid that here */ -}}
         {{- if $.Root.Site.Params.no_minify -}}
             {{- $res := resources.Get . | fingerprint -}}
-            {{- $.Root.Scratch.Set "url" $res.RelPermalink -}}
-            {{- $.Root.Scratch.Set "integrity" $res.Data.Integrity -}}
+            {{- $url = $res.RelPermalink -}}
+            {{- $integrity = $res.Data.Integrity -}}
         {{- else -}}
             {{- $res := resources.Get . | minify | fingerprint -}}
-            {{- $.Root.Scratch.Set "url" $res.RelPermalink -}}
-            {{- $.Root.Scratch.Set "integrity" $res.Data.Integrity -}}
+            {{- $url = $res.RelPermalink -}}
+            {{- $integrity = $res.Data.Integrity -}}
         {{- end -}}
     {{- else -}}
         {{- errorf "style partial requires either Src or Asset to be set Params: %#v" . -}}
     {{- end -}}
 {{- end -}}
-
-{{- $url := partial "make_link" (dict "URL" ($.Root.Scratch.Get "url") "Root" $.Root) -}}
-{{- $integrity := $.Root.Scratch.Get "integrity" -}}
 
 {{- if $preload -}}
 <link rel="preload" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} as="style"{{ with $integrity }}{{ printf " integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }} onload="this.onload=null;this.rel='stylesheet'">

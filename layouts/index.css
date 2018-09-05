@@ -14,10 +14,10 @@
 {{- /* Add any CSS from shortcodes */ -}}
 {{- partial "shortcodes/get_list.html" $ -}}
 {{- range $name := ($.Scratch.Get "shortcodes") -}}
-    {{- $.Scratch.Set "page_has_shortcode" false -}}
+    {{- $hasshortcode := false -}}
     {{- range $page := $.Site.Pages -}}
-        {{- if and (ne ($.Scratch.Get "page_has_shortcode") true) ($page.HasShortcode $name) -}}
-            {{- $.Scratch.Set "page_has_shortcode" true -}}
+        {{- if and (not $hasshortcode) ($page.HasShortcode $name) -}}
+            {{- $hasshortcode = true -}}
             {{- $.Scratch.Set "shortcode_name" $name -}}
             {{- partial "shortcodes/definition.html" $ -}}
             {{- $shortcode := $.Scratch.Get "shortcode" -}}

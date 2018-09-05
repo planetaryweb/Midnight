@@ -1,9 +1,10 @@
+{{- $found := false -}}
 {{- range $format := (.Site.GetPage "home").OutputFormats -}}
     {{ if eq $format.Name "JSON" }}
-        {{- $.Scratch.Set "found" true -}}
+        {{- $found = true -}}
     {{ end }}
 {{- end -}}
-{{- if not (.Scratch.Get "found") -}}
+{{- if not $found -}}
     {{- errorf "\"home\" needs to have an output format of \"JSON\" for search to work!" -}}
 {{- end -}}
 <div class="widget" id="search-container">

@@ -1,9 +1,7 @@
-{{- $.Scratch.Set "content" .Content -}}
+{{- $content := .Content -}}
 {{- if $.HasShortcode "fa" -}}
-    {{- $content := $.Scratch.Get "content" -}}
-    {{- $content := replaceRE "hahahugoshortcode\\-0x[0-9a-f]{10}-\\d+\\-hbhb\\-" "" $content -}}
-    {{- $content := replaceRE "\\-hahahugoshortcode\\-0x[0-9a-f]{10}-\\d+\\-hbhb" "" $content -}}
-    {{- $content := replaceRE "hahahugoshortcode\\-0x[0-9a-f]{10}-\\d+\\-hbhb" "" $content -}}
-    {{- $.Scratch.Set "content" $content -}}
+    {{- $content = replaceRE "hahahugoshortcode\\-0x[0-9a-f]{10}-\\d+\\-hbhb\\-" "" $content -}}
+    {{- $content = replaceRE "\\-hahahugoshortcode\\-0x[0-9a-f]{10}-\\d+\\-hbhb" "" $content -}}
+    {{- $content = replaceRE "hahahugoshortcode\\-0x[0-9a-f]{10}-\\d+\\-hbhb" "" $content -}}
 {{- end -}}
-{{ $.Scratch.Get "content" | safeHTML }}
+{{ $content | safeHTML }}

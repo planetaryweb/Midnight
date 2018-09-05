@@ -1,20 +1,20 @@
 <div class="widget">
+    {{ $posts := "" }}
     {{ if $.Site.Params.sidebar.recent.section }}
         {{ with $.Site.Params.sidebar.recent.section }}
             {{ if ($.Site.GetPage .) }}
-                {{ $.Scratch.Set "posts_name" . }}
+                {{ $posts = . }}
             {{ else }}
                 {{ errorf "Could not find section %s" . }}
             {{ end }}
         {{ end }}
     {{ else if ($.Site.GetPage "/news") }}
-        {{ $.Scratch.Set "posts_name" "news" }}
+        {{ $posts = "news" }}
     {{ else if ($.Site.GetPage "/posts") }}
-		{{ $.Scratch.Set "posts_name" "posts" }}
+		{{ $posts = "posts" }}
 	{{ else if ($.Site.GetPage "/post") }}
-		{{ $.Scratch.Set "posts_name" "post" }}
+		{{ $posts = "post" }}
 	{{ end }}
-	{{ $posts := string ($.Scratch.Get "posts_name") }}
 	<header>
 		<span class="widget-header"><span class="fas fa-pencil-alt fa-xs" aria-hidden></span> <a href="{{ partial "make_link" (dict "URL" (printf "%s/" $posts) "Root" $) }}">{{ i18n "recentPostsLabel" | title }}</a></span>
 	</header>
@@ -35,23 +35,23 @@
 	{{- else if .IsPage -}}
 	{{- $sectionstr := trim (replaceRE "[^/]+$" "" (trim (replace (absLangURL .URL) .Site.BaseURL "") "/")) "/" -}}
 
-	{{- $.Scratch.Set "section" "" -}}
-	{{- $.Scratch.Set "sectionok" true -}}
+	{{- $section := "" -}}
+	{{- $sectionok := true -}}
 	{{- range $piece := split $sectionstr "/" -}}
-		{{- if $.Scratch.Get "sectionok" -}}
+		{{- if $sectionok -}}
 			{{- /*Build the closest section*/ -}}
-			{{- if eq ($.Scratch.Get "section") "" -}}
-				{{- $.Scratch.Set "section" $piece -}}
-			{{- else if ($.Site.GetPage (printf "%s/%s" ($.Scratch.Get "section") $piece)) -}}
-				{{- $.Scratch.Add "section" "/" -}}
-				{{- $.Scratch.Add "section" $piece -}}
+			{{- if eq $section "" -}}
+				{{- $section = $piece -}}
+			{{- else if ($.Site.GetPage (printf "%s/%s" $section $piece)) -}}
+				{{- $section = add $section "/" -}}
+				{{- $section = add $section $piece -}}
 			{{- else -}}
-				{{- $.Scratch.Set "sectionok" false -}}
+				{{- $sectionok = false -}}
 			{{- end -}}
 		{{- end -}}
 	{{- end -}}
 
-	{{- $section := (.Site.GetPage ($.Scratch.Get "section")) -}}
+	{{- $section := (.Site.GetPage $section) -}}
 	{{- if ne (trim $section.URL "/") "" -}}
 		{{- range $format := $section.OutputFormats -}}
 			{{- if eq $format.Name "RSS" -}}

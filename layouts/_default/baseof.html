@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{- .Title -}}</title>
 
-        {{- $.Scratch.Set "desc" "" -}}
-        {{- with $.Site.Params.description -}}{{- $.Scratch.Set "desc" . -}}{{- end -}}
-        {{- with .Summary -}}{{- $.Scratch.Set "desc" . -}}{{- end -}}
-        {{- with $.Params.description -}}{{- $.Scratch.Set "desc" . -}}{{- end -}}
-        {{- if (not (eq ($.Scratch.Get "desc") "")) -}}
-        <meta name="description" itemprop="description" content="{{ replace ($.Scratch.Get "desc") "\n" " " }}" id="desc">
+        {{- $desc := "" -}}
+        {{- with $.Site.Params.description -}}{{- $desc = . -}}{{- end -}}
+        {{- with .Summary -}}{{- $desc = . -}}{{- end -}}
+        {{- with $.Params.description -}}{{- $desc = . -}}{{- end -}}
+        {{- with $desc -}}
+        <meta name="description" itemprop="description" content="{{ replace $desc "\n" " " }}" id="desc">
         {{- end -}}
 
         {{ .Hugo.Generator }}
@@ -46,13 +46,12 @@
                                     {{- if ne $thmb.ResourceType "image" -}}
                                         {{- errorf "Resource %s is not an image" . -}}
                                     {{- end -}}
+                                    {{- /* 93px is the max-width/height of the thumbnail in rems times 1rem */ -}}
+                                    {{- $width := 93 -}}
                                     {{- if or (or (strings.HasSuffix . "jpg") (strings.HasPrefix . "jpeg")) (strings.HasSuffix . "png") -}}
-                                        {{- $.Scratch.Set "width" (cond (gt 93 $thmb.Width) 93 $thmb.Width) -}}
-                                    {{- else -}}
-                                        {{- /* 93px is the max-width/height of the thumbnail in rems times 1rem */ -}}
-                                        {{- $.Scratch.Set "width" 93 -}}
+                                        {{- $width = (cond (gt 93 $thmb.Width) 93 $thmb.Width) -}}
                                     {{- end -}}
-                                    <img id="site-thumbnail" class="cell shrink" src="{{ partial "make_link" (dict "URL" $thmb.RelPermalink "Root" $) }}" data-width="{{ $.Scratch.Get "width" }}">
+                                    <img id="site-thumbnail" class="cell shrink" src="{{ partial "make_link" (dict "URL" $thmb.RelPermalink "Root" $) }}" data-width="{{ $width }}">
                                 {{ end -}}
                                 <div id="site-title-container" class="cell shrink grid-y">
                                     <div id="site-title" class="cell shrink" itemprop="name">{{ .Site.Title }}</div>

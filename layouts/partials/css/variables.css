@@ -70,31 +70,31 @@
     {{- partial "css/color/hsl_to_rgb" .Scratch }}
     --color-fg-alert-link: rgb({{ .Scratch.Get "red" }}, {{ .Scratch.Get "green" }}, {{ .Scratch.Get "blue" }});
     
-    {{- .Scratch.Set "background_src" "none" -}}
-    {{- .Scratch.Set "background_src_medium" "none" -}}
-    {{- .Scratch.Set "background_src_small" "none" -}}
+    {{- $bglg := "" -}}
+    {{- $bgmd := "" -}}
+    {{- $bgsm := "" -}}
     {{- with $.Site.Params.background.src -}}
-    {{- $.Scratch.Set "background_src" . -}}
-    {{- $.Scratch.Set "background_src_medium" . -}}
-    {{- $.Scratch.Set "background_src_small" . -}}
+        {{- $bglg = . -}}
+        {{- $bgmd = . -}}
+        {{- $bgsm = . -}}
     {{- end -}}
     {{- with $.Site.Params.background.medium_src -}}
-    {{- $.Scratch.Set "background_src_medium" . -}}
-    {{- $.Scratch.Set "background_src_small" . -}}
+        {{- $bgmd = . -}}
+        {{- $bgsm = . -}}
     {{- end -}}
     {{- with $.Site.Params.background.small_src -}}
-    {{- $.Scratch.Set "background_src_small" . -}}
+        {{- $bgsm = . -}}
     {{- end -}}
     
-    {{- with ($.Scratch.Get "background_src") -}}
+    {{- with $bglg -}}
         {{- $res := resources.Get . -}}
         --image-bg-lg: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
-    {{- with ($.Scratch.Get "background_src_medium") -}}
+    {{- with $bgmd -}}
         {{- $res := resources.Get . -}}
         --image-bg-md: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
-    {{- with ($.Scratch.Get "background_src_small") -}}
+    {{- with $bgsm -}}
         {{- $res := resources.Get . -}}
         --image-bg-sm: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
