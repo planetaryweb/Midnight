@@ -10,7 +10,7 @@
 
 {{ partial "matomo/head.html" . }}
 
-{{ partial "styles" (dict "Asset" "css/foundation.css" "Root" $) }}
+{{ partial "styles" (dict "Asset" "css/foundation.css" "Root" $ "Preload" false) }}
 
 {{- $assets := slice -}}
 
@@ -33,12 +33,12 @@
     {{- end -}}
 {{- end -}}
 
-{{ partial "styles" (dict "Src" "/styles.css" "Root" $) }}
+{{ partial "styles" (dict "Src" "/styles.css" "Root" $ "Preload" false) }}
 
 {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
     {{ $files := slice "reset" "fonts" "classes" "pagination" "page" "widgets" }}
     {{ range $f := $files }}
-        {{- partial "styles" (dict "Asset" (printf "css/%s.css" $f) "Root" $) -}}
+        {{- partial "styles" (dict "Asset" (printf "css/%s.css" $f) "Root" $ "Preload" false) -}}
     {{- end -}}
 {{ end }}
 
@@ -51,7 +51,7 @@
     {{- $page := resources.Get "css/page.css" -}}
     {{- $widgets := resources.Get "css/widgets.css" -}}
     {{- $css := slice $reset $codecss $fonts $classes $pagination $page $widgets | resources.Concat "css/bundle.css" | fingerprint -}}
-    {{- partial "styles" (dict "Src" $css.RelPermalink "Integrity" $css.Data.Integrity "Root" $) -}}
+    {{- partial "styles" (dict "Src" $css.RelPermalink "Integrity" $css.Data.Integrity "Root" $ "Preload" false) -}}
 {{- end -}}
 
 {{ if eq .Kind "page" }}
