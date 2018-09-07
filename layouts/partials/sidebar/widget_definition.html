@@ -1,24 +1,20 @@
 {{- $name := $.Scratch.Get "widget_name" -}}
 
 {{- $sidebar := $.Site.Params.sidebar -}}
-{{- $bnsidebar := $.Site.Params.BluestNight.sidebar -}}
+{{- $mnsidebar := $.Site.Params.Midnight.sidebar -}}
 
 {{- if (not (isset $.Site.Params "sidebar")) -}}
-    {{- $.Scratch.Set "sidebar" $bnsidebar -}}
+    {{- $sidebar = $mnsidebar -}}
 {{- else if (not (isset $.Site.Params.sidebar $name)) -}}
-    {{- $.Scratch.Set "sidebar" $bnsidebar -}}
+    {{- $sidebar = $mnsidebar -}}
 {{- else if (not (isset (index $.Site.Params.sidebar $name) "path")) -}}
-    {{- $.Scratch.Set "sidebar" $bnsidebar -}}
-{{- else -}}
-    {{- $.Scratch.Set "sidebar" $sidebar -}}
+    {{- $sidebar = $mnsidebar -}}
 {{- end -}}
 
-{{- $sb := ($.Scratch.Get "sidebar") -}}
-
-{{- if eq nil $sb -}}
-    {{- errorf "Sidebar widget definitions are nil: %#v" $sb -}}
-{{- else if eq nil (index $sb $name) -}}
+{{- if eq nil $sidebar -}}
+    {{- errorf "Sidebar widget definitions are nil: %#v" $sidebar -}}
+{{- else if eq nil (index $sidebar $name) -}}
     {{- errorf "Could not find definition for widget: %s" $name -}}
 {{- end -}}
 
-{{- $.Scratch.Set "widget" (index $sb $name) -}}
+{{- $.Scratch.Set "widget" (index $sidebar $name) -}}

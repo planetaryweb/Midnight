@@ -4,12 +4,22 @@
     {{- if $.Root.Page.HasShortcode $name -}}
         {{- $.Root.Scratch.Set "shortcode_name" $name -}}
         {{- partial "shortcodes/definition.html" $.Root -}}
-        {{- $shortcode := $.Root.Scratch.Get "shortcode" -}}
-        {{- with (index $shortcode $.Prop) -}}
-            {{- if and .cache (ne $.Root.Site.Params.ref_type "relative") -}}
-                {{- partialCached .path $.Root -}}
+        {{- $prop := $.Root.Scratch.Get "shortcode" -}}
+        {{- $exists := true -}}
+        {{- range split $.Prop "." -}}
+            {{- if $exists -}}
+                {{- with index $prop . -}}
+                    {{- $prop = . -}}
+                {{- else -}}
+                    {{- $exists = false -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if $exists -}}
+            {{- if and $prop.cache (ne $.Root.Site.Params.ref_type "relative") -}}
+                {{- partialCached $prop.path $.Root -}}
             {{- else -}}
-                {{- partial .path $.Root -}}
+                {{- partial $prop.path $.Root -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}

@@ -1,0 +1,12 @@
+/*
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+
+Content-Security-Policy: {{ partial "get_csp.txt" $ }}
+
+/*.html
+Expires: 0
+
+/*.css /*.js /*.woff /*.woff2 /*.json /*.png /*.jpg /*.jpeg /*.gif
+Expires: max

@@ -2,13 +2,23 @@
 {{- range $.Root.Site.Params.plugins.enabled -}}
     {{- $.Root.Scratch.Set "plugin_name" . -}}
     {{- partial "plugins/definition.html" $.Root -}}
-    {{- $p := $.Root.Scratch.Get "plugin" -}}
-    {{- with (index $p $.Prop) -}}
-        {{- with .path -}}
-            {{- if and .cache (ne $.Root.Site.Params.ref_type "relative") -}}
-                {{- partial .path $.Root -}}
+    {{- $prop := $.Root.Scratch.Get "plugin" -}}
+    {{- $exists := true -}}
+    {{- range split $.Prop "." -}}
+        {{- if $exists -}}
+            {{- with index $prop . -}}
+                {{- $prop = . -}}
             {{- else -}}
-                {{- partial .path $.Root -}}
+                {{- $exists = false -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if $exists -}}
+        {{- if $prop.path -}}
+            {{- if and $prop.cache (ne $.Root.Site.Params.ref_type "relative") -}}
+                {{- partial $prop.path $.Root -}}
+            {{- else -}}
+                {{- partial $prop.path $.Root -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}

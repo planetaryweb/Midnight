@@ -105,15 +105,6 @@
 
 {{- partial "plugins/partial.html" (dict "Prop" "head" "Root" $) -}}
 
-{{ if .Content -}}
-    {{ $urls := findRE "<img src=\"[^\"|\\\"]*\"" .Content -}}
-    {{ range $url := $urls -}}
-      {{ $url := (strings.TrimPrefix "<img src=\"" $url) -}}
-      {{ $url := strings.TrimSuffix "\"" $url -}}
-      <link rel="preload" href="{{ $url | htmlUnescape | safeHTML }}" as="image" />
-    {{ end -}}
-{{ end -}}
-
 {{ partial "matomo/head2.html" . }}
 
 {{- partial "favicons.html" . -}}

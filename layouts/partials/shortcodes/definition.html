@@ -1,24 +1,20 @@
 {{- $name := $.Scratch.Get "shortcode_name" -}}
 
-{{- $sitecodes := $.Site.Params.shortcodes -}}
-{{- $bncodes := $.Site.Params.BluestNight.shortcodes -}}
+{{- $codes := $.Site.Params.shortcodes -}}
+{{- $mncodes := $.Site.Params.Midnight.shortcodes -}}
 
 {{- if (not (isset $.Site.Params "shortcodes")) -}}
-    {{- $.Scratch.Set "shortcodes" $bncodes -}}
+    {{- $codes = $mncodes -}}
 {{- else if (not (isset $.Site.Params.shortcodes $name)) -}}
-    {{- $.Scratch.Set "shortcodes" $bncodes -}}
+    {{- $codes = $mncodes -}}
 {{- else if (not (isset (index $.Site.Params.shortcodes $name) "path")) -}}
-    {{- $.Scratch.Set "shortcodes" $bncodes -}}
-{{- else -}}
-    {{- $.Scratch.Set "shortcodes" $sitecodes -}}
+    {{- $codes = $mncodes -}}
 {{- end -}}
 
-{{- $sb := ($.Scratch.Get "shortcodes") -}}
-
-{{- if eq nil $sb -}}
-    {{- errorf "shortcode CSS/JS definitions are nil: %#v" $sb -}}
-{{- else if eq nil (index $sb $name) -}}
+{{- if eq nil $codes -}}
+    {{- errorf "shortcode CSS/JS definitions are nil: %#v" $codes -}}
+{{- else if eq nil (index $codes $name) -}}
     {{- errorf "Could not find definition for widget: %s" $name -}}
 {{- end -}}
 
-{{- $.Scratch.Set "shortcode" (index $sb $name) -}}
+{{- $.Scratch.Set "shortcode" (index $codes $name) -}}

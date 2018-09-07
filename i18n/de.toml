@@ -8,7 +8,7 @@
     other = "about"
 
 [attribution]
-    other = "Mit {{ .Hugo }} und {{ .BluestNight }} gebaut."
+    other = "Mit {{ .Hugo }} und {{ .Midnight }} gebaut."
 
 [categoryLabel]
     one = "category"

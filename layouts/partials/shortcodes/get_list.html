@@ -1,5 +1,5 @@
 {{- .Scratch.Set "shortcode_list" "" -}}
-{{- range $name, $ignore := $.Site.Params.BluestNight.shortcodes -}}
+{{- range $name, $ignore := $.Site.Params.Midnight.shortcodes -}}
     {{- $.Scratch.Add "shortcode_list" $name -}}
     {{- $.Scratch.Add "shortcode_list" "," -}}
 {{- end -}}

@@ -1,24 +1,20 @@
 {{- $name := $.Scratch.Get "comments_name" -}}
 
-{{- $sitecomments := $.Site.Params.comments -}}
-{{- $bncomments := $.Site.Params.BluestNight.comments -}}
+{{- $comments := $.Site.Params.comments -}}
+{{- $mncomments := $.Site.Params.Midnight.comments -}}
 
 {{- if (not (isset $.Site.Params "comments")) -}}
-    {{- $.Scratch.Set "comments" $bncomments -}}
+    {{- $comments = $mncomments -}}
 {{- else if (not (isset $.Site.Params.comments $name)) -}}
-    {{- $.Scratch.Set "comments" $bncomments -}}
+    {{- $comments = $mncomments -}}
 {{- else if (not (isset (index $.Site.Params.comments $name) "path")) -}}
-    {{- $.Scratch.Set "comments" $bncomments -}}
-{{- else -}}
-    {{- $.Scratch.Set "comments" $sitecomments -}}
+    {{- $comments = $mncomments -}}
 {{- end -}}
 
-{{- $c := ($.Scratch.Get "comments") -}}
-
-{{- if eq nil $c -}}
-    {{- errorf "comments definitions are empty: %#v" $c -}}
-{{- else if eq nil (index $c $name) -}}
+{{- if eq nil $comments -}}
+    {{- errorf "comments definitions are empty: %#v" $comments -}}
+{{- else if eq nil (index $comments $name) -}}
     {{- errorf "Could not find definition for comment provider: %s" $name -}}
 {{- end -}}
 
-{{- $.Scratch.Set "comments" (index $c $name) -}}
+{{- $.Scratch.Set "comments" (index $comments $name) -}}

@@ -2,12 +2,22 @@
 {{- if and ($.Root.Site.Params.comments.provider) (and ($.Root.IsPage) (not $.Root.Params.disable_comments)) -}}
     {{- $.Root.Scratch.Set "comments_name" $.Root.Site.Params.comments.provider -}}
     {{- partial "comments/definition.html" $.Root -}}
-    {{- $c := $.Root.Scratch.Get "comments" -}}
-    {{- with (index $c $.Prop) -}}
-        {{- if and .cache (ne $.Root.Site.Params.ref_type "relative") -}}
-            {{- partialCached .path $.Root -}}
+    {{- $prop := $.Root.Scratch.Get "comments" -}}
+    {{- $exists := true -}}
+    {{- range split $.Prop "." -}}
+        {{- if $exists -}}
+            {{- with index $prop . -}}
+                {{- $prop = . -}}
+            {{- else -}}
+                {{- $exists = false -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if $exists -}}
+        {{- if and $prop.cache (ne $.Root.Site.Params.ref_type "relative") -}}
+            {{- partialCached $prop.path $.Root -}}
         {{- else -}}
-            {{- partial .path $.Root -}}
+            {{- partial $prop.path $.Root -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
