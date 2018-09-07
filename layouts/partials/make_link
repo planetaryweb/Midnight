@@ -1,6 +1,6 @@
 {{- /* Do not modify links with leading "//" as those represent a URL with same protocol as this connection */ -}}
 {{- $path := strings.TrimPrefix $.Root.Site.BaseURL $.URL -}}
-{{- $type := $.Root.Site.Params.ref_type -}}
+{{- $type := default $.Root.Site.Params.ref_type $.RelType -}}
 {{- if and (eq $.Root.Kind "404") (eq $type "relative") -}}
     {{- $type = "root-relative" -}}
 {{- end -}}

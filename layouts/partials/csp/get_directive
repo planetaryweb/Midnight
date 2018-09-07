@@ -14,7 +14,7 @@
 {{- $comments := partial "comments/partial.html" $ctx -}}
 {{- range split $comments " " -}}
     {{- /* Avoid empty strings */ -}}
-{{- if . -}}
+    {{- if . -}}
         {{- $url := trim . " \n\t\r\v\f" | urls.Parse -}}
         {{- $h := add "://" $url.Host | add $url.Scheme -}}
         {{- $hosts = add " " $h | add $hosts -}}
@@ -29,7 +29,7 @@
 {{- range $name := $shortcodes -}}
     {{- range $page := $.Root.Site.Pages -}}
         {{- if not ($.Root.Scratch.Get $name) -}}
-            {{- if $.Root.Page.HasShortcode $name -}}
+            {{- if $page.HasShortcode $name -}}
                 {{- $.Root.Scratch.Set "shortcode_name" $name -}}
                 {{- partial "shortcodes/definition.html" $.Root -}}
                 {{- $shortcode := $.Root.Scratch.Get "shortcode" -}}

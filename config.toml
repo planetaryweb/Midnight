@@ -18,8 +18,17 @@
         path = "comments/commento/foot.html"
         cache = true
     [params.Midnight.comments.commento.csp]
+    [params.Midnight.comments.commento.csp.connect-src]
+        path = "comments/commento/csp/script"
+        cache = true
+    [params.Midnight.comments.commento.csp.font-src]
+        path = "comments/commento/csp/fonts"
+        cache = true
     [params.Midnight.comments.commento.csp.script-src]
         path = "comments/commento/csp/script"
+        cache = true
+    [params.Midnight.comments.commento.csp.style-src]
+        path = "comments/commento/csp/style"
         cache = true
 
 [params.Midnight.fonts]
@@ -37,12 +46,18 @@
         [params.Midnight.shortcodes.math.head]
             path = "shortcodes/katex/head.html"
             cache = true
-        [params.Midnight.shortcode.math.csp]
-        [params.Midnight.shortcode.math.csp.script-src]
-            path = "shortcodes/katex/csp/script"
-            cache = true
         [params.Midnight.shortcodes.math.foot]
             path = "shortcodes/katex/foot.html"
+            cache = true
+        [params.Midnight.shortcodes.math.csp]
+        [params.Midnight.shortcodes.math.csp.font-src]
+            path = "shortcodes/katex/csp/script"
+            cache = true
+        [params.Midnight.shortcodes.math.csp.script-src]
+            path = "shortcodes/katex/csp/script"
+            cache = true
+        [params.Midnight.shortcodes.math.csp.style-src]
+            path = "shortcodes/katex/csp/script"
             cache = true
     [params.Midnight.shortcodes.tabgroup]
         [params.Midnight.shortcodes.tabgroup.head]

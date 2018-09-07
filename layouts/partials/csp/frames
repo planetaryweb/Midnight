@@ -1,9 +1,8 @@
-frame-src: 'self'
-{{- if $.Site.Params.iubenda.id }} https://cdn.iubenda.com{{ end }}
+frame-src 'self'
+{{- if $.Site.Params.iubenda.id }} https://cdn.iubenda.com {{ end }}
 {{- $recaptcha := false -}}
 {{- range $page := $.Site.Pages -}}
 {{- if and (not $recaptcha) (in (string $page.Content) "<div netlify-recaptcha>") -}}
-    {{- $recaptcha = true }} https://www.google.com
-{{- end -}}
+    {{- $recaptcha = true }} https://www.google.com {{ end -}}
 {{- end -}}
 {{- partial "csp/get_directive" (dict "Directive" "frame-src" "Root" $) -}};

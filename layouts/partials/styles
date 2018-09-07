@@ -3,6 +3,8 @@
 {{- $crossorigin := .CrossOrigin | default "" -}}
 {{- $url := "" -}}
 {{- $integrity := "" -}}
+{{- $reltype := .RelType -}}
+{{- $url_only := .URLOnly | default false -}}
 {{- with (index . "Src") -}}
     {{- $url = . -}}
     {{- $integrity = ($.Integrity | default "") -}}
@@ -11,11 +13,11 @@
         {{- /* Can't seem to store asset resources in Scratch, so avoid that here */ -}}
         {{- if $.Root.Site.Params.no_minify -}}
             {{- $res := resources.Get . | fingerprint -}}
-            {{- $url = $res.RelPermalink -}}
+            {{- $url = partial "make_link" (dict "URL" $res.RelPermalink "Root" $.Root "RelType" $reltype) -}}
             {{- $integrity = $res.Data.Integrity -}}
         {{- else -}}
             {{- $res := resources.Get . | minify | fingerprint -}}
-            {{- $url = $res.RelPermalink -}}
+            {{- $url = partial "make_link" (dict "URL" $res.RelPermalink "Root" $.Root "RelType" $reltype) -}}
             {{- $integrity = $res.Data.Integrity -}}
         {{- end -}}
     {{- else -}}
@@ -23,11 +25,15 @@
     {{- end -}}
 {{- end -}}
 
-{{- if $preload -}}
-<link rel="preload" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} as="style"{{ with $integrity }}{{ printf " integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }} onload="this.onload=null;this.rel='stylesheet'">
-<noscript>
-{{- end -}}
-<link rel="stylesheet" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} {{ with $integrity }}{{ printf "integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}></noscript>
-{{- if $preload -}}
-</noscript>
+{{- if $url_only -}}
+    {{- $url -}}
+{{- else -}}
+    {{- if $preload -}}
+    <link rel="preload" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} as="style"{{ with $integrity }}{{ printf " integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }} onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+    {{- end -}}
+    <link rel="stylesheet" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} {{ with $integrity }}{{ printf "integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}></noscript>
+    {{- if $preload -}}
+    </noscript>
+    {{- end -}}
 {{- end -}}
