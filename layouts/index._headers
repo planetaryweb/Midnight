@@ -11,6 +11,7 @@ Link: </styles.css>; as=style; rel=preload
 {{ range slice "css/foundation.css" "css/reset.css" "css/page.css" "css/fonts.css" -}}
 Link: <{{ partial "styles" (dict "Asset" . "Root" $ "URLOnly" true "RelType" "root-relative") | strings.TrimPrefix (strings.TrimSuffix "/" $url.Path) }}>; as=style; rel=preload
 {{ end }}
+Link: <{{ partial "script" (dict "Asset" "js/loadCSS.js" "Root" $ "URLOnly" true "RelType" "root-relative") | strings.TrimPrefix $url.Path }}>; as=script; rel=preload
 {{ range slice ($.Site.Params.fonts.header_style | default "sans-serif") ($.Site.Params.fonts.body_style | default "sans-serif") -}}
     {{ if ($.Scratch.Get .) -}}
         {{ if eq . "serif" -}}

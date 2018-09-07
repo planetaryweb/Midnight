@@ -1,5 +1,6 @@
 "use strict";
 
+var lunrJSON = "{{ partial "make_link" (dict "URL" "/index.json" "Root" $) }}";
 var lunrIndex = undefined;
 var rawIndex = [];
 var sbox = document.getElementById("searchbox");

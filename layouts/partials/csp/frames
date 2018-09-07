@@ -4,5 +4,4 @@ frame-src 'self'
 {{- range $page := $.Site.Pages -}}
 {{- if and (not $recaptcha) (in (string $page.Content) "<div netlify-recaptcha>") -}}
     {{- $recaptcha = true }} https://www.google.com {{ end -}}
-{{- end -}}
-{{- partial "csp/get_directive" (dict "Directive" "frame-src" "Root" $) -}};
+{{- end }} {{ partial "csp/get_directive" (dict "Directive" "frame-src" "Root" $) -}};

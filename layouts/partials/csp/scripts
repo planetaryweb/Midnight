@@ -1,8 +1,7 @@
-script-src 'self' 'unsafe-inline' {{ with $.Site.Params.matomo.host }}
+script-src 'self' {{ with $.Site.Params.matomo.host }}
     {{- $url := urls.Parse . -}}
     {{- add "://" $url.Host | add $url.Scheme | add " " -}}
-{{- end -}}
-{{- if $.Site.Params.iubenda.id }} https://cdn.iubenda.com
+{{- end }} {{ if $.Site.Params.iubenda.id }} https://cdn.iubenda.com
     {{- if $.Site.Params.iubenda.pro.enable_pro -}}
         {{- if $.Site.Params.iubenda.pro.enable_cookie_policy }} https://www.iubenda.com {{ end -}}
     {{- end -}}
@@ -11,5 +10,4 @@ script-src 'self' 'unsafe-inline' {{ with $.Site.Params.matomo.host }}
 {{- range $page := $.Site.Pages -}}
 {{- if and (not $recaptcha) (in (string $page.Content) "<div netlify-recaptcha>") -}}
     {{- $recaptcha = true }} https://www.google.com https://www.gstatic.com {{ end -}}
-{{- end -}}
-{{- partial "csp/get_directive" (dict "Directive" "script-src" "Root" $) }};
+{{- end }} {{ partial "csp/get_directive" (dict "Directive" "script-src" "Root" $) }};

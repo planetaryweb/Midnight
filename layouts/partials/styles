@@ -5,21 +5,22 @@
 {{- $integrity := "" -}}
 {{- $reltype := .RelType -}}
 {{- $url_only := .URLOnly | default false -}}
+{{- $is_tmpl := .IsTemplate | default false -}}
 {{- with (index . "Src") -}}
     {{- $url = . -}}
     {{- $integrity = ($.Integrity | default "") -}}
 {{- else -}}
     {{- with (index . "Asset") -}}
-        {{- /* Can't seem to store asset resources in Scratch, so avoid that here */ -}}
-        {{- if $.Root.Site.Params.no_minify -}}
-            {{- $res := resources.Get . | fingerprint -}}
-            {{- $url = partial "make_link" (dict "URL" $res.RelPermalink "Root" $.Root "RelType" $reltype) -}}
-            {{- $integrity = $res.Data.Integrity -}}
-        {{- else -}}
-            {{- $res := resources.Get . | minify | fingerprint -}}
-            {{- $url = partial "make_link" (dict "URL" $res.RelPermalink "Root" $.Root "RelType" $reltype) -}}
-            {{- $integrity = $res.Data.Integrity -}}
+        {{- $res := resources.Get . -}}
+        {{- if $is_tmpl -}}
+            {{- $res = resources.ExecuteAsTemplate . $.Root $res -}}
         {{- end -}}
+        {{- if not $.Root.Site.Params.no_minify -}}
+            {{- $res = $res | minify -}}
+        {{- end -}}
+        {{- $res = $res | fingerprint -}}
+        {{- $url = partial "make_link" (dict "URL" $res.RelPermalink "Root" $.Root "RelType" $reltype) -}}
+        {{- $integrity = $res.Data.Integrity -}}
     {{- else -}}
         {{- errorf "style partial requires either Src or Asset to be set Params: %#v" . -}}
     {{- end -}}
@@ -29,10 +30,10 @@
     {{- $url -}}
 {{- else -}}
     {{- if $preload -}}
-    <link rel="preload" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} as="style"{{ with $integrity }}{{ printf " integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }} onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} as="style"{{ with $integrity }}{{ printf " integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}>
     <noscript>
     {{- end -}}
-    <link rel="stylesheet" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} {{ with $integrity }}{{ printf "integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}></noscript>
+    <link rel="stylesheet" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} {{ with $integrity }}{{ printf "integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}>
     {{- if $preload -}}
     </noscript>
     {{- end -}}

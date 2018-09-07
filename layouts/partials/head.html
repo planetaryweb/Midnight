@@ -95,8 +95,6 @@
 {{- end -}}
 <link rel="preload" media="print" type="text/css" href="{{ partial "make_link" (dict "URL" $url "Root" $) }}" integrity="{{ $integrity }}" as="style">
 
-{{ partial "async/cssrelpreload.js.html" }}
-
 {{- partial "shortcodes/partial.html" (dict "Prop" "head" "Root" $) -}}
 
 {{- partial "sidebar/partial.html" (dict "Prop" "head" "Root" $) -}}
@@ -106,5 +104,7 @@
 {{- partial "plugins/partial.html" (dict "Prop" "head" "Root" $) -}}
 
 {{ partial "matomo/head2.html" . }}
+
+{{- partial "script" (dict "Asset" "js/loadCSS.js" "Root" $ "Defer" false) -}}
 
 {{- partial "favicons.html" . -}}
