@@ -4,7 +4,7 @@ X-Frame-Options: SAMEORIGIN
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Referrer-Policy: strict-origin-when-cross-origin
-Feature-Policy: vibrate 'none'; geolocation 'none'; midi 'none'; notifications *; push *; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker *; vibrate 'none'; fullscreen *; payment 'none'
+Feature-Policy: vibrate 'none'; geolocation 'none'; midi 'none'; notifications *; push *; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker *; fullscreen *; payment 'none'
 
 {{- if $.Site.Params.http2 }}
 Link: </styles.css>; as=style; rel=preload
