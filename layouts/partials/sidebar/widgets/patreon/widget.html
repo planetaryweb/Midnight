@@ -24,6 +24,11 @@
 		{{- end -}}
         {{- if $isasset -}}
             {{- $img := resources.Get $banner -}}
+            {{- with lower $banner -}}
+                {{- if eq "true" (partial "has_suffix" (dict "String" $banner "Suffixes" (slice "jpg" "jpeg") "CaseSensitive" false)) -}}
+                    {{- $img = $img.Resize (printf "%dx%d" $img.Width $img.Height) -}}
+                {{- end -}}
+            {{- end -}}
             {{- $banner = $img.RelPermalink -}}
         {{- end -}}
     <img id="patreon-banner" src="{{ partial "make_link" (dict "URL" $banner "Root" $) }}" alt="Patreon Banner" title="Support me on Patreon!" />

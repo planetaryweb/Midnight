@@ -48,7 +48,10 @@
                                     {{- end -}}
                                     {{- /* 93px is the max-width/height of the thumbnail in rems times 1rem */ -}}
                                     {{- $width := 93 -}}
-                                    {{- if or (or (strings.HasSuffix . "jpg") (strings.HasPrefix . "jpeg")) (strings.HasSuffix . "png") -}}
+                                    {{- if eq "true" (partial "has_suffix" (dict "String" . "Suffixes" (slice "jpg" "jpeg" "png") "CaseSensitive" false)) -}}
+                                        {{- if eq "true" (partial "has_suffix" (dict "String" . "Suffixes" (slice "jpg" "jpeg") "CaseSensitive" false)) -}}
+                                            {{- $thmb = $thmb.Resize (printf "%dx%d" $thmb.Width $thmb.Height) -}}
+                                        {{- end -}}
                                         {{- $width = (cond (gt 93 $thmb.Width) 93 $thmb.Width) -}}
                                     {{- end -}}
                                     <img id="site-thumbnail" class="cell shrink" src="{{ partial "make_link" (dict "URL" $thmb.RelPermalink "Root" $) }}" data-width="{{ $width }}">

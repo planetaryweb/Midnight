@@ -88,14 +88,23 @@
     
     {{- with $bglg -}}
         {{- $res := resources.Get . -}}
+        {{- if eq "true" (partial "has_suffix" (dict "String" . "Suffixes" (slice "jpg" "jpeg") "CaseSensitive" false)) -}}
+            {{- $res = $res.Resize (printf "%dx%d" $res.Width $res.Height) -}}
+        {{- end -}}
         --image-bg-lg: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
     {{- with $bgmd -}}
         {{- $res := resources.Get . -}}
+        {{- if eq "true" (partial "has_suffix" (dict "String" . "Suffixes" (slice "jpg" "jpeg") "CaseSensitive" false)) -}}
+            {{- $res = $res.Resize (printf "%dx%d" $res.Width $res.Height) -}}
+        {{- end -}}
         --image-bg-md: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
     {{- with $bgsm -}}
         {{- $res := resources.Get . -}}
+        {{- if eq "true" (partial "has_suffix" (dict "String" . "Suffixes" (slice "jpg" "jpeg") "CaseSensitive" false)) -}}
+            {{- $res = $res.Resize (printf "%dx%d" $res.Width $res.Height) -}}
+        {{- end -}}
         --image-bg-sm: url("{{ partial "make_link" (dict "URL" $res.RelPermalink "Start" "/css/" "Root" $) }}");
     {{- end -}}
     
