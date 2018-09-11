@@ -92,7 +92,7 @@ function populateSearchbox() {
 
 sbox.addEventListener("keyup", populateSearchbox);
 window.addEventListener("beforeunload", function(){
-    if (_paq !== undefined && searchAnalytics !== undefined) {
+    if (typeof _paq !== "undefined" && searchAnalytics !== undefined) {
         _paq.push(['trackSiteSearch',
             // Search keyword searched for
             searchAnalytics.keyword,
