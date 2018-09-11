@@ -105,6 +105,8 @@
 
 {{ partial "matomo/head2.html" . }}
 
+{{- partial "script" (dict "Asset" "js/relpreload.js" "Root" $ "Defer" false) -}}
 {{- partial "script" (dict "Asset" "js/loadCSS.js" "Root" $ "Defer" false) -}}
+{{- partial "script" (dict "Asset" "js/asyncCSS.js" "Root" $ "Defer" false) -}}
 
 {{- partial "favicons.html" . -}}
