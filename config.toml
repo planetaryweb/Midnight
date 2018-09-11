@@ -71,6 +71,15 @@
         [params.Midnight.shortcodes.nebula-form.foot]
             path = "shortcodes/nebula-form/foot.html"
             cache = true
+        [params.Midnight.shortcodes.nebula-form.csp]
+        [params.Midnight.shortcodes.nebula-form.csp.connect-src]
+            path = "shortcodes/forms/csp/connect"
+    [params.Midnight.shortcodes.netlify-form]
+        [params.Midnight.shortcodes.netlify-form.csp]
+        [params.Midnight.shortcodes.netlify-form.csp.connect-src]
+            path = "shortcodes/forms/csp/connect"
+            cache = true
+
 
 [params.Midnight.sidebar]
     [params.Midnight.sidebar.categories]
