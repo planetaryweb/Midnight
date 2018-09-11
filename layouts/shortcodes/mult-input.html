@@ -1,4 +1,4 @@
-<div class="grid-x">
+<div class="grid-x grid-padding-x">
     {{ $type := .Get "type" }}
     {{ $name := .Get "name" }}
     {{ $has_other := (eq (.Get "add_other") "true") }}
@@ -40,7 +40,7 @@
     </div>
 </div>
 {{ if and (eq $type "select") $has_other }}
-<div class="grid-x">
+<div class="grid-x grid-padding-x">
     <div class="cell small-text-center medium-4 medium-text-right">
         <label for="{{ $name }}_other_value">
             <p>If "Other", please specify:</p>
