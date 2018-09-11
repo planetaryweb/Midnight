@@ -73,7 +73,7 @@ function populateSearchbox() {
             var link = document.createElement("a");
             link.setAttribute("href", rawIndex[data.ref].url);
             // Add event handler to results to log search if using piwik
-            if (_paq !== undefined) {
+            if (typeof _paq !== "undefined") {
                 link.addEventListener("click", function() {
                     searchAnalytics = {
                         keyword: sbox.value,
