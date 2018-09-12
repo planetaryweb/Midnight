@@ -42,14 +42,28 @@
         {{- end }}
         <div class="cell small-full small-text-center grid-x">
             {{ $iubenda := and $.Site.Params.iubenda.id (or (not $.Site.Params.iubenda.pro.enable_pro) (not $.Site.Params.iubenda.pro.disable_footer_link)) }}
-            {{ if or ($.Site.GetPage "page" "/privacy-policy.md") $iubenda }}
+            {{ if or (or ($.Site.GetPage "page" "/privacy-policy.md") ($.Site.GetPage "page" "/cookie-policy.md")) $iubenda }}
             <div class="cell medium-auto">
                 {{ if $iubenda }}
-                {{ partial "iubenda/button.html" . }}
+                {{ partial "iubenda/privacy-button.html" . }}
+                {{ if and (and $.Site.Params.iubenda.pro.enable_pro $.Site.Params.iubenda.pro.no_button_style) $.Site.Params.iubenda.enable_cookie_policy -}}
+                |
+                {{- end }}
+                {{ if $.Site.Params.iubenda.enable_cookie_policy -}}
+                {{ partial "iubenda/cookie-button.html" . }}
+                {{- end -}}
                 {{ else }}
                 {{ with $.Site.GetPage "page" "/privacy-policy.md" }}
                 <small>
                     <a href="{{- partial "make_link" (dict "URL" (relref $ "/privacy-policy.md") "Root" $) -}}">{{ i18n "privacyPolicyLabel" | title }}</a>
+                </small>
+                {{ end }}
+                {{ if and ($.Site.GetPage "page" "/privacy-policy.md") ($.Site.GetPage "page" "/cookie-policy.md") -}}
+                |
+                {{- end }}
+                {{ with $.Site.GetPage "page" "/cookie-policy.md" }}
+                <small>
+                    <a href="{{- partial "make_link" (dict "URL" (relref $ "/cookie-policy.md") "Root" $) -}}">{{ i18n "cookiePolicyLabel" | title }}</a>
                 </small>
                 {{ end }}
                 {{ end }}

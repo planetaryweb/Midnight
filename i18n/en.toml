@@ -17,6 +17,9 @@
 [cookie_banner]
     other = "This website or its third party tools use cookies, which are necessary to its functioning and required to achieve the purposes illustrated in the %{cookie_policy_link}. If you want to know more or withdraw your consent to all or some of the cookies, please refer to the cookie policy. By closing this banner, scrolling this page, clicking a link, or continuing to browse otherwise, you agree to the use of cookies."
 
+[cookiePolicyLabel]
+    other = "cookie policy"
+
 [dateLabel]
     other = "date"
 

@@ -19,6 +19,9 @@
 [dateLabel]
     other = "Datum"
 
+[cookiePolicyLabel]
+    other = "cookie-richtlinie"
+
 [doorsOpenLabel]
     other = "doors open"
 

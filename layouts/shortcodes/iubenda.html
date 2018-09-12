@@ -1,11 +1,15 @@
 {{- if $.Site.Params.iubenda.pro.enable_pro -}}
     {{- with $.Site.Params.iubenda.id -}}
-        {{- $content := getJSON (add (add "http://www.iubenda.com/api/privacy-policy/" .) "/no-markup") -}}
+        {{- $url := (add "http://www.iubenda.com/api/privacy-policy/" .) -}}
+        {{- if eq (lower ($.Get 0)) "cookie" -}}
+            {{- $url = add $url "/cookie-policy" -}}
+        {{- end -}}
+        {{- $content := getJSON (add $url "/no-markup") -}}
         {{- if $content.success -}}
             {{- $content.content | replaceRE "<h1>(.*)</h1>" "" | safeHTML -}}
         {{- else -}}
             {{- if $.Site.Params.iubenda.pro.ignore_failed_download -}}
-                {{- errorf "Failed to fetch the content of the Privacy Policy." -}}
+                {{- errorf "(%s) Failed to fetch the content of the Privacy Policy." $.Page.File.Path -}}
             {{- end -}}
         {{- end -}}
     {{- else -}}
