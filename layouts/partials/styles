@@ -1,5 +1,5 @@
 {{- $attrs := .Attrs | default "" -}}
-{{- $preload := .Preload | default true -}}
+{{- $preload := .Preload | default false -}}
 {{- $crossorigin := .CrossOrigin | default "" -}}
 {{- $url := "" -}}
 {{- $integrity := "" -}}
