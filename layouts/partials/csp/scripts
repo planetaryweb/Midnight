@@ -3,8 +3,8 @@ script-src 'self' {{ with $.Site.Params.matomo.host }}
     {{- add "://" $url.Host | add $url.Scheme | add " " -}}
 {{- end }} {{ if $.Site.Params.iubenda.id }} https://cdn.iubenda.com
     {{- if $.Site.Params.iubenda.pro.enable_pro -}}
-        {{- if $.Site.Params.iubenda.pro.enable_cookie_policy }}
-            {{- if not $.Site.Params.iubenda.pro.disable_footer_link }} 'unsafe-inline'{{ end }} https://www.iubenda.com {{ end -}}
+        {{- if not $.Site.Params.iubenda.pro.disable_footer_link }} 'unsafe-inline'{{ end }}
+        {{- if $.Site.Params.iubenda.pro.enable_cookie_banner }} https://www.iubenda.com {{ end -}}
     {{- end -}}
 {{- end -}}
 {{- $recaptcha := false -}}

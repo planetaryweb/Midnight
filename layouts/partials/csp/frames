@@ -1,7 +1,7 @@
 frame-src 'self'
 {{- if $.Site.Params.iubenda.id }}
    {{- if not $.Site.Params.iubenda.pro.disable_footer_link }} https://www.iubenda.com{{ end }}
-   {{- if $.Site.Params.iubenda.pro.enable_cookie_policy }} https://cdn.iubenda.com{{ end }}
+   {{- if $.Site.Params.iubenda.pro.enable_cookie_banner }} https://cdn.iubenda.com{{ end }}
 {{- end }}
 {{- $recaptcha := false -}}
 {{- range $page := $.Site.Pages -}}
