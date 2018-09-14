@@ -35,7 +35,7 @@ Link: <{{ partial "script" (dict "Asset" . "Root" $ "URLOnly" true "RelType" "ro
 Content-Security-Policy: {{ partial "get_csp.txt" $ }}
 {{ end }}
 
-{{ if $.Site.Params.nginx.hsts }}
+{{ if $.Site.Params.server.hsts }}
 Strict-Transport-Security: "max-age=31536000; includeSubdomains; preload" always;
 {{ end }}
 
