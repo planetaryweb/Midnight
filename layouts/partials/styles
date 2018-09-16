@@ -30,6 +30,7 @@
     {{- $url -}}
 {{- else -}}
     {{- if $preload -}}
+    {{- $.Root.Scratch.Set "has_async_css" true -}}
     <link rel="preload" {{ printf "href=\"%s\"" $url | safeHTMLAttr }} as="style"{{ with $integrity }}{{ printf " integrity=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $crossorigin }}{{ printf " crossorigin=\"%s\"" . | safeHTMLAttr }}{{ end }}{{ with $attrs }} {{ . | safeHTMLAttr }}{{ end }}>
     <noscript>
     {{- end -}}

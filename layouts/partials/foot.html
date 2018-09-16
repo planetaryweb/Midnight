@@ -17,3 +17,9 @@
 {{- partial "plugins/partial.html" (dict "Prop" "foot" "Root" $) -}}
 
 {{- partial "script" (dict "Asset" "js/index.js" "Defer" true "Root" $) -}}
+
+{{- if ($.Scratch.Get "has_async_css") -}}
+{{- partial "script" (dict "Asset" "js/relpreload.js" "Root" $ "Defer" false) -}}
+{{- partial "script" (dict "Asset" "js/loadCSS.js" "Root" $ "Defer" false) -}}
+{{- partial "script" (dict "Asset" "js/asyncCSS.js" "Root" $ "Defer" false) -}}
+{{- end -}}

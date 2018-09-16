@@ -33,7 +33,7 @@
     {{- end -}}
 {{- end -}}
 
-{{ partial "styles" (dict "Src" "/styles.css" "Root" $ ) }}
+{{ partial "styles" (dict "Src" "/styles.css" "Root" $) }}
 
 {{- if or $.Site.Params.http2 (getenv "HUGO_HTTP2") -}}
     {{ $files := slice "reset" "fonts" "classes" "pagination" "page" "widgets" }}
@@ -104,9 +104,5 @@
 {{- partial "plugins/partial.html" (dict "Prop" "head" "Root" $) -}}
 
 {{ partial "matomo/head2.html" . }}
-
-{{- partial "script" (dict "Asset" "js/relpreload.js" "Root" $ "Defer" false) -}}
-{{- partial "script" (dict "Asset" "js/loadCSS.js" "Root" $ "Defer" false) -}}
-{{- partial "script" (dict "Asset" "js/asyncCSS.js" "Root" $ "Defer" false) -}}
 
 {{- partial "favicons.html" . -}}
