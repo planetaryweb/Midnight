@@ -16,7 +16,7 @@
     {{- else -}}
         {{- with .PrevInSection -}}
             {{- $prevlink = .Permalink -}}
-            {{- $prevtitle = .Title -}}
+            {{- $prevtitle = .LinkTitle -}}
         {{- end -}}
     {{- end -}}
 
@@ -32,7 +32,7 @@
     {{- else -}}
         {{- with .NextInSection -}}
             {{- $nextlink = .Permalink -}}
-            {{- $nexttitle = .Title -}}
+            {{- $nexttitle = .LinkTitle -}}
         {{- end -}}
     {{- end -}}
 
