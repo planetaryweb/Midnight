@@ -6,29 +6,12 @@ X-XSS-Protection: 1; mode=block
 Referrer-Policy: strict-origin-when-cross-origin
 Feature-Policy: vibrate 'none'; geolocation 'none'; midi 'none'; notifications *; push *; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker *; fullscreen *; payment 'none'
 
-{{- if $.Site.Params.http2 }}
-Link: </styles.css>; as=style; rel=preload
-{{ range slice "css/foundation.css" "css/reset.css" "css/page.css" "css/fonts.css" -}}
-Link: <{{ partial "styles" (dict "Asset" . "Root" $ "URLOnly" true "RelType" "root-relative") | strings.TrimPrefix (strings.TrimSuffix "/" $url.Path) }}>; as=style; rel=preload
+{{ if $.Site.Params.http2 -}}
+{{- partial "get_push" $ -}}
+{{- $push := $.Scratch.Get "push" -}}
+{{ range $push -}}
+Link <{{ .Path }}>; as={{ .Type }}; rel=preload
 {{ end }}
-{{ range slice "js/relpreload.js" "js/loadCSS.js" "js/asyncCSS.js" -}}
-Link: <{{ partial "script" (dict "Asset" . "Root" $ "URLOnly" true "RelType" "root-relative") | strings.TrimPrefix $url.Path }}>; as=script; rel=preload
-{{ end }}
-{{ range slice ($.Site.Params.fonts.header_style | default "sans-serif") ($.Site.Params.fonts.body_style | default "sans-serif") -}}
-    {{ if ($.Scratch.Get .) -}}
-        {{ if eq . "serif" -}}
-            Link: </css/fonts/alegreya/Alegreya-Regular.woff2>; as=font; rel=preload
-            {{- $.Scratch.Set . false -}}
-        {{ else if eq . "sans-serif" -}}
-            Link: </css/fonts/clear-sans/ClearSans-Regular.woff>; as=font; rel=preload
-        {{ else if eq . "slab-serif" -}}
-            Link: </css/fonts/zilla-slab/ZillaSlab-Regular.woff2; as=font; rel=preload
-        {{ end -}}
-    {{ end -}}
-{{- end -}}
-{{ with $.Site.Params.thumbnail -}}
-    Link: <{{ cond (hasPrefix . "/") . (add "/" .) }}>; as=image; rel=preload
-{{- end }}
 {{- end -}}
 
 {{ if not $.Site.Params.disable_csp }}
