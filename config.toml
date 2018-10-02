@@ -134,6 +134,9 @@
         delimiter = ""
     [mediaTypes."config/nginx"]
         suffixes = ["conf"]
+    [mediaTypes."config/caddy"]
+        suffixes = ["Caddyfile"]
+        delimiter = ""
 
 [outputFormats]
     [outputFormats.NetlifyHeaders]
@@ -145,4 +148,9 @@
         isPlainText = true
         basename = "nginx"
         mediaType = "config/nginx"
+        notAlternative = true
+    [outputFormats.Caddyfile]
+        isPlainText = true
+        basename = ""
+        mediaType = "config/caddy"
         notAlternative = true
