@@ -1,12 +1,10 @@
 /* Site main - pagination */
 .pagination a.button {
   color: var(--color-fg-alt)
-  white-space: nowrap;
 }
 
 .pagination .pagination-next {
   align-self: flex-end;
-  white-space: nowrap;
 }
 
 .pagination .pagination-page-number {
