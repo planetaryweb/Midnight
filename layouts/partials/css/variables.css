@@ -146,13 +146,15 @@
     {{- end -}}
     
     {{- with $.Site.Params.background.repeat -}}
-    {{- if eq . true -}}
-    --bg-repeat: repeat;
-    {{- else if ne . false -}}
-    --bg-repeat: {{ . }};
+        {{- if eq . true -}}
+        --bg-repeat: repeat;
+        {{- else if ne . false -}}
+        --bg-repeat: {{ . }};
+        {{- else -}}
+        --bg-repeat: no-repeat;
+        {{- end -}}
     {{- else -}}
     --bg-repeat: no-repeat;
-    {{- end -}}
     {{- end -}}
     
     {{- with $.Site.Params.background.fit -}}
