@@ -5,8 +5,10 @@
     {{- $action := findRE $actions . 1 -}}
     {{- with (index $action 0) -}}
         {{- with trim . " \t\n\r\v\f" | strings.TrimSuffix "\"" | strings.TrimPrefix "action=\"" -}}
-            {{- $url := urls.Parse . -}}
-            {{- add "://" $url.Host | add $url.Scheme | add " " -}}
+            {{- if ne . "thank-you" -}}
+                {{- $url := urls.Parse . -}}
+                {{- add "://" $url.Host | add $url.Scheme | add " " -}}
+            {{- end -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
