@@ -25,6 +25,7 @@
         {{ partial "head.html" . }}
     </head>
     <body itemscope itemtype="http://schema.org/WebPage">
+        {{ if $.Site.Menus.main -}}
         <div class="off-canvas-wrapper">
             <button id="off-canvas-toggle" type="button" class="button hide-for-medium" aria-label="Open Menu" data-toggle="main-nav-off-canvas">
                 <span class="fas fa-bars"></span>
@@ -36,6 +37,7 @@
                     </ul>
                 </nav>
             </div>
+        {{ end -}}
             <div id="site-container" class="grid-container full off-canvas-content">
                 <div class="grid-x full grid-container data-off-canvas-content">
                     <div id="site-header" class="cell">
@@ -62,7 +64,7 @@
                                 </div>
                             </header>
                         </a>
-                        {{ if (.Site.Menus.main) -}}
+                        {{ if .Site.Menus.main -}}
                         <nav id="main-nav" class="small-hide">
                           <ul class="dropdown menu" data-dropdown-menu>
                           {{- partial "nested_menu.html" (dict "menu" .Site.Menus.main "page" . "root" $) . -}}
@@ -89,6 +91,6 @@
                 </div>
             </div>
             {{ partial "foot.html" . }}
-        </div>
+        {{ if $.Site.Menus.main }}</div>{{ end }}
     </body>
 </html>
