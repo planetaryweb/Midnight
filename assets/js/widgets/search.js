@@ -1,6 +1,19 @@
 "use strict";
 
+{{ if and $.Site.Params.ref_type (eq $.Site.Params.ref_type "relative") }}
+// JavaScript trickery to make relative paths work
+var lunrJSON = "";
+var scripts = document.getElementsByTagName('script');
+for (var i = 0; i < scripts.length; i++ ) {
+    var scr = scripts[i];
+    if (scr.hasAttribute("src") && ((scr.getAttribute("src")[0] === '/' && scr.getAttribute("src")[1] !== '/') || scr.getAttribute("src")[0] === '.')) {
+        lunrJSON = scr.getAttribute("src").replace(/\/js\/.+$/, "/index.json");
+        break;
+    }
+}
+{{ else }}
 var lunrJSON = "{{ partial "make_link" (dict "URL" "/index.json" "Root" $) }}";
+{{ end }}
 var lunrIndex = undefined;
 var rawIndex = [];
 var sbox = document.getElementById("searchbox");

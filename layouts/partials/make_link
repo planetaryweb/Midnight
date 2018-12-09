@@ -35,12 +35,17 @@
             {{- $path = add $path "../" -}}
         {{- end -}}
         {{- $path = add $path $that -}}
-        {{- strings.TrimPrefix "../" $path -}}
+        {{- $path = strings.TrimPrefix "../" $path -}}
+        {{- /* Add leading "./" if there is no "../" - helps with JavaScript URL parsing */ -}}
+        {{- if not (hasPrefix $path ".") -}}
+            {{- $path = add "./" $path -}}
+        {{- end -}}
+        {{- $path -}}
     {{- else -}}
         {{- $thatPage -}}
     {{- end -}}
 {{- else -}}
-    {{- absLangURL $path -}}
+    {{- strings.TrimPrefix "/" $path | absLangURL -}}
     {{- /* Add #anchor back onto path */ -}}
     {{- index (findRE "\\#.*" .URL 1) 0 -}}
 {{- end -}}
