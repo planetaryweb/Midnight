@@ -13,10 +13,14 @@
 {{- end -}}
 
 {{- $pronoun := "" -}}
+{{- $len := 1 -}}
 {{- if .IsMember -}}
     {{- $pronoun = .Name -}}
 {{- else -}}
-    {{- $pronoun = i18n "ownerPronoun" (len ($scr.Get "sitevar").Data.members) -}}
+    {{- with ($scr.Get "sitevar").Data.members -}}
+        {{- $len = len . -}}
+    {{- end -}}
+    {{- $pronoun = i18n "ownerPronoun" $len -}}
 {{- end -}}
 
 {{ with .Social.bitbucket -}}

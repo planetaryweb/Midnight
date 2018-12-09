@@ -21,19 +21,21 @@
                 <time datetime="{{ .Date.Format "2006-01-02" }}" itemprop="datePublished">{{ .Page.Date.Format "January 02, 2006" }}</time>
                 </div>
                 {{- end -}}
-                {{- if gt (len $.Root.Site.Data.members) 1 -}}
-                    {{- $author := $.Root.Site.Params.author -}}
-                    {{- with $.Page.Params.author -}}
-                        {{- /* Verify author actually exists */ -}}
-                        {{- $.Scratch.Set "member" "" -}}
-                        {{- partial "get_member" (dict "Members" $.Root.Site.Data.members "Name" . "Scratch" $.Root.Scratch) -}}
-                        {{- $author = ($.Root.Scratch.Get "member").Name -}}
-                    {{- end -}}
-                    {{- with $author -}}
-                    <div>
-                        <span class="fas fa-user" aira-hidden></span>
-                        By: <span itemprop="author">{{ . }}</span>
-                    </div>
+                {{- if $.Root.Site.Data.members -}}
+                    {{- if gt (len $.Root.Site.Data.members) 1 -}}
+                        {{- $author := $.Root.Site.Params.author -}}
+                        {{- with $.Page.Params.author -}}
+                            {{- /* Verify author actually exists */ -}}
+                            {{- $.Scratch.Set "member" "" -}}
+                            {{- partial "get_member" (dict "Members" $.Root.Site.Data.members "Name" . "Scratch" $.Root.Scratch) -}}
+                            {{- $author = ($.Root.Scratch.Get "member").Name -}}
+                        {{- end -}}
+                        {{- with $author -}}
+                        <div>
+                            <span class="fas fa-user" aria-hidden></span>
+                            By: <span itemprop="author">{{ . }}</span>
+                        </div>
+                        {{- end -}}
                     {{- end -}}
                 {{- end -}}
             </div>
