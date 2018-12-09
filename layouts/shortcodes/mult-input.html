@@ -3,7 +3,7 @@
     {{ $name := .Get "name" }}
     {{ $has_other := (eq (.Get "add_other") "true") }}
     {{- if not (in (slice "checkbox" "radio" "select") $type) -}}
-        {{- errorf "(%s) Invalid multiple-choice input type \"%s\" - valid options are \"checkbox\", \"radio\", and \"select\"" .Page.File.Path -}}
+        {{- errorf "(%s) Invalid multiple-choice input type \"%s\" - valid options are \"checkbox\", \"radio\", and \"select\"" .Position -}}
     {{- end -}}
     <div class="cell small-text-center medium-4 medium-text-right">
         {{ if eq $type "select" }}

@@ -1,5 +1,5 @@
 {{- if eq (.Get "id") "" -}}
-    {{- errorf "(%s) Tabbed box must have a unique title" .Page.File.Path -}}
+    {{- errorf "(%s) Tabbed box must have a unique title" .Position -}}
 {{- end -}}
 {{- $regexp := "<li class=\"tab.*?>(.|\n)*?</li>" -}}
 <div class="tabgroup">

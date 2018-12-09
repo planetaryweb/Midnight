@@ -1,5 +1,5 @@
 {{- if .Inner -}}
-    {{- errorf "(%s) \"fa\" is a self-closing shortcode and should not have inner content" .Page.File.Path -}}
+    {{- errorf "(%s) \"fa\" is a self-closing shortcode and should not have inner content" .Position -}}
 {{- end -}}
 {{- if .IsNamedParams -}}
     {{- if eq (.Get "isbrand") "true" -}}

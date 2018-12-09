@@ -9,11 +9,11 @@
             {{- $content.content | replaceRE "<h1>(.*)</h1>" "" | safeHTML -}}
         {{- else -}}
             {{- if $.Site.Params.iubenda.pro.ignore_failed_download -}}
-                {{- errorf "(%s) Failed to fetch the content of the Privacy Policy." $.Page.File.Path -}}
+                {{- errorf "(%s) Failed to fetch the content of the Privacy Policy." $.Position -}}
             {{- end -}}
         {{- end -}}
     {{- else -}}
-        {{- errorf "(%s) Iubenda id is necessary to use Iubenda features." .Page.File.Path -}}
+        {{- errorf "(%s) Iubenda id is necessary to use Iubenda features." .Position -}}
     {{- end -}}
 {{- else -}}
     {{- errorf "(%s) Iubenda pro features are not enabled. Pro features must be enabled to use the iubenda shortcode." .Page.File.Path -}}

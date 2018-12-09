@@ -9,7 +9,7 @@
 {{- end -}}
 
 {{- if not $path -}}
-{{- errorf "(%s) missing path parameter in link shortcode" $.Page.File.Path -}}
+{{- errorf "(%s) missing path parameter in link shortcode" $.Position -}}
 {{- end -}}
 
 {{- $valid := true -}}
@@ -25,9 +25,9 @@
 {{- else if eq $type "static" -}}
     {{- $url = $path -}}
 {{- else if not $type -}}
-    {{- errorf "(%s) missing type for link shortcode with path \"%s\"" $.Page.File.Path $path -}}
+    {{- errorf "(%s) missing type for link shortcode with path \"%s\"" $.Position $path -}}
 {{- else -}}
-    {{- errorf "(%s) Invalid resource type \"%s\". Valid types are \"content\", \"resource\", \"asset\", and \"static\"" -}}
+    {{- errorf "(%s) Invalid resource type \"%s\". Valid types are \"content\", \"resource\", \"asset\", and \"static\"" $.Position $type -}}
     {{- $valid = false -}}
 {{- end -}}
 
