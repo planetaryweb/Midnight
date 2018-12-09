@@ -1,25 +1,33 @@
 <div class="widget">
     {{ $posts := "" }}
-    {{ if $.Site.Params.sidebar.recent.section }}
-        {{ with $.Site.Params.sidebar.recent.section }}
-            {{ if ($.Site.GetPage .) }}
-                {{ $posts = . }}
-            {{ else }}
-                {{ errorf "Could not find section %s" . }}
+    {{ if $.Site.Params.sidebar }}
+        {{ if $.Site.Params.sidebar.recent }}
+            {{ if $.Site.Params.sidebar.recent.section }}
+                {{ with $.Site.Params.sidebar.recent.section }}
+                    {{ if ($.Site.GetPage .) }}
+                        {{ $posts = . }}
+                    {{ else }}
+                        {{ errorf "Could not find section %s" . }}
+                    {{ end }}
+                {{ end }}
             {{ end }}
         {{ end }}
-    {{ else if ($.Site.GetPage "/news") }}
-        {{ $posts = "news" }}
-    {{ else if ($.Site.GetPage "/posts") }}
-		{{ $posts = "posts" }}
-	{{ else if ($.Site.GetPage "/post") }}
-		{{ $posts = "post" }}
+    {{ end }}
+
+    {{ if eq $posts "" }}
+        {{ if ($.Site.GetPage "/news") }}
+            {{ $posts = "news" }}
+        {{ else if ($.Site.GetPage "/posts") }}
+            {{ $posts = "posts" }}
+        {{ else if ($.Site.GetPage "/post") }}
+            {{ $posts = "post" }}
+        {{ end }}
 	{{ end }}
 	<header>
 		<span class="widget-header"><span class="fas fa-pencil-alt fa-xs" aria-hidden></span> <a href="{{ partial "make_link" (dict "URL" (printf "%s/" $posts) "Root" $) }}">{{ i18n "recentPostsLabel" | title }}</a></span>
 	</header>
 	{{ $url := .URL }}
-	{{- range $format := (.Site.GetPage "/").OutputFormats -}}
+	{{- range $format := ($.Site.GetPage "/").OutputFormats -}}
 		{{ if eq $format.Name "RSS" }}
 			<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" "/index.xml" "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSiteSubscribe" | title }}</a>
 		{{ end }}
@@ -33,7 +41,7 @@
 			{{- end -}}
 		{{- end -}}
 	{{- else if .IsPage -}}
-	{{- $sectionstr := trim (replaceRE "[^/]+$" "" (trim (replace (absLangURL .URL) .Site.BaseURL "") "/")) "/" -}}
+	{{- $sectionstr := trim (replaceRE "[^/]+$" "" (trim (replace .Permalink .Site.BaseURL "") "/")) "/" -}}
 
 	{{- $section := "" -}}
 	{{- $sectionok := true -}}
