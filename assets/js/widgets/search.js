@@ -1,13 +1,15 @@
 "use strict";
-
-{{ if and $.Site.Params.ref_type (eq $.Site.Params.ref_type "relative") }}
+{{ $isRel := and $.Site.Params.ref_type (eq $.Site.Params.ref_type "relative") }}
+{{ if $isRel }}
 // JavaScript trickery to make relative paths work
 var lunrJSON = "";
+var pathToRoot = "";
 var scripts = document.getElementsByTagName('script');
 for (var i = 0; i < scripts.length; i++ ) {
     var scr = scripts[i];
     if (scr.hasAttribute("src") && ((scr.getAttribute("src")[0] === '/' && scr.getAttribute("src")[1] !== '/') || scr.getAttribute("src")[0] === '.')) {
-        lunrJSON = scr.getAttribute("src").replace(/\/js\/.+$/, "/index.json");
+        pathToRoot = scr.getAttribute("src").replace(/\/js\/.+$/, "");
+        lunrJSON = pathToRoot + "/index.json";
         break;
     }
 }
@@ -84,7 +86,11 @@ function populateSearchbox() {
             result.setAttribute("class", "search-result cell button");
             result.innerHTML = rawIndex[data.ref].name;
             var link = document.createElement("a");
+            {{ if $isRel }}
+            link.setAttribute("href", pathToRoot + rawIndex[data.ref].url);
+            {{ else }}
             link.setAttribute("href", rawIndex[data.ref].url);
+            {{ end }}
             // Add event handler to results to log search if using piwik
             if (typeof _paq !== "undefined") {
                 link.addEventListener("click", function() {
