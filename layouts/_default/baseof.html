@@ -15,7 +15,10 @@
 
         {{ hugo.Generator }}
 
-        {{- if .RSSLink -}}<link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} Feed" href="{{ .RSSLink }}">{{ end }}
+        {{- with .OutputFormats.Get "RSS" -}}
+                <link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }} Feed" href="
+                {{- partialCached "make_link" (dict "Root" $ "URL" .Permalink) .Permalink }}">
+        {{- end }}
 
         {{- if .Params.tags -}}
           <meta name="keywords" itemprop="keywords" content="{{ delimit .Params.tags "," }}" id="keywords">
