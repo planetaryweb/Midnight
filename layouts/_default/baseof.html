@@ -13,7 +13,7 @@
         <meta name="description" itemprop="description" content="{{ replace $desc "\n" " " }}" id="desc">
         {{- end -}}
 
-        {{ .Hugo.Generator }}
+        {{ hugo.Generator }}
 
         {{- if .RSSLink -}}<link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} Feed" href="{{ .RSSLink }}">{{ end }}
 
