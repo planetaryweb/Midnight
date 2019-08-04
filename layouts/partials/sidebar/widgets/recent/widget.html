@@ -26,7 +26,7 @@
 	<header>
 		<span class="widget-header"><span class="fas fa-pencil-alt fa-xs" aria-hidden></span> <a href="{{ partial "make_link" (dict "URL" (printf "%s/" $posts) "Root" $) }}">{{ i18n "recentPostsLabel" | title }}</a></span>
 	</header>
-	{{ $url := .URL }}
+	{{ $url := .Permalink }}
 	{{- range $format := ($.Site.GetPage "/").OutputFormats -}}
 		{{ if eq $format.Name "RSS" }}
 			<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" "/index.xml" "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSiteSubscribe" | title }}</a>
