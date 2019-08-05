@@ -3,7 +3,7 @@ license = "MIT"
 licenselink = "https://gitlab.com/BluestNight/Midnight/raw/master/LICENSE.md"
 description = "A modern Hugo theme with lots of configuration options to make it truly yours. Supports custom plugins to integrate your own features into the theme."
 homepage = "https://bluestnight.com/products/midnight"
-min_version = 0.51
+min_version = 0.56
 tags = [
     "Blog",
     "Caddy",
