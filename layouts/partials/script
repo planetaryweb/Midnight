@@ -12,8 +12,7 @@
     {{- $url = . -}}
     {{- $integrity = $.Integrity | default "" -}}
 {{- else -}}
-    {{- with (index . "Asset") -}}
-        {{- /* Can't seem to store asset resources in Scratch, so avoid that here */ -}}
+    {{- with .Asset -}}
         {{- $res := resources.Get . -}}
         {{- if $is_tmpl -}}
             {{- $res = resources.ExecuteAsTemplate . $.Root $res -}}
@@ -21,9 +20,9 @@
         {{- if not $.Root.Site.Params.no_minify -}}
             {{- $res = $res | minify -}}
         {{- end -}}
-        {{- $res := $res | fingerprint -}}
-        {{- $integrity = $res.Data.Integrity -}}
         {{- $url = partial "make_link" (dict "URL" $res.RelPermalink "Root" $.Root "RelType" $reltype) -}}
+        {{- $res = $res | resources.Fingerprint "sha512" -}}
+        {{- $integrity = $res.Data.Integrity -}}
     {{- else -}}
         {{- errorf "script partial requires either Src or Asset to be set. Params: %#v" . -}}
     {{- end -}}

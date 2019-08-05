@@ -18,8 +18,8 @@
         {{- if not $.Root.Site.Params.no_minify -}}
             {{- $res = $res | minify -}}
         {{- end -}}
-        {{- $res = $res | fingerprint -}}
         {{- $url = partial "make_link" (dict "URL" $res.RelPermalink "Root" $.Root "RelType" $reltype) -}}
+        {{- $res = $res | resources.Fingerprint "sha512" -}}
         {{- $integrity = $res.Data.Integrity -}}
     {{- else -}}
         {{- errorf "style partial requires either Src or Asset to be set Params: %#v" . -}}
