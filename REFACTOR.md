@@ -1,0 +1,4 @@
+- [x] get_member
+- [ ] get_push
+  - Awaiting refactor to better match module system w/ base "module"
+- [ ] has_suffix
