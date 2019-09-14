@@ -1,3 +1,44 @@
+[module]
+[[module.imports]]
+    #path = "gitlab.com/BluestNight/orbiter-server-nginx"
+    path = "orbiter-server-nginx"
+[[module.imports]]
+    #path = "gitlab.com/BluestNight/orbiter-comments-commento"
+    path = "orbiter-comments-commento"
+[[module.imports]]
+    #path = "gitlab.com/BluestNight/orbiter-sidebar-support"
+    path = "orbiter-sidebar-support"
+[[module.imports]]
+    #path = "gitlab.com/BluestNight/orbiter-sidebar-search"
+    path = "orbiter-sidebar-search"
+[[module.imports]]
+    #path = "gitlab.com/BluestNight/orbiter-sidebar-patreon"
+    path = "orbiter-sidebar-patreon"
+[[module.imports]]
+    #path = "gitlab.com/BluestNight/orbiter-shortcode-katex"
+    path = "orbiter-shortcode-katex"
+[[module.imports]]
+    #path = "gitlab.com/BluestNight/orbiter-server-netlify"
+    path = "orbiter-server-netlify"
+[[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"
+[[module.mounts]]
+    source = "assets"
+    target = "assets"
+[[module.mounts]]
+    source = "data"
+    target = "data"
+[[module.mounts]]
+    source = "i18n"
+    target = "i18n"
+[[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+[[module.mounts]]
+    source = "static"
+    target = "static"
+
 [params]
 [params.Midnight]
 [params.Midnight.color]
@@ -59,19 +100,11 @@
             cache = true
 
 [mediaTypes]
-    [mediaTypes."netlify/headers"]
-        suffixes = ["_headers"]
-        delimiter = ""
     [mediaTypes."config/caddy"]
         suffixes = ["Caddyfile"]
         delimiter = ""
 
 [outputFormats]
-    [outputFormats.NetlifyHeaders]
-        isPlainText = true
-        basename = ""
-        mediaType = "netlify/headers"
-        notAlternative = true
     [outputFormats.Caddyfile]
         isPlainText = true
         basename = ""
