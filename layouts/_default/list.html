@@ -29,18 +29,7 @@
         {{ $pages := .Pages }}
 
         {{ if .IsHome }}
-            {{ if $.Site.Params.home_section }}    
-                {{ $pages = strings.TrimPrefix "/" $.Site.Params.home_section | where $.Pages "Section" }}
-                {{ if eq (len $pages) 0 }}
-                    {{ errorf "Section \"%s\" is empty or does not exist" .Site.Params.home_section }}
-                {{ end }}
-            {{ else if ($.Site.GetPage "/news") }}
-                {{ $pages = where .Pages "Section" "news" }}
-            {{ else if ($.Site.GetPage "/posts") }}
-                {{ $pages = where .Pages "Section" "posts" }}
-            {{ else if ($.Site.GetPage "/post") }}
-                {{ $pages = where .Pages "Section" "post" }}
-            {{ end }}
+            {{ $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
         {{ end }}
 
         {{ if or .Params.sort_field .Params.sort_order }}
