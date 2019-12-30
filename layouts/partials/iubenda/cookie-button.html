@@ -1,6 +1,4 @@
-{{- .Scratch.Set "sitevar" $.Site -}}
-{{- partial "iubenda/color.html" .Scratch -}}
-{{- $color := add " iubenda-" (.Scratch.Get "iub_color") -}}
+{{- $color := add " iubenda-" (partial "iubenda/color.html" $.Site) -}}
 {{- $class := "iubenda-embed" -}}
 {{- if $.Site.Params.iubenda.pro.enable_pro -}}
     {{- if $.Site.Params.iubenda.pro.white_label -}}

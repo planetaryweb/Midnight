@@ -1,35 +1,37 @@
-{{- $scr := . -}}
-{{- $site := $scr.Get "sitevar" -}}
+{{- $color := . -}}
 
-{{- $scr.Set "page_bg" "#000000" -}}{{- $scr.Set "main_bg" "#050505" -}}{{- $scr.Set "alt_bg" "#252525" -}}
-{{- $scr.Set "main_text" "#e2e2e2" -}}{{- $scr.Set "alt_text" "#ffffff" -}}
-{{- $scr.Set "accent" "#2073c9" -}}{{- $scr.Set "accent_text" "#e2e2e2" -}}
+{{- $pageBg    := "#000000" -}}
+{{- $mainBg    := "#050505" -}}
+{{- $altBg     := "#252525" -}}
+{{- $mainTxt   := "#e2e2e2" -}}
+{{- $altTxt    := "#ffffff" -}}
+{{- $accentBg  := "#2073c9" -}}
+{{- $accentTxt := "#e2e2e2" -}}
 
-{{- with $site.Params.color.page_background -}}
-  {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "page_bg" . -}}
+{{- with $color.page_background -}}
+    {{- $pageBg = partial "utils/color/to_rgb" . -}}
 {{- end -}}
-{{- with $site.Params.color.main_background -}}
-  {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "main_bg" . -}}
+{{- with $color.main_background -}}
+    {{- $mainBg = partial "utils/color/to_rgb" . -}}
 {{- end -}}
-{{- with $site.Params.color.alt_background -}}
-  {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "alt_bg" . -}}
+{{- with $color.alt_background -}}
+    {{- $altBg = partial "utils/color/to_rgb" . -}}
 {{- end -}}
-{{- with $site.Params.color.main_text -}}
-  {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "main_text" . -}}
+{{- with $color.main_text -}}
+    {{- $mainTxt = partial "utils/color/to_rgb" . -}}
 {{- end -}}
-{{- with $site.Params.color.alt_text -}}
-  {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "alt_text" . -}}
+{{- with $color.alt_text -}}
+    {{- $altTxt = partial "utils/color/to_rgb" . -}}
 {{- end -}}
-{{- with $site.Params.color.accent -}}
-  {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "accent" . -}}
+{{- with $color.accent -}}
+    {{- $accentBg = partial "utils/color/to_rgb" . -}}
 {{- end -}}
-{{- with $site.Params.color.accent_text -}}
-  {{- partial "css/color/validate_color.css" (dict "color" . "color_map" $site.Data.css_colors) -}}
-  {{- $scr.Set "accent_text" . -}}
+{{- with $color.accent_text -}}
+    {{- $accentTxt = partial "utils/color/to_rgb" . -}}
 {{- end -}}
+
+{{- $page   := dict "Background" $pageBg -}}
+{{- $main   := dict "Background" $mainBg   "Text" $mainTxt -}}
+{{- $alt    := dict "Background" $altBg    "Text" $altTxt -}}
+{{- $accent := dict "Background" $accentBg "Text" $accentTxt -}}
+{{- return (dict "Page" $page "Main" $main "Alt" $alt "Accent" $accent) -}}

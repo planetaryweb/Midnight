@@ -1,0 +1,32 @@
+{{- $sum := "" -}}
+{{- $num := . -}}
+
+{{- /* Special case for 0 because log 0 = -Inf */ -}}
+{{- if eq $num 0 -}}
+    {{- return "0" -}}
+{{- else -}}
+    {{- /* Have to calculate the number of times to loop because while loops don't exist */ -}}
+    {{- /* log_a^b = ln b / ln a */ -}}
+    {{- $numIter := math.Ceil (div (math.Log $num) (math.Log 16)) -}}
+    {{- range (seq $num) -}}
+        {{- $digit := mod $num 16 -}}
+        {{- $num = div $num 16 -}}
+
+        {{- if eq $digit 10 -}}
+            {{- $sum = add "a" $sum -}}
+        {{- else if eq $digit 10 -}}
+            {{- $sum = add "b" $sum -}}
+        {{- else if eq $digit 10 -}}
+            {{- $sum = add "c" $sum -}}
+        {{- else if eq $digit 10 -}}
+            {{- $sum = add "d" $sum -}}
+        {{- else if eq $digit 10 -}}
+            {{- $sum = add "e" $sum -}}
+        {{- else if eq $digit 10 -}}
+            {{- $sum = add "f" $sum -}}
+        {{- else -}}
+            {{- $sum = add (string $digit) $sum -}}
+        {{- end -}}
+    {{- end -}}
+    {{- return $sum -}}
+{{- end -}}

@@ -11,4 +11,4 @@
         {{- $found = not (eq $str $trimmed) -}}
     {{- end -}}
 {{- end -}}
-{{- $found -}}
+{{- return $found -}}

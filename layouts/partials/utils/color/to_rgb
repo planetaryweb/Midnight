@@ -1,0 +1,109 @@
+{{- $returnVal := dict "" "" -}}
+{{- $type := partial "utils/color/color_type" . -}}
+{{- if eq $type "rgb" -}}
+    {{- if reflect.IsMap . -}}
+        {{- $returnVal = . -}}
+    {{- else -}}
+        {{- $rgbRegExp := "[0-9]{1,3}(?:(,|\\)))" -}}
+        {{- $str := trim (replace (replace . "rgba(" "") "rgb(" "") " \n" -}}
+        {{- $nums := findRE $rgbRegExp $str -}}
+        {{- $red   := int (trim (index $nums 0) ",)") -}}
+        {{- $green := int (trim (index $nums 1) ",)") -}}
+        {{- $blue  := int (trim (index $nums 2) ",)") -}}
+        {{- $alpha := 1.0 -}}
+        {{- if eq 4 (len $nums) -}}
+            {{- $floatstr := last 1 (findRE "[0-1](\\.[0-9]+)?\\)" $str 1) -}}
+            {{- $alpha = (float (trim (index $floatstr 0) ")")) -}}
+        {{- end -}}
+        {{- $returnVal = (dict "Red" $red "Green" $green "Blue" $blue "Alpha" $alpha) -}}
+    {{- end -}}
+{{- else if eq $type "hsl" -}}
+    {{- $hsl := . -}}
+
+    {{- if not (reflect.IsMap .) -}}
+        {{- $hsl = partial "utils/color/to_hsl" . -}}
+    {{- end -}}
+
+    {{- $hue := $hsl.Hue -}}
+    {{- $hue := div (mod (int $hue) 360) 360.0 -}}
+    {{- $saturation := div ($hsl.Saturation) 100.0 -}}
+    {{- $lightness := div ($hsl.Lightness) 100.0 -}}
+
+    {{- if eq $saturation 0 -}}
+        {{- $returnVal = (dict "Red" 255 "Green" 255 "Blue" 255 "Alpha" $hsl.Alpha) -}}
+    {{- else -}}
+        {{- $q := 0 -}}
+        {{- if lt $lightness 0.5 -}}
+            {{- $q = (mul $lightness (add 1.0 $saturation)) -}}
+        {{- else -}}
+            {{- $q = (sub (add $lightness $saturation ) (mul $lightness $saturation)) -}}
+        {{- end -}}
+
+        {{- $p := sub (mul 2.0 $lightness) $q -}}
+
+        {{- $slice := slice -}}
+        {{- range $i, $color := (slice "Red" "Green" "Blue") -}}
+            {{- $t := add $hue (sub (div 1.0 3.0) (mul $i (div 1.0 3.0))) -}}
+
+            {{- if lt $t 0 -}}
+                {{- $t = (add $t 1.0) -}}
+            {{- else if gt $t 1 -}}
+                {{- $t = (sub $t 1.0) -}}
+            {{- end -}}
+
+            {{- if lt $t (div 1.0 6.0) -}}
+                {{- $t = (add $p (mul (mul (sub $q $p) 6.0) $t)) -}}
+            {{- else if lt $t 0.5 -}}
+                {{- $t = $q -}}
+            {{- else if lt $t (div 2.0 3.0) -}}
+                {{- $t = (add $p (mul (mul (sub $q $p) (sub (div 2.0 3.0) $t)) 6.0)) -}}
+            {{- else -}}
+                {{- $t = $p -}}
+            {{- end -}}
+
+            {{- $slice = append (int (add (mul $t 255.0) 0.5)) $slice -}}
+        {{- end -}}
+
+        {{- $returnVal = (dict "Red" (index $slice 0) "Green" (index $slice 1) "Blue" (index $slice 2) "Alpha" $hsl.Alpha) -}}
+    {{- end -}}
+{{- else if eq $type "hex" -}}
+    {{- $redstr := "" -}}
+    {{- $greenstr := "" -}}
+    {{- $bluestr := "" -}}
+    {{- $alphastr := "ff" -}}
+
+    {{- /* If length < 7, every value is one character */ -}}
+    {{- if lt (len .) 7 -}}
+        {{- $redstr = strings.Repeat (substr . 1 1) 2 -}}
+        {{- $greenstr = strings.Repeat (substr . 2 1) 2 -}}
+        {{- $bluestr = strings.Repeat (substr . 3 1) 2 -}}
+        {{- /* If has alpha */ -}}
+        {{- if eq (len .) 5 -}}
+            {{- $alphastr = strings.Repeat (substr . 4 1) 2 -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $redstr = (substr . 1 2) -}}
+        {{- $greenstr = (substr . 3 2) -}}
+        {{- $bluestr = (substr . 5 2) -}}
+        {{- /* If has alpha */ -}}
+        {{- if eq (len .) 9 -}}
+            {{- $alphastr = (substr . 7 2) -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $red := partial "utils/math/hex_to_dec" $redstr -}}
+    {{- $green := partial "utils/math/hex_to_dec" $greenstr -}}
+    {{- $blue := partial "utils/math/hex_to_dec" $bluestr -}}
+    {{- $alpha := partial "utils/math/hex_to_dec" $alphastr -}}
+
+    {{- $returnVal = (dict "Red" $red "Green" $green "Blue" $blue "Alpha" $alpha) -}}
+{{- else if eq $type "name" -}}
+    {{- $keywords := partial "utils/color/get_color_names" -}}
+    {{- $arr := index $keywords . -}}
+    {{- $red = (index $arr 0) -}}
+    {{- $green = (index $arr 1) -}}
+    {{- $blue = (index $arr 2) -}}
+    {{- $alpha = (index $arr 3) -}}
+    {{- $returnVal = (dict "Red" $red "Green" $green "Blue" $blue "Alpha" $alpha) -}}
+{{- end -}}
+{{- return $returnVal -}}

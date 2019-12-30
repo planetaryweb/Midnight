@@ -1,0 +1,2 @@
+{{- return getJSON "https://raw.githubusercontent.com/corysimmons/colors.json/master/colors.json" -}}
+

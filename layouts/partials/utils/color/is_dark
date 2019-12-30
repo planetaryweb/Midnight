@@ -1,0 +1,2 @@
+{{- $hsl := partial "utils/color/to_hsl" . -}}
+{{- return (lt $hsl.Lightness 50) -}}

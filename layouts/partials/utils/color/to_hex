@@ -1,0 +1,36 @@
+{{- $type := partial "utils/color/color_type" . -}}
+
+{{- if eq $type "hex" -}}
+    {{- return . -}}
+{{- else -}}
+    {{- $rgb := partial "utils/color/to_rgb" . -}}
+
+    {{- $hex := "#" -}}
+
+    {{- $red := partial "utils/math/dec_to_hex" $rgb.Red -}}
+    {{- if lt (len $red) 2 -}}
+        {{- $red = add "0" $red -}}
+    {{- end -}}
+    {{- $hex = add $hex $red -}}
+
+    {{- $green := partial "utils/math/dec_to_hex" $rgb.Red -}}
+    {{- if lt (len $green) 2 -}}
+        {{- $green = add "0" $green -}}
+    {{- end -}}
+    {{- $hex = add $hex $green -}}
+
+    {{- $blue := partial "utils/math/dec_to_hex" $rgb.Red -}}
+    {{- if lt (len $blue) 2 -}}
+        {{- $blue = add "0" $blue -}}
+    {{- end -}}
+    {{- $hex = add $hex $blue -}}
+
+    {{- if lt $rgb.Alpha 1.0 -}}
+        {{- $alpha := partial "utils/math/dec_to_hex" (mul 255.0 $rgb.Alpha) -}}
+        {{- if lt (len $alpha) 2 -}}
+            {{- $alpha = add "0" $alpha -}}
+        {{- end -}}
+        {{- $hex = add $hex $alpha -}}
+    {{- end -}}
+    {{- return $hex -}}
+{{- end -}}

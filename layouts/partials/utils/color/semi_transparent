@@ -1,0 +1,10 @@
+{{- $rgb := dict "" "" -}}
+{{- $alpha := 0.0 -}}
+{{- if or (not (reflect.IsMap .)) (or (isset . "Red") (isset . "Hue")) -}}
+    {{- $rgb = partial "utils/color/to_rgb" . -}}
+    {{- $alpha = div $rgb.Alpha 2.0 -}}
+{{- else -}}
+    {{- $rgb = partial "utils/color/to_rgb" .Color -}}
+    {{- $alpha = .Alpha -}}
+{{- end -}}
+{{- return (dict "Red" $rgb.Red "Green" $rgb.Green "Blue" $rgb.Blue "Alpha" $alpha) -}}

@@ -1,0 +1,25 @@
+{{- $sum := 0 -}}
+{{- $mult := 0.0625 -}}{{- /* 1/16 */ -}}
+{{- $chars := split (lower .) "" -}}
+
+{{- /* Go in reverse order to start with Least Significant Digit */ -}}
+{{- range $i := seq (sub (len $chars) 1) -1 0 -}}
+    {{- $mult = int (mul $mult 16) -}}
+    {{- $char := index $chars $i -}}
+    {{- if eq $char "a" -}}
+        {{- $sum = add $sum (mul $mult 10) -}}
+    {{- else if eq $char "b" -}}
+        {{- $sum = add $sum (mul $mult 11) -}}
+    {{- else if eq $char "c" -}}
+        {{- $sum = add $sum (mul $mult 12) -}}
+    {{- else if eq $char "d" -}}
+        {{- $sum = add $sum (mul $mult 13) -}}
+    {{- else if eq $char "e" -}}
+        {{- $sum = add $sum (mul $mult 14) -}}
+    {{- else if eq $char "f" -}}
+        {{- $sum = add $sum (mul $mult 15) -}}
+    {{- else -}}
+        {{- $sum = add $sum (mul $mult (int $char)) -}}
+    {{- end -}}
+{{- end -}}
+{{- return $sum -}}

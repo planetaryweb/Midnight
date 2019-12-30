@@ -1,0 +1,77 @@
+{{- $returnVal := dict "" "" -}}
+{{- $type := partial "utils/color/color_type" . -}}
+
+{{- if eq $type "hsl" -}}
+    {{- if reflect.IsMap . -}}
+        {{- $returnVal = . -}}
+    {{- else -}}
+        {{- errorf "Cannot convert \"%s\" to HSL: hsl string parsing not yet implemented" -}}
+    {{- end -}}
+{{- else if or (or (eq $type "hex") (eq $type "name")) (eq $type "rgb") -}}
+    {{- $rgb := partial "utils/color/to_rgb" . -}}
+
+    {{- $red   := div $rgb.Red   255.0 -}}
+    {{- $green := div $rgb.Green 255.0 -}}
+    {{- $blue  := div $rgb.Blue  255.0 -}}
+
+    {{- $hue := 0.0 -}}
+    {{- $saturation := 0.0 -}}
+    {{- $lightness := 0.0 -}}
+
+    {{- $max := 0.0 -}}
+    {{- $min := 0.0 -}}
+
+    {{- $maxlabel := "" -}}
+    {{- $minlabel := "" -}}
+
+    {{- if gt $red $blue -}}
+        {{- $max = $red -}}
+        {{- $maxlabel = "red" -}}
+        {{- $min = $blue -}}
+        {{- $minlabel = "blue" -}}
+    {{- else -}}
+        {{- $max = $blue -}}
+        {{- $maxlabel = "blue" -}}
+        {{- $min = $red -}}
+        {{- $minlabel = "red" -}}
+    {{- end -}}
+
+    {{- if gt $green $max -}}
+        {{- $max = $green -}}
+        {{- $maxlabel = "green" -}}
+    {{- else if lt $green $min -}}
+        {{- $min = $green -}}
+        {{- $minlabel = "green" -}}
+    {{- end -}}
+
+    {{- $lightness = div (add $max $min) 2.0 -}}
+
+    {{- if eq $max $min -}}
+        {{ $hue = 0 }}
+        {{ $saturation = 0 }}
+    {{- else -}}
+        {{- $delta := sub $max $min -}}
+        {{- if gt $lightness 0.5 -}}
+            {{- $saturation = div $delta (sub (sub 2 $max) $min) -}}
+        {{- else -}}
+            {{- $saturation = div $delta (add $max $min) -}}
+        {{- end -}}
+
+        {{- if eq $maxlabel "red" -}}
+            {{- $x := 0 -}}
+            {{- if lt $green $blue -}}{{- $x = 6 -}}{{- end -}}
+            {{- $hue = add (div (sub $green $blue) $delta) $x -}}
+        {{- else if eq $maxlabel "green" -}}
+            {{- $hue = add (div (sub $blue $red) $delta) 2 -}}
+        {{- else -}}
+            {{- $hue = add (div (sub $red $green) $delta) 4 -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $hue = mul $hue 60 -}}
+    {{- $lightness = mul $lightness 100 -}}
+    {{- $saturation = mul $saturation 100 -}}
+
+    {{- $returnVal = (dict "Hue" $hue "Saturation" $saturation "Lightness" $lightness "Alpha" $rgb.Alpha) -}}
+{{- end -}}
+{{- return $returnVal -}}

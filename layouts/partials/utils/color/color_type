@@ -1,0 +1,29 @@
+{{- $returnVal := "" -}}
+{{- if reflect.IsMap . -}}
+    {{- if and (and (isset . "Red") (isset . "Green")) (and (isset . "Blue") (isset . "Alpha")) -}}
+        {{- $returnVal = "rgb" -}}
+    {{- else if and (and (isset . "Hue") (isset . "Saturation")) (and (isset . "Lightness") (isset . "Alpha")) -}}
+        {{- $returnVal = "hsl" -}}
+    {{- else -}}
+        {{- errorf "dicts representing colors must have one of the following sets of keys: [Red, Green, Blue, Alpha] or [Hue, Saturation, Lightness, Alpha]" -}}
+    {{- end -}}
+{{- else -}}
+    {{- $color := . -}}
+    {{- $colorMap := partial "utils/color/get_color_names" -}}
+    {{- $hexRegex := "^#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{4}|[0-9a-fA-F]{3})$" -}}
+    {{- $rgbRegex := "^rgb\\((((2([0-4][0-9]|5[0-5]))|([0-1]?[0-9]?[0-9])|([0-1]?[0-9]?[0-9]\\%)),(\\s?)){2}((2([0-4][0-9]|5[0-5]))|([0-1]?[0-9]?[0-9])|([0-1]?[0-9]?[0-9]\\%))\\)$" -}}
+    {{- $rgbaRegex := "^rgb(a?)\\((((2([0-4][0-9]|5[0-5]))|([0-1]?[0-9]?[0-9])|([0-1]?[0-9]?[0-9]\\%)),(\\s?)){3}(([0-1]?[0-9]?[0-9]\\%)|(1(\\.0+)?)|(0((\\.[0-9]+)?))|(\\.[0-9]+))\\)$" -}}
+
+    {{- if eq (index (findRE $hexRegex $color) 0) $color -}}
+        {{- $returnVal = "hex" -}}
+    {{- else if eq (index (findRE $rgbRegex $color) 0) $color -}}
+        {{- $returnVal = "rgb" -}}
+    {{- else if eq (index (findRE $rgbaRegex $color) 0) $color -}}
+        {{- $returnVal = "rgb" -}}
+    {{- else if ne (index $colorMap $color) nil -}}
+        {{- $returnVal = "name" -}}
+    {{- else -}}
+        {{- errorf "\"%s\" is not a valid CSS Color\nSee https://developer.mozilla.org/en-US/docs/Web/CSS/color_value for examples of valid values" $color -}}
+    {{- end -}}
+{{- end -}}
+{{- return $returnVal -}}

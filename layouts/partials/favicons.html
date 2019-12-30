@@ -1,7 +1,7 @@
 {{- $files := readDir "/static/" -}}
 {{- $regex := "favicon\\-\\d+x\\d+.png" -}}
-{{- partial "css/color/parse_color" .Scratch -}}
-{{- $accent := .Scratch.Get "accent" -}}
+{{- $color := partial "css/color/parse_color" .Site.Params.color -}}
+{{- $accent := $color.Accent.Background -}}
 {{ range $files }}
     {{- $reg := findRE $regex .Name 1 -}}
     {{- if eq .Name "apple-touch-icon.png" -}}

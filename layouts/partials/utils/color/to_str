@@ -1,0 +1,29 @@
+{{ $type := partial "utils/color/color_type" . }}
+
+{{- if eq $type "rgb" -}}
+    {{- if reflect.IsMap . -}}
+        {{- if lt .Alpha 1.0 -}}
+            rgba({{ .Red }}, {{ .Green }}, {{ .Blue }}, {{ .Alpha }})
+        {{- else -}}
+            {{- /* Better compatibility with older browsers */ -}}
+            rgb({{ .Red }}, {{ .Green }}, {{ .Blue }})
+        {{- end -}}
+    {{- else -}}
+        {{- . -}}
+    {{- end -}}
+{{- else if eq $type "hsl" -}}
+    {{- if reflect.IsMap . -}}
+        {{- if lt .Alpha 1.0 -}}
+            hsla({{ .Hue }}, {{ .Saturation }}, {{ .Lightness }}, {{ .Alpha }})
+        {{- else -}}
+            {{- /* Better compatibility with older browsers */ -}}
+            rgb({{ .Hue }}, {{ .Saturation }}, {{ .Lightness }})
+        {{- end -}}
+    {{- else -}}
+        {{- . -}}
+    {{- end -}}
+{{- else if eq $type "hex" -}}
+    {{- . -}}
+{{- else if eq $type "name" -}}
+    {{- . -}}
+{{- end -}}
