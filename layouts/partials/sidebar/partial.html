@@ -7,10 +7,14 @@
     {{- $exists := true -}}
     {{- range split $.Prop "." -}}
         {{- if $exists -}}
-            {{- with index $prop . -}}
-                {{- $prop = . -}}
-            {{- else -}}
+            {{- if eq $prop nil -}}
                 {{- $exists = false -}}
+            {{- else -}}
+                {{- with index $prop . -}}
+                    {{- $prop = . -}}
+                {{- else -}}
+                    {{- $exists = false -}}
+                {{- end -}}
             {{- end -}}
         {{- end -}}
     {{- end -}}
