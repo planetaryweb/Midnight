@@ -18,7 +18,7 @@
     {{ if not .Params.hide_list }}
         {{/* If showing nested sections, show those first */}}
         {{ if .Params.list_subsections }}
-            {{ $section := trim .URL "/" }}
+            {{ $section := trim .RelPermalink "/" }}
             {{ range (.Site.GetPage (add "/" $section)).Sections }}
                 {{ partial "list_item.html" (dict "Page" . "Root" $) }}
             {{ end }}

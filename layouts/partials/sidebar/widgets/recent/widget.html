@@ -37,7 +37,7 @@
 		{{- $this := . -}}
 		{{- range $format := .OutputFormats -}}
 			{{- if eq $format.Name "RSS" -}}
-				<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" (printf "%s/index.xml" $this.URL) "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $this.LinkTitle | title }}</a>
+				<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" (printf "%s/index.xml" $this.RelPermalink) "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $this.LinkTitle | title }}</a>
 			{{- end -}}
 		{{- end -}}
 	{{- else if .IsPage -}}
@@ -60,10 +60,10 @@
 	{{- end -}}
 
 	{{- $section := (.Site.GetPage $section) -}}
-	{{- if ne (trim $section.URL "/") "" -}}
+	{{- if ne (trim $section.RelPermalink "/") "" -}}
 		{{- range $format := $section.OutputFormats -}}
 			{{- if eq $format.Name "RSS" -}}
-			<a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" (printf "%s/index.xml" $section.URL) "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $section.LinkTitle | title }}</a>
+            <a class="widget-header-small button" href="{{ partial "make_link" (dict "URL" (printf "%s/index.xml" $section.RelPermalink) "Root" $) }}"><span class="fas fa-rss fa-xs" aria-hidden></span> {{ i18n "rssSectionSubscribe" $section.LinkTitle | title }}</a>
 			{{- end -}}
 		{{- end -}}
 	{{- end -}}
